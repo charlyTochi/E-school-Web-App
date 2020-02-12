@@ -43,12 +43,13 @@ class StudentController extends Controller
           $school_mail = $student_school_name_query->email;
           $student_name = $student->lastname." ".$student->firstname;//this gets the first and lastname of the student when card is tapped
           $data = $this->getParentData($student->primary_contact_id, $student->secondary_contact_id);
-            $phone_number = $data['phone_number'];
-            $addressFrom = $school_mail;
-            $addressTo = $data['email'];
-            $parent_name = $data['parent_name'];
-            $subject = 'School Notification';
-            $name =$student_school;
+
+          $phone_number = $data['phone_number'];
+          $addressFrom = $school_mail;
+          $addressTo = $data['email'];
+          $parent_name = $data['parent_name'];
+          $subject = 'School Notification';
+          $name =$student_school;
 
           $user = Auth::user();
 
@@ -57,6 +58,13 @@ class StudentController extends Controller
           $school_id = Auth::user()->external_table_id;// id of the logged in school
           if ($school_id === $student_school_name_query->id) {
             $studentLog = StudentLog::where('card_code', $card_code)->where('log_year', $year)->where('log_month', $month)->where('log_day', $day)->orderBy('id', 'DESC')->first();
+            $message = [
+              "title" => "Student Attendance Notification",
+              "receiver_phone" => $phone_number,
+              "receiver_name" => $parent_name,
+              "message_id" => uniqid()
+
+            ];
               if ($studentLog) {
                 if ($studentLog->is_logged_in) {
                   $log = false;
@@ -74,13 +82,14 @@ class StudentController extends Controller
                   $studentLog->save();
                   // logout message send
                   //   $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
-                  $msgSent = $this->LoginSmsSender($log, $phone_number, $student_school, $student_name, $timestamp);
                   // $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
                   if ($msgSent) {
                     array_push($responses, [
                       "payload" => $obj,
                        "response" => "200",
                        "success"=> "Student successfully logged out",
+                       "studentData" => $student,
+                       "message" => $message,
                        "studentName"=>$student_name,
                        "studentSchoolName"=>$student_school,
                        "log" => $studentLog,
@@ -109,7 +118,6 @@ class StudentController extends Controller
                   $studentLog->save();
                   // login message send
                   // get the sstudent details that would be used to send smsSender
-                  $msgSent = $this->LoginSmsSender($log, $phone_number, $student_school, $student_name, $timestamp);
                   //   $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
                   // $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
                   if ($msgSent) {
@@ -117,6 +125,8 @@ class StudentController extends Controller
                       "payload" => $obj,
                        "response" => "200",
                        "success"=> "Student successfully logged in",
+                       "studentData" => $student,
+                       "message" => $message,
                        "studentName"=>$student_name,
                        "studentSchoolName"=>$student_school,
                        "log" => $studentLog,
@@ -139,14 +149,15 @@ class StudentController extends Controller
                 ]);
                 $studentLog->save();
                  // login first time message send
-                 $msgSent = $this->LoginSmsSender($log, $phone_number, $student_school, $student_name, $timestamp);
                 // $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
                 // $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
                 if ($msgSent) {
                   array_push($responses, [
                     "payload" => $obj,
+                    "studentData" => $student,
+                    "success"=> "Student successfully logged in",
+                    "message" => $message,
                      "response" => "200",
-                     "success"=> "Student successfully logged in",
                      "log" => $studentLog,
                      "sent" => $msgSent
                    ]);
@@ -220,38 +231,4 @@ public function message($log, $student_school, $student_name, $timestamp){
   }
 }
 
-  public function LoginSmsSender($log, $phone_number, $student_school,$student_name, $timestamp){
-    // $message = message($log, $student_school, $student_name, $timestamp);
-          try{
-              // $access_token = Auth::user->access_token;
-              $client = new Client(['base_uri' => "http://47.90.244.90:8081"]);
-              $response = $client->post('/sendsms/', [
-                  RequestOptions::JSON => [
-                        'smsRequest' => [
-                              [
-                              "msgId"=> hexdec(uniqid()),
-                              "sender"=> "efull",
-                              "msIsdn"=>  $phone_number,
-                              "msgText"=> "dsaa",
-                              "ackUrl"=> "",
-                              "datetimeSubmit"=> $timestamp
-                            ]
-                          ]
-                  ],
-                  'headers' => [
-                      'Accept' => 'application/json',
-                      'Content-type' => 'application/json'
-                      // 'accessToken' => "{$access_token}"
-                  ]
-              ]);
-              return json_decode($response->getBody()->getContents(), true);
-          }
-          catch (RequestException $e) {
-              if ($e->hasResponse()) {
-                  // return Psr7\str($e->getResponse());
-                  return false;
-              }
-          }
-          return null;
-      }
 }
