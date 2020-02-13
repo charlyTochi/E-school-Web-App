@@ -22,7 +22,7 @@ class SuperAdminAuth
          return route('login');
        }
        if (Auth::User()->user_category != $cat_code){
-         return abort(404, 'Your error message');
+         return route('home');
        }
          return $next($request);
      }

@@ -54,7 +54,6 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'admin' => \App\Http\Middleware\AdminAuth::class,
         'cors' => \App\Http\Middleware\Cors::class,
-        'superadmin' => \App\Http\Middleware\SuperAdminAuth::class,
         'superAdmin' => \App\Http\Middleware\SuperAdminAuth::class,
         'admin' => \App\Http\Middleware\AdminAuth::class,
         'school' => \App\Http\Middleware\SchoolAuth::class,
