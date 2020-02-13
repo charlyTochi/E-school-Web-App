@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+<<<<<<< HEAD
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,4 +44,21 @@ class Teacher extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+=======
+
+use Illuminate\Database\Eloquent\Model;
+
+class Teacher extends Model
+{
+
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+      'name', 'email', 'assigned_class_name'
+  ];
+
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 }

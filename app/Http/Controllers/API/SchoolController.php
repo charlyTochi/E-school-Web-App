@@ -67,7 +67,11 @@ class SchoolController extends Controller
             // 'remember_me' => 'boolean'
         ]);
         $credentials = request(['email', 'password']);
+<<<<<<< HEAD
         // $credentials['deleted_at'] = null;
+=======
+        $credentials['deleted_at'] = null;
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
         if(!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'

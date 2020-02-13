@@ -83,11 +83,14 @@ $(document).ready(function() {
     }
   });
 
+<<<<<<< HEAD
   $("#delete").click(function(){
   		var val = $(this).val();
       alert("are you want to delete this user");
   		// $("#counsellor_email").val(val);
   	});
+=======
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 });
 
 $(document).on('click', '.navbar-toggler', function() {
@@ -736,4 +739,8 @@ function debounce(func, wait, immediate) {
     }, wait);
     if (immediate && !timeout) func.apply(context, args);
   };
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3

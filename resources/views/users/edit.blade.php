@@ -10,14 +10,22 @@
             @method('put')
 
             <div class="card ">
+<<<<<<< HEAD
               <div class="card-header card-header-warning">
+=======
+              <div class="card-header card-header-primary">
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
                 <h4 class="card-title">{{ __('Edit User') }}</h4>
                 <p class="card-category"></p>
               </div>
               <div class="card-body ">
                 <div class="row">
                   <div class="col-md-12 text-right">
+<<<<<<< HEAD
                       <a href="{{ route('user.index') }}" class="btn btn-sm btn-warning">{{ __('Back to list') }}</a>
+=======
+                      <a href="{{ route('user.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
                   </div>
                 </div>
                 <div class="row">
@@ -42,9 +50,34 @@
                     </div>
                   </div>
                 </div>
+<<<<<<< HEAD
               </div>
               <div class="card-footer ml-auto mr-auto">
                 <button type="submit" class="btn btn-warning">{{ __('Save') }}</button>
+=======
+                <div class="row">
+                  <label class="col-sm-2 col-form-label" for="input-password">{{ __(' Password') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" input type="password" name="password" id="input-password" placeholder="{{ __('Password') }}" />
+                      @if ($errors->has('password'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('password') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label" for="input-password-confirmation">{{ __('Confirm Password') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group">
+                      <input class="form-control" name="password_confirmation" id="input-password-confirmation" type="password" placeholder="{{ __('Confirm Password') }}" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer ml-auto mr-auto">
+                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               </div>
             </div>
           </form>
@@ -52,4 +85,8 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3

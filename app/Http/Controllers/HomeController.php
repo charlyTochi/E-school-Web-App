@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+<<<<<<< HEAD
 use Auth;
 use App\Traits\Utilities;
 use Illuminate\Http\Request;
@@ -13,6 +14,11 @@ use App\User;
 class HomeController extends Controller
 {
   use Utilities;
+=======
+
+class HomeController extends Controller
+{
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
     /**
      * Create a new controller instance.
      *
@@ -26,6 +32,7 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
+<<<<<<< HEAD
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
@@ -124,4 +131,12 @@ class HomeController extends Controller
       }
     return $array;
 }
+=======
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        return view('dashboard');
+    }
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 }

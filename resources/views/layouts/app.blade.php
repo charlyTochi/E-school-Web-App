@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <!-- <!DOCTYPE html> -->
+=======
+<!DOCTYPE html>
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
     <meta charset="utf-8" />
@@ -12,7 +16,10 @@
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<<<<<<< HEAD
     <script src="https://kit.fontawesome.com/76a519fd6d.js" crossorigin="anonymous"></script>
+=======
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
     <!-- CSS Files -->
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -72,10 +79,13 @@
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <script src="{{ asset('material') }}/demo/demo.js"></script>
         <script src="{{ asset('material') }}/js/settings.js"></script>
+<<<<<<< HEAD
         <!-- <script src="{{asset( 'material' )}}/js/jquery.min.js"></script> -->
         <!-- <script src="{{asset( 'material' )}}/js/chart.js"></script> -->
         <!-- <script src="{{asset( 'material') }}/js/charts.js"></script> -->
 
+=======
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
         @stack('js')
     </body>
 </html>

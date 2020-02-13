@@ -13,6 +13,12 @@ trait Utilities {
                 case 'ADMIN':
                     $code = "44556";
                     break;
+<<<<<<< HEAD
+=======
+                case 'SCHOOL':
+                    $code = "33445";
+                    break;
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
                 case 'PARENT':
                     $code = "22334";
                     break;

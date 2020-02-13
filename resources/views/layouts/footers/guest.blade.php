@@ -1,6 +1,10 @@
 <footer class="footer">
     <div class="container">
+<<<<<<< HEAD
         <!-- <nav class="float-left">
+=======
+        <nav class="float-left">
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
         <ul>
             <li>
             <a href="https://www.creative-tim.com">
@@ -23,13 +27,25 @@
             </a>
             </li>
         </ul>
+<<<<<<< HEAD
         </nav> -->
         <div class="copyright text-center text-white">
+=======
+        </nav>
+        <div class="copyright float-right">
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
         &copy;
         <script>
             document.write(new Date().getFullYear())
         </script>, made with <i class="material-icons">favorite</i> by
+<<<<<<< HEAD
         <a href="https://www.e-school.com" target="_blank">Powered by Efull Technology Nig. Ltd</a>  for the best solution in tech.
         </div>
     </div>
 </footer>
+=======
+        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> and <a href="https://www.updivision.com" target="_blank">UPDIVISION</a> for a better web.
+        </div>
+    </div>
+</footer>
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3

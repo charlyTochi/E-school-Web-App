@@ -1,8 +1,15 @@
 <!-- Navbar -->
+<<<<<<< HEAD
 <nav class="navbar navbar-expand-lg navbar-dark navbar-absolute fixed-top ">
   <div class="container-fluid">
     <div class="navbar-wrapper">
       <a class="navbar-brand" href="#">{{$data['school_name'] ?? 'E-School MGT'}}</a>
+=======
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+  <div class="container-fluid">
+    <div class="navbar-wrapper">
+      <a class="navbar-brand" href="#">{{ $titlePage }}</a>
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
     <span class="sr-only">Toggle navigation</span>

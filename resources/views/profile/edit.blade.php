@@ -10,7 +10,11 @@
             @method('put')
 
             <div class="card ">
+<<<<<<< HEAD
               <div class="card-header card-header-warning">
+=======
+              <div class="card-header card-header-primary">
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
                 <h4 class="card-title">{{ __('Edit Profile') }}</h4>
                 <p class="card-category">{{ __('User information') }}</p>
               </div>
@@ -51,7 +55,11 @@
                 </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
+<<<<<<< HEAD
                 <button type="submit" class="btn btn-warning">{{ __('Save') }}</button>
+=======
+                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               </div>
             </div>
           </form>
@@ -64,7 +72,11 @@
             @method('put')
 
             <div class="card ">
+<<<<<<< HEAD
               <div class="card-header card-header-warning">
+=======
+              <div class="card-header card-header-primary">
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
                 <h4 class="card-title">{{ __('Change password') }}</h4>
                 <p class="card-category">{{ __('Password') }}</p>
               </div>
@@ -113,7 +125,11 @@
                 </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
+<<<<<<< HEAD
                 <button type="submit" class="btn btn-warning">{{ __('Change password') }}</button>
+=======
+                <button type="submit" class="btn btn-primary">{{ __('Change password') }}</button>
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               </div>
             </div>
           </form>
@@ -121,4 +137,8 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
