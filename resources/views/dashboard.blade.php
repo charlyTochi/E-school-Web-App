@@ -3,45 +3,27 @@
 @section('content')
   <div class="content">
     <div class="container-fluid">
-<<<<<<< HEAD
       <!-- users statiscs start here -->
       <div class="row">
         @if (Auth::user()->user_category == '77889' )
-=======
-      <div class="row">
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
               <div class="card-icon">
-<<<<<<< HEAD
                 <i class="fa fa-users"></i>
               </div>
               <p class="card-category">Total Users</p>
               <h3 class="card-title">{{number_format($data['total'])}} <br>
                 <small>Users</small>
-=======
-                <i class="material-icons">content_copy</i>
-              </div>
-              <p class="card-category">Used Space</p>
-              <h3 class="card-title">49/50
-                <small>GB</small>
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               </h3>
             </div>
             <div class="card-footer">
               <div class="stats">
-<<<<<<< HEAD
                 <i class="fa fa-users text-danger"></i>All users
-=======
-                <i class="material-icons text-danger">warning</i>
-                <a href="#pablo">Get More Space...</a>
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               </div>
             </div>
           </div>
         </div>
-<<<<<<< HEAD
         @endif
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
@@ -75,27 +57,12 @@
             <div class="card-footer">
               <div class="stats">
                 <i class="fa fa-user-friends text-warning"></i> All parent
-=======
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">store</i>
-              </div>
-              <p class="card-category">Revenue</p>
-              <h3 class="card-title">$34,245</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">date_range</i> Last 24 Hours
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               </div>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
-<<<<<<< HEAD
             <div class="card-header card-header-warning card-header-icon">
               <div class="card-icon">
                 <i class="fas fa-chalkboard-teacher"></i>
@@ -108,23 +75,10 @@
             <div class="card-footer">
               <div class="stats">
                 <i class="fas fa-chalkboard-teacher"></i>All teacher
-=======
-            <div class="card-header card-header-danger card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">info_outline</i>
-              </div>
-              <p class="card-category">Fixed Issues</p>
-              <h3 class="card-title">75</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">local_offer</i> Tracked from Github
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               </div>
             </div>
           </div>
         </div>
-<<<<<<< HEAD
         @if (Auth::user()->user_category != '77889' )
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
@@ -140,33 +94,15 @@
             <div class="card-footer">
               <div class="stats">
                 <i class="fa fa-users text-danger"></i>All student
-=======
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-twitter"></i>
-              </div>
-              <p class="card-category">Followers</p>
-              <h3 class="card-title">+245</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">update</i> Just Updated
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               </div>
             </div>
           </div>
         </div>
-<<<<<<< HEAD
         @endif
       </div>
       <!-- users statistics end here -->
 
       <!-- charts start here -->
-=======
-      </div>
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
       <div class="row">
         <div class="col-md-4">
           <div class="card card-chart">
@@ -174,11 +110,7 @@
               <div class="ct-chart" id="dailySalesChart"></div>
             </div>
             <div class="card-body">
-<<<<<<< HEAD
               <h4 class="card-title">Students Attendance</h4>
-=======
-              <h4 class="card-title">Daily Sales</h4>
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               <p class="card-category">
                 <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
             </div>
@@ -195,11 +127,7 @@
               <div class="ct-chart" id="websiteViewsChart"></div>
             </div>
             <div class="card-body">
-<<<<<<< HEAD
               <h4 class="card-title">Total Student Present</h4>
-=======
-              <h4 class="card-title">Email Subscriptions</h4>
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               <p class="card-category">Last Campaign Performance</p>
             </div>
             <div class="card-footer">
@@ -215,11 +143,7 @@
               <div class="ct-chart" id="completedTasksChart"></div>
             </div>
             <div class="card-body">
-<<<<<<< HEAD
               <h4 class="card-title">Total Student Absent</h4>
-=======
-              <h4 class="card-title">Completed Tasks</h4>
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               <p class="card-category">Last Campaign Performance</p>
             </div>
             <div class="card-footer">
@@ -230,15 +154,11 @@
           </div>
         </div>
       </div>
-<<<<<<< HEAD
       <!-- charts end here -->
 
 
 
       <!-- <div class="row">
-=======
-      <div class="row">
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
         <div class="col-lg-6 col-md-12">
           <div class="card">
             <div class="card-header card-header-tabs card-header-primary">
@@ -528,12 +448,8 @@
             </div>
           </div>
         </div>
-<<<<<<< HEAD
       </div> -->
 
-=======
-      </div>
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
     </div>
   </div>
 @endsection
@@ -545,8 +461,4 @@
       md.initDashboardPageCharts();
     });
   </script>
-<<<<<<< HEAD
 @endpush
-=======
-@endpush
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3

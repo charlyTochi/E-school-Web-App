@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-<<<<<<< HEAD
 use App\School;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
@@ -11,28 +10,15 @@ use App\Traits\Utilities;
 class UserController extends Controller
 {
   use Utilities;
-=======
-use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Hash;
-
-class UserController extends Controller
-{
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
     /**
      * Display a listing of the users
      *
      * @param  \App\User  $model
      * @return \Illuminate\View\View
      */
-<<<<<<< HEAD
     public function index(School $school, User $user)
     {
         return view('users.index', ['school' => $school->paginate(15), 'user' => $user->paginate(15) ]);
-=======
-    public function index(User $model)
-    {
-        return view('users.index', ['users' => $model->paginate(15)]);
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
     }
 
     /**
@@ -52,7 +38,6 @@ class UserController extends Controller
      * @param  \App\User  $model
      * @return \Illuminate\Http\RedirectResponse
      */
-<<<<<<< HEAD
     public function store(UserRequest $request, User $userModel)
     {
       $request->validate([
@@ -79,13 +64,6 @@ class UserController extends Controller
         // $schoolModel->create($school);
 
         return redirect()->route('user.index')->withStatus(__($request->school_name.' School successfully created.'));
-=======
-    public function store(UserRequest $request, User $model)
-    {
-        $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
-
-        return redirect()->route('user.index')->withStatus(__('User successfully created.'));
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
     }
 
     /**

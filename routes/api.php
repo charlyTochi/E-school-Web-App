@@ -57,12 +57,9 @@ Route::group(['prefix' => 'auth'], function () {
           /****fetch card details of students****/
           Route::post('saveStudentLog', 'API\StudentController@saveStudentLog');
 
-<<<<<<< HEAD
           /****save sent messages ****/
           Route::post('sentMessageLog', 'API\SentMessageController@sentMessageLog');
 
-=======
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 
         });
 

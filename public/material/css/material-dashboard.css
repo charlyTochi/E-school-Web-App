@@ -13030,13 +13030,8 @@ fieldset[disabled] .form-group .form-control {
   padding: 0.625rem 0;
   margin-bottom: 20px;
   height: auto !important;
-<<<<<<< HEAD
   color: #fff;
   background-color: #5f3104  !important;
-=======
-  color: #555;
-  background-color: #fff !important;
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
   box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15);
 }
 
@@ -14499,11 +14494,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .sidebar[data-background-color="black"] {
-<<<<<<< HEAD
   background-color: #5f3104;
-=======
-  background-color: #191919;
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 }
 
 .sidebar .sidebar-wrapper {
@@ -14773,11 +14764,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .sidebar[data-background-color="black"] .sidebar-background:after {
-<<<<<<< HEAD
   background: #5f3104;
-=======
-  background: #000;
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
   opacity: .8;
 }
 
@@ -16299,11 +16286,7 @@ thead.thead-inverse th,
 }
 
 body {
-<<<<<<< HEAD
   background-image: linear-gradient(to top, #7b5b40, #de6d10);
-=======
-  background-color: #eee;
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
   color: #3C4858;
   font-weight: 300;
 }
@@ -18875,8 +18858,4 @@ Copyright (c) 2015 Daniel Eden
 }
 
 
-<<<<<<< HEAD
 /*# sourceMappingURL=dashboard-free.css.map */
-=======
-/*# sourceMappingURL=dashboard-free.css.map */
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3

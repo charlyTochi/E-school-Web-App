@@ -10,8 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-<<<<<<< HEAD
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -34,7 +32,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/studentView/{id}', 'HomeController@studentView')->name('studentView')->middleware('auth');
 // Route::post('loginUser', 'LoginController@loginUser');
-=======
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -43,7 +41,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::Post('adminLogin', 'API\UserController@login');
 // Route::get('/schools', 'HomeController@index')->name('schools')->middleware('auth');
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {
@@ -76,7 +73,6 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-<<<<<<< HEAD
   Route::group(['middleware' => 'superadmin'], function(){
     Route::resource('user', 'UserController', ['except' => ['show']]);
   });
@@ -87,9 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('teacher', 'TeacherController', ['except' => ['show']]);
     Route::resource('message', 'MessageController', ['except' => ['show']]);
   // });
-=======
 	Route::resource('user', 'UserController', ['except' => ['show']]);
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);

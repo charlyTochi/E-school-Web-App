@@ -167,7 +167,7 @@ class StudentController extends Controller
             array_push($responses, [
               "payload" => $obj,
               "response" => "500",
-              "error"=> $student->firstname." Does not belong to ". $student_school,
+              "error"=> $student->firstname." Does not belong to ". $school->school_name,
             ]);
           }
         }else{

@@ -10,18 +10,13 @@
             @method('post')
 
             <div class="card ">
-<<<<<<< HEAD
               <div class="card-header card-header-warning">
-=======
-              <div class="card-header card-header-primary">
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
                 <h4 class="card-title">{{ __('Add User') }}</h4>
                 <p class="card-category"></p>
               </div>
               <div class="card-body ">
                 <div class="row">
                   <div class="col-md-12 text-right">
-<<<<<<< HEAD
                       <a href="{{ route('user.index') }}" class="btn btn-sm btn-warning">{{ __('Back to list') }}</a>
                   </div>
                 </div>
@@ -34,9 +29,6 @@
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('school_name') }}</span>
                       @endif
                     </div>
-=======
-                      <a href="{{ route('user.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
                   </div>
                 </div>
                 <div class="row">
@@ -62,7 +54,6 @@
                   </div>
                 </div>
                 <div class="row">
-<<<<<<< HEAD
                   <label class="col-sm-2 col-form-label">{{ __('Motto') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('motto') ? ' has-danger' : '' }}">
@@ -96,8 +87,6 @@
                   </div>
                 </div>
                 <div class="row">
-=======
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
                   <label class="col-sm-2 col-form-label" for="input-password">{{ __(' Password') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
@@ -118,11 +107,7 @@
                 </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
-<<<<<<< HEAD
                 <button type="submit" class="btn btn-warning">{{ __('Add User') }}</button>
-=======
-                <button type="submit" class="btn btn-primary">{{ __('Add User') }}</button>
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
               </div>
             </div>
           </form>

@@ -8,10 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-<<<<<<< HEAD
 use App\Traits\Utilities;
-=======
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 
 class RegisterController extends Controller
 {
@@ -27,10 +24,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-<<<<<<< HEAD
     use Utilities;
-=======
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
 
     /**
      * Where to redirect users after registration.
@@ -38,10 +32,6 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-<<<<<<< HEAD
-=======
-
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
     /**
      * Create a new controller instance.
      *
@@ -75,20 +65,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-<<<<<<< HEAD
         $cat_code = $this->userRole('SUPERADMIN');
-=======
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-<<<<<<< HEAD
             'external_table_id' => 0,
             'user_category' => ($cat_code),
             'school_id' => 0
-=======
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3
         ]);
     }
 }
