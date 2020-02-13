@@ -75,12 +75,12 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('Card Number') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('Card Code') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('card_number') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('card_number') ? ' is-invalid' : '' }}" name="card_number" id="input-card_number" type="text" placeholder="{{ __('Card Number') }}" value="{{ old('card_number') }}" required="true" aria-required="true"/>
-                      @if ($errors->has('card_number'))
-                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('card_number') }}</span>
+                    <div class="form-group{{ $errors->has('card_code') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('card_code') ? ' is-invalid' : '' }}" name="card_code" id="input-card_code" type="text" placeholder="{{ __('Card Code') }}" value="{{ old('card_code') }}" required="true" aria-required="true"/>
+                      @if ($errors->has('card_code'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('card_code') }}</span>
                       @endif
                     </div>
                   </div>
@@ -212,21 +212,57 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label" for="input-password">{{ __(' Password') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('Date Of Birth') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" input type="password" name="password" id="input-password" placeholder="{{ __('Password') }}" value="" required />
-                      @if ($errors->has('password'))
-                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('password') }}</span>
+                    <div class="form-group{{ $errors->has('date_of_birth') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}" name="date_of_birth" id="input-date_of_birth" type="date" placeholder="{{ __('Date Of Birth') }}" value="{{ old('date_of_birth') }}" required="true" aria-required="true"/>
+                      @if ($errors->has('date_of_birth'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('date_of_birth') }}</span>
                       @endif
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label" for="input-password-confirmation">{{ __('Confirm Password') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('Nationality') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group">
-                      <input class="form-control" name="password_confirmation" id="input-password-confirmation" type="password" placeholder="{{ __('Confirm Password') }}" value="" required />
+                    <div class="form-group{{ $errors->has('nationality') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('nationality') ? ' is-invalid' : '' }}" name="nationality" id="input-nationality" type="text" placeholder="{{ __('nationality') }}" value="{{ old('Nationality') }}" required="true" aria-required="true"/>
+                      @if ($errors->has('nationality'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('nationality') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('State Of Origin') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('state_of_origin') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('state_of_origin') ? ' is-invalid' : '' }}" name="state_of_origin" id="input-state_of_origin" type="text" placeholder="{{ __('State Of Origin') }}" value="{{ old('state_of _origin') }}" required="true" aria-required="true"/>
+                      @if ($errors->has('state_of_origin'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('state_of_origin') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Local Govt') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('local_govt') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('local_govt') ? ' is-invalid' : '' }}" name="local_govt" id="input-local_govt" type="text" placeholder="{{ __('Local Govt') }}" value="{{ old('local_govt') }}" required="true" aria-required="true"/>
+                      @if ($errors->has('local_govt'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('local_govt') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Religion') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('religion') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('religion') ? ' is-invalid' : '' }}" name="religion" id="input-religion" type="text" placeholder="{{ __('religion') }}" value="{{ old('Religion') }}" required="true" aria-required="true"/>
+                      @if ($errors->has('religion'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('religion') }}</span>
+                      @endif
                     </div>
                   </div>
                 </div>

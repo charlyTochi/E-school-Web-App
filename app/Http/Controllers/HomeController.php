@@ -57,9 +57,8 @@ class HomeController extends Controller
         // dd($student);
         $teacher = Teacher::where('school_id', $id)->get()->count();
         $parents = Parents::where('school_id', $id)->get()->count();
-        // $total = User::all()->count();
-        // $student = School::find(Auth::id());
 
+        // $request->session()->put('school_name', $school_name);
         $data = array(
           'school_name' => $school_name,
           'school' => $school,
@@ -74,15 +73,11 @@ class HomeController extends Controller
 
         $school_name = School::where('id', $id)->pluck('school_name')->first();
         $children = Student::where('secondary_contact_id', Auth::user()->external_table_id || 'primary_contact_id', Auth::user()->external_table_id)->get();
-
+        // $request->session()->put('school_name', $school_name);
         $data = array(
           'school_name' => $school_name,
           'children' => $children
         );
-        // dd($data['children']);
-        dd($this->array_add_multiple($children));
-
-          // return view('parent', ['data'=>$data]);
       }else {
         $id = Auth::user()->school_id;
         $uid = Auth::user()->external_table_id;
@@ -95,8 +90,6 @@ class HomeController extends Controller
           'school_name' => $school_name,
           'children' => $children
         );
-         // dd($data['school_name']);
-         dd($this->array_add_multiple($children));
           return view('parent', ['data' => $data]);
       }
     }

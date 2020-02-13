@@ -21,14 +21,14 @@ class CreateStudentsTable extends Migration
           $table->string('father_id');
           $table->string('mother_id');
           $table->string('school_id');
-          $table->string('class');
-          $table->string('card_number');
+          $table->string('class_name');
+          $table->string('card_code');
           $table->date('date_of_birth');
           $table->string('nationality');
-          $table->string('State_of_origin');
+          $table->string('state_of_origin');
           $table->string('local_govt');
           $table->string('address');
-          $table->string('Religion');
+          $table->string('religion');
           $table->string('primary_contact_id');
           $table->string('primary_contact_rel');
           $table->string('secondary_contact_id');

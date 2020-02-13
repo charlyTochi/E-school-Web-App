@@ -196,7 +196,7 @@ public function getParentData($pri_contact_id, $sec_contact_id){
     if($parent){
       $phone_number = $parent->phone_number;
       $email = $parent->email;
-      $parent_name = $parent->parent_name;
+      $parent_name = $parent->first_name. $parent->last_name;
       $data = array('phone_number' => $phone_number, 'email' => $email, 'parent_name'=> $parent_name);
     }else {
       $data = null;
@@ -208,7 +208,7 @@ public function getParentData($pri_contact_id, $sec_contact_id){
     if ($parent) {
       $phone_number = $parent->phone_number;
       $email = $parent->email;
-      $parent_name = $parent->parent_name;
+      $parent_name = $parent->first_name.$parent->last_name;
       $data = array('phone_number' => $phone_number, 'email' => $email, 'parent_name'=> $parent_name);
     }else{
       $data = null;
