@@ -83,10 +83,30 @@ $(document).ready(function() {
     }
   });
 
-  $("#delete").click(function(){
-  		var val = $(this).val();
-      alert("are you want to delete this user");
-  		// $("#counsellor_email").val(val);
+  $(".delete").click(function(e){
+    e.preventDefault();
+    var msg = $(this).attr("msg");
+    Swal.fire({
+  title: 'Are you sure you want to delete '+ msg + '?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.value) {
+    return true;
+    Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )
+  }
+})
+  		// var val = $(this).val();
+      // alert("are you want to delete this user");
+  		// // $("#counsellor_email").val(val);
   	});
 });
 

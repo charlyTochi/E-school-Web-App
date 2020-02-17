@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer" style="max-height: 100px">
     <div class="container">
         <!-- <nav class="float-left">
         <ul>

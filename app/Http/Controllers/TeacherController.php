@@ -49,7 +49,12 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return view('teachers.create');
+      $id = Auth::user()->school_id;
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $data = array(
+      'school_name' => $school_name,
+    );
+        return view('teachers.create', ['data' => $data]);
     }
 
     /**
@@ -104,9 +109,13 @@ class TeacherController extends Controller
     {
       // get the user
       $users = Teacher::find($id);
-
+      $school_id = Auth::user()->school_id;
+      $school_name = School::where('id', $school_id)->pluck('school_name')->first();
+      $data = array(
+        'school_name' => $school_name,
+      );
       // show the edit form and pass the user
-      return View('teachers.edit', ['user'=> $users]);
+      return View('teachers.edit', ['user'=> $users, 'data'=> $data]);
     }
 
     /**
@@ -116,11 +125,10 @@ class TeacherController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id, $exId, Request $request)
+    public function update($id, Request $request)
     {
       $rules = array(
         'first_name' => 'required|string',
-        'email' => 'required|string|email|unique:users',
         'last_name' => 'required|string',
         'address' => 'required|string',
         'phone_number' => 'required|string'
@@ -129,21 +137,19 @@ class TeacherController extends Controller
 
       // process the login
       if ($validator->fails()) {
-          return Redirect::to('parents/' . $id . '/edit')
-              ->withErrors($validator)
-              ->withInput($request->except('password'));
+          return redirect()->route('teacher.edit', $id)
+              ->withErrors($validator);
       } else {
           // update
-          $teacher = Student::find($id);
+          $teacher = Teacher::find($id);
           $teacher->first_name =$request->get('first_name');
           $teacher->last_name =$request->get('last_name');
-          $teacher->email =$request->get('email');
           $teacher->address =$request->get('address');
           $teacher->phone_number =$request->get('phone_number');
           $teacher->save();
-          $user = User::find($exId);
-            $parents->name = $request->get('name');
-            $parents->email = $request->get('email');
+            $full_name = $request->first_name. ' '. $request->last_name;
+            $user = User::where('external_table_id', $id)->where('school_id', $teacher->school_id)->first();
+            $user->name = $full_name;
 
           $user->save();
         }

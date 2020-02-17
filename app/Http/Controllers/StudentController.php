@@ -51,6 +51,7 @@ class StudentController extends Controller
     public function create()
     {
       $school_id = Auth::user()->school_id;
+      $school_name = School::where('id', $school_id)->pluck('school_name')->first();
       $father = Parents::where('school_id',  $school_id)->where('sex', 'male')->get()->toArray();
       $mother = Parents::where('school_id',  $school_id)->where('sex', 'female')->get()->toArray();
       $parents = Parents::where('school_id',  $school_id)->get()->toArray();
@@ -58,6 +59,7 @@ class StudentController extends Controller
         'fathers' => $father,
         'mothers' => $mother,
         'parents' => $parents,
+        'school_name' => $school_name,
        );
         return view('students.create', ['data' => $data]);
     }
@@ -99,7 +101,7 @@ class StudentController extends Controller
         'mother_id'=> $request->mother_id,
         'school_id' =>Auth::user()->school_id,
         'class_name'=> $request->class_name,
-        'card_code'=> $request->card_number,
+        'card_code'=> $request->card_code,
         'date_of_birth'=> $request->date_of_birth,
         'nationality'=> $request->nationality,
         'religion'=> $request->religion,
@@ -127,11 +129,15 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
+      $school_id = Auth::user()->school_id;
+      $school_name = School::where('id', $school_id)->pluck('school_name')->first();
       // get the user
       $users = Student::find($id);
-
+      $data = array(
+        'school_name' => $school_name,
+       );
       // show the edit form and pass the user
-      return View('students.edit', ['user'=> $users]);
+      return View('students.edit', ['user'=> $users, 'data' => $data]);
     }
 
     /**
@@ -147,7 +153,7 @@ class StudentController extends Controller
         'first_name' => 'required|string',
         'last_name' => 'required|string',
         'address' => 'required|string',
-        'card_number' => 'required|string',
+        'card_code' => 'required|string',
         'class_name' => 'required|string',
         'primary_contact_rel' => 'required|string',
         'secondary_contact_rel' => 'required|string',
@@ -156,16 +162,15 @@ class StudentController extends Controller
 
       // process the login
       if ($validator->fails()) {
-          return Redirect::to('parents/' . $id . '/edit')
-              ->withErrors($validator)
-              ->withInput($request->except('password'));
+          return redirect()->route('student.edit',$id)
+              ->withErrors($validator);
       } else {
           // update
           $student = Student::find($id);
           $student->first_name =$request->get('first_name');
           $student->last_name =$request->get('last_name');
           $student->class_name =$request->get('class_name');
-          $student->card_number =$request->get('card_number');
+          $student->card_code =$request->get('card_code');
           // 'date_of_birth'=> $student->date_of_birth,
           // 'nationality'=> $student->nationality,
           // 'religion'=> $student->religion,
@@ -189,10 +194,11 @@ class StudentController extends Controller
     public function destroy($id)
     {
       $student = Student::find($id);
-      if ($student->delete()) {
-          $user = User::where('external_table_id', $id)->where('school_id', $student->school_id)->first();
-          $user->delete();
-      }
+      $student->delete();
+      // if () {
+      //     $user = User::where('external_table_id', $id)->where('school_id', $student->school_id)->first();
+      //     $user->delete();
+      // }
 
       // redirect
       return redirect()->route('student.index')->withStatus(__('User successfully deleted.'));

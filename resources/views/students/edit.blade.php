@@ -45,10 +45,10 @@
                 <div class="row">
                   <label class="col-sm-2 col-form-label">{{ __('Card Number') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('card_number') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('card_number') ? ' is-invalid' : '' }}" name="card_number" id="input-card_number" type="text" placeholder="{{ __('Card Number') }}" value="{{ old('card_number', $user->card_number) }}" required="true" aria-required="true"/>
-                      @if ($errors->has('card_number'))
-                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('card_number') }}</span>
+                    <div class="form-group{{ $errors->has('card_code') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('card_code') ? ' is-invalid' : '' }}" name="card_code" id="input-card_code" type="text" placeholder="{{ __('Card Number') }}" value="{{ old('card_code', $user->card_code) }}" required="true" aria-required="true"/>
+                      @if ($errors->has('card_code'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('card_code') }}</span>
                       @endif
                     </div>
                   </div>

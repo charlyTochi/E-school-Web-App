@@ -56,7 +56,7 @@ class StudentController extends Controller
           $msgSent = true; // remove this later
 
           $school_id = Auth::user()->external_table_id;// id of the logged in school
-          if ($school_id === $student_school_name_query->id) {
+          if ($school_id == $student_school_name_query->id) {
             $studentLog = StudentLog::where('card_code', $card_code)->where('log_year', $year)->where('log_month', $month)->where('log_day', $day)->orderBy('id', 'DESC')->first();
             $message = [
               "title" => "Student Attendance Notification",
@@ -81,8 +81,8 @@ class StudentController extends Controller
                   ]);
                   $studentLog->save();
                   // logout message send
-                  //   $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
-                  // $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
+                    $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
+                  $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
                   if ($msgSent) {
                     array_push($responses, [
                       "payload" => $obj,
@@ -118,8 +118,8 @@ class StudentController extends Controller
                   $studentLog->save();
                   // login message send
                   // get the sstudent details that would be used to send smsSender
-                  //   $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
-                  // $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
+                    $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
+                  $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
                   if ($msgSent) {
                     array_push($responses, [
                       "payload" => $obj,
@@ -149,8 +149,8 @@ class StudentController extends Controller
                 ]);
                 $studentLog->save();
                  // login first time message send
-                // $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
-                // $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
+                $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
+                $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
                 if ($msgSent) {
                   array_push($responses, [
                     "payload" => $obj,

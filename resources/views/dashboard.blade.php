@@ -100,10 +100,66 @@
         </div>
         @endif
       </div>
+      <div class="row ">
+        <div class="col-md-4">
+          <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+              <div class="card-icon">
+                <i class="fa fa-mail-bulk"></i>
+              </div>
+              <p class="card-category">All Message</p>
+              <h3 class="card-title">0
+                <small>All Message</small>
+              </h3>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="fa fa-mail-bulk text-warning"></i> All messsages
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+              <div class="card-icon">
+                <i class="fa fa-envelope-open-text"></i>
+              </div>
+              <p class="card-category">Message Delivered</p>
+              <h3 class="card-title">0
+                <small>Message Delivered</small>
+              </h3>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="fa fa-envelope-open-text text-warning"></i> All delivered messsage
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+              <div class="card-icon">
+                <i class="fa fa-envelope"></i>
+              </div>
+              <p class="card-category">Message failed</p>
+              <h3 class="card-title">0
+                <small>Message failed</small>
+              </h3>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="fa fa-envelope text-warning"></i> All failed messsage
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- users statistics end here -->
 
       <!-- charts start here -->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-success">
@@ -153,7 +209,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- charts end here -->
 
 

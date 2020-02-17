@@ -60,6 +60,9 @@ Route::group(['prefix' => 'auth'], function () {
           /****save sent messages ****/
           Route::post('sentMessageLog', 'API\SentMessageController@sentMessageLog');
 
+          /****check user Authentication ****/
+          Route::post('checkAuth', 'API\SchoolController@checkAuth');
+
 
         });
 

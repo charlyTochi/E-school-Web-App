@@ -35,8 +35,8 @@ class TestEmail extends Mailable
 
              return $this->view('testmail', ['data' => $data])
                          ->from($this->data['address'], $this->data['name'])
-                         ->cc($this->data['address'], $this->data['name'])
-                         ->bcc($this->data['address'], $this->data['name'])
+                         // ->cc($this->data['address'], $this->data['name'])
+                         // ->bcc($this->data['address'], $this->data['name'])
                          ->replyTo($this->data['address'], $this->data['name'])
                          ->subject($this->data['subject']);
     }

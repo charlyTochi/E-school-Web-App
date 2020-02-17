@@ -72,7 +72,7 @@
                                 </a>
                                   @csrf
                                   @method('delete')
-                                  <button type="submit" id="delete" class="btn btn-danger btn-link" data-original-title="" title="" >
+                                  <button type="submit" class="btn btn-danger btn-link delete" msg="{{$user->first_name}}" data-original-title="" title="" >
                                       <i class="material-icons">close</i>
                                       <div class="ripple-container"></div>
                                   </button>
@@ -107,7 +107,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>

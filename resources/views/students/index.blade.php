@@ -37,7 +37,7 @@
                           {{ __('Full Name') }}
                       </th>
                       <th>
-                        {{ __('Email') }}
+                        {{ __('Class') }}
                       </th>
                       <th>
                         {{ __('Creation date') }}
@@ -53,7 +53,7 @@
                             {{ $user->first_name. ' '. $user->last_name }}
                           </td>
                           <td>
-                            {{ $user->email }}
+                            {{ $user->class_name }}
                           </td>
                           <td>
                             {{ $user->created_at->format('Y-m-d') }}
@@ -72,7 +72,7 @@
                                     <i class="material-icons">remove_red_eye</i>
                                     <div class="ripple-container"></div>
                                   </a>
-                                  <button type="submit" class="btn btn-danger btn-link" data-original-title="" title="" >
+                                  <button type="submit" class="btn btn-danger btn-link delete" msg="{{$user->first_name}}" data-original-title="" title="" >
                                       <i class="material-icons">close</i>
                                       <div class="ripple-container"></div>
                                   </button>
@@ -107,7 +107,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>

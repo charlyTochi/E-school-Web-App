@@ -48,7 +48,12 @@ class ParentsController extends Controller
      */
     public function create()
     {
-        return view('parents.create');
+      $id = Auth::user()->school_id;
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $data = array(
+        'school_name' => $school_name,
+      );
+        return view('parents.create', ['data'=>$data]);
     }
 
     /**
@@ -107,11 +112,15 @@ class ParentsController extends Controller
      */
     public function edit($id)
     {
+      $school_id = Auth::user()->school_id;
+      $school_name = School::where('id', $school_id)->pluck('school_name')->first();
       // get the user
       $users = Parents::find($id);
-
+      $data = array(
+        'school_name' => $school_name,
+      );
       // show the edit form and pass the user
-      return View('parents.edit', ['user'=> $users]);
+      return View('parents.edit', ['user'=> $users, 'data'=>$data]);
     }
 
     /**
@@ -145,13 +154,13 @@ class ParentsController extends Controller
           $parents->last_name = $request->get('last_name');
           $parents->address = $request->get('address');
           $parents->phone_number = $request->get('phone_number');
-          if($parents->save()){
-            $full_name = $request->first_name. ' '. $request->last_name;
-            $user = User::where('external_table_id', $id)->where('school_id', $parents->school_id)->first();
+          $parents->save()
+              $full_name = $request->first_name. ' '. $request->last_name;
+              $user = User::where('external_table_id', $id)->where('school_id', $parents->school_id)->first();
               $user->name = $full_name;
 
             $user->save();
-          }
+
           // redirect
           return redirect()->route('parents.index')->withStatus('user updated successfully');
       }

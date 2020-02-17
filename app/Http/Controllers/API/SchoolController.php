@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Traits\Utilities;
 use App\School;
+use App\Student;
 use App\User;
 
 use Illuminate\Support\Str;
@@ -75,6 +76,8 @@ class SchoolController extends Controller
 
 
         $user = Auth::User();
+        $id = Auth::id();
+        $all_student = Student::where('school_id', $id)->get();
         $success = 'Login Successfull';
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
@@ -83,7 +86,25 @@ class SchoolController extends Controller
             'access_token' => $tokenResult->accessToken,
             'message' => $success,
             'user' => $user,
-            'token_type' => 'Bearer'
+            'token_type' => 'Bearer',
+            'students' => $all_student
         ], 200);
     }
+
+  public function checkAuth(){
+    // dd(Auth::user());
+    if(Auth::user()){
+      return response()->json([
+          'response' => 200,
+          'message' => "Authentication successful",
+          'auth' => true,
+      ], 200);
+    }else {
+      return response()->json([
+        'response' => 500,
+          'message' => "Authentication failed",
+          'auth' => false,
+      ], 500);
+    }
+  }
 }

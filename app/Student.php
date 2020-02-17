@@ -12,7 +12,7 @@ class Student extends Model
    * @var array
    */
   protected $fillable = [
-      'firstname', 'lastname', 'father_id', 'mother_id', 'class_name','card_code','sex', 'date_of_birth', 'nationality', 'religion', 'state_of_origin', 'local_govt' , 'home_address', 'primary_contact_id', 'primary_contact_rel', 'secondary_contact_id', 'secondary_contact_rel','school_id'
+      'first_name', 'last_name', 'father_id', 'mother_id', 'class_name','card_code','sex', 'date_of_birth', 'nationality', 'religion', 'state_of_origin', 'local_govt' , 'address', 'primary_contact_id', 'primary_contact_rel', 'secondary_contact_id', 'secondary_contact_rel','school_id'
   ];
 
     // get student details
