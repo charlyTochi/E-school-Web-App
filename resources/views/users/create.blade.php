@@ -11,7 +11,7 @@
 
             <div class="card ">
               <div class="card-header card-header-warning">
-                <h4 class="card-title">{{ __('Add User') }}</h4>
+                <h4 class="card-title">{{ __('Add School') }}</h4>
                 <p class="card-category"></p>
               </div>
               <div class="card-body ">
@@ -107,7 +107,7 @@
                 </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
-                <button type="submit" class="btn btn-warning">{{ __('Add User') }}</button>
+                <button type="submit" class="btn btn-warning">{{ __('Add School') }}</button>
               </div>
             </div>
           </form>

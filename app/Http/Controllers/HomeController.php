@@ -45,8 +45,6 @@ class HomeController extends Controller
           'parents' => $parents,
           'student' => $student
         );
-        // $datas = $data['school'];
-        // dd($datas);
           return view('dashboard', ['data'=>$data]);
       }elseif ($cat_code == $this->userRole('ADMIN')) {
 
@@ -54,7 +52,6 @@ class HomeController extends Controller
         $school_name = School::where('id', $id)->pluck('school_name')->first();
         $school = User::where('school_id', $id)->get()->count();
         $student = Student::where('school_id', $id)->get()->count();
-        // dd($student);
         $teacher = Teacher::where('school_id', $id)->get()->count();
         $parents = Parents::where('school_id', $id)->get()->count();
 
@@ -78,6 +75,7 @@ class HomeController extends Controller
           'school_name' => $school_name,
           'children' => $children
         );
+        return view('parent', ['data' => $data]);
       }else {
         $id = Auth::user()->school_id;
         $uid = Auth::user()->external_table_id;

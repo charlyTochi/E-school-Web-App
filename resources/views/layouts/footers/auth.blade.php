@@ -29,7 +29,7 @@
       <script>
         document.write(new Date().getFullYear())
       </script>, made with <i class="material-icons">favorite</i>
-      <a href="https://www.e-school.com" target="_blank">Powered by Efull Technology Nig. Ltd</a>  for the best solution in tech.
+      <a class="text-warning" href="https://www.e-school.com" target="_blank">Powered by Efull Technology Nig. Ltd</a>  for the best solution in tech.
     </div>
   </div>
 </footer>

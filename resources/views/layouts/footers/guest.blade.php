@@ -1,5 +1,5 @@
-<footer class="footer" style="max-height: 100px">
-    <div class="container">
+<footer class="footer" >
+    <div class="container" style="max-height: 80px; font-size:20px">
         <!-- <nav class="float-left">
         <ul>
             <li>
@@ -24,12 +24,12 @@
             </li>
         </ul>
         </nav> -->
-        <div class="copyright text-center text-white">
+        <div class="copyright text-center text-white" >
         &copy;
         <script>
             document.write(new Date().getFullYear())
         </script>, made with <i class="material-icons">favorite</i> by
-        <a href="https://www.e-school.com" target="_blank">Powered by Efull Technology Nig. Ltd</a>  for the best solution in tech.
+        <a class="text-warning" href="https://www.e-school.com" target="_blank">Powered by Efull Technology Nig. Ltd</a>  for the best solution in tech.
         </div>
     </div>
 </footer>

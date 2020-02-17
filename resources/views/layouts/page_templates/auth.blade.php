@@ -14,5 +14,5 @@
     @yield('content')
     @include('layouts.footers.auth')
   <!-- </div> -->
-</div>
+  </div>
 @endif

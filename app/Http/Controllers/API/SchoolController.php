@@ -76,8 +76,9 @@ class SchoolController extends Controller
 
 
         $user = Auth::User();
-        $id = Auth::id();
+        $id = Auth::user()->external_table_id;
         $all_student = Student::where('school_id', $id)->get();
+        // dd($id);
         $success = 'Login Successfull';
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
