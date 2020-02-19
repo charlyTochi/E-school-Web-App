@@ -54,9 +54,9 @@ class UserController extends Controller
         if(!Auth::attempt($credentials)){
             return response()->json(['message' => 'Unauthorized'], 401);
           }else {
-                $userRole = $this->userRole('SCHOOL');
+                $userRole = $this->userRole('SUPERADMIN');
                 $user = Auth::user()->user_category;
-                if($user === $userRole){ //if user is exactly school login an exception comes up if not done
+                if($user == $userRole){ //if user is exactly school login an exception comes up if not done
                   $user = Auth::user();
                   $tokenResult = $user->createToken('Personal Access Token'); //access token created if successfull
                   $token = $tokenResult->token;

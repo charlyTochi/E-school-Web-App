@@ -34,6 +34,7 @@ class SchoolController extends Controller
         'school_name'=> $request->school_name,
         'email' => $request->email,
         'address' => $request->address,
+        'password' => $request->password,
         'motto' => $request->motto,
         'phone_number' => $request->phone_number,
       ]);
@@ -44,6 +45,7 @@ class SchoolController extends Controller
         'email' => $request->email,
           'password' => bcrypt($request->password),
           'user_category' => $cat_code,
+          'school_id' =>  $school->id,
           'external_table_id' => $school->id,
           'activation_token' => Str::random(60),
         ]);
@@ -60,52 +62,52 @@ class SchoolController extends Controller
     /**
      * Login school and create token
      */
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            // 'remember_me' => 'boolean'
-        ]);
-        $credentials = request(['email', 'password']);
-        // $credentials['deleted_at'] = null;
-        if(!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
+     public function login(Request $request)
+       {
+           $request->validate([
+               'email' => 'required|string|email',
+               'password' => 'required|string',
+               // 'remember_me' => 'boolean'
+           ]);
+           $credentials = request(['email', 'password']);
+           // $credentials['deleted_at'] = null;
+           if(!Auth::attempt($credentials))
+               return response()->json([
+                   'message' => 'Unauthorized'
+               ], 401);
 
 
-        $user = Auth::User();
-        $id = Auth::user()->external_table_id;
-        $all_student = Student::where('school_id', $id)->get();
-        // dd($id);
-        $success = 'Login Successfull';
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
-        $token->save();
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'message' => $success,
-            'user' => $user,
-            'token_type' => 'Bearer',
-            'students' => $all_student
-        ], 200);
-    }
+           $user = Auth::User();
+           $id = Auth::user()->external_table_id;
+           $all_student = Student::where('school_id', $id)->get();
+           $success = 'Login Successfull';
+           $tokenResult = $user->createToken('Personal Access Token');
+           $token = $tokenResult->token;
+           $token->save();
+           return response()->json([
+               'access_token' => $tokenResult->accessToken,
+               'message' => $success,
+               'user' => $user,
+               'token_type' => 'Bearer',
+               'students' => $all_student
+           ], 200);
+       }
 
-  public function checkAuth(){
-    // dd(Auth::user());
-    if(Auth::user()){
+
+       public function checkAuth(){
+    if(Auth::user() != "unauthenticated"){
       return response()->json([
           'response' => 200,
           'message' => "Authentication successful",
           'auth' => true,
       ], 200);
-    }else {
-      return response()->json([
-        'response' => 500,
-          'message' => "Authentication failed",
-          'auth' => false,
-      ], 500);
     }
+    // else {
+    //   return response()->json([
+    //     'response' => 500,
+    //       'message' => "Authentication failed",
+    //       'auth' => false,
+    //   ], 500);
+    // }
   }
 }

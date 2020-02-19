@@ -41,7 +41,7 @@ class StudentController extends Controller
           if($student_school_name_query){
           $student_school = $student_school_name_query->school_name;//this gets the name of the school in accordance with the details of the relationship of the school id of in the student database
           $school_mail = $student_school_name_query->email;
-          $student_name = $student->lastname." ".$student->firstname;//this gets the first and lastname of the student when card is tapped
+          $student_name = $student->last_name." ".$student->first_name;//this gets the first and lastname of the student when card is tapped
           $data = $this->getParentData($student->primary_contact_id, $student->secondary_contact_id);
 
           $phone_number = $data['phone_number'];
@@ -81,8 +81,9 @@ class StudentController extends Controller
                   ]);
                   $studentLog->save();
                   // logout message send
-                    $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
-                  $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
+                  //   $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
+                  // $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
+                  // dd($data);
                   if ($msgSent) {
                     array_push($responses, [
                       "payload" => $obj,
@@ -118,8 +119,9 @@ class StudentController extends Controller
                   $studentLog->save();
                   // login message send
                   // get the sstudent details that would be used to send smsSender
-                    $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
-                  $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
+                  //   $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
+                  // $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
+                  // dd($data);
                   if ($msgSent) {
                     array_push($responses, [
                       "payload" => $obj,
@@ -149,8 +151,9 @@ class StudentController extends Controller
                 ]);
                 $studentLog->save();
                  // login first time message send
-                $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
-                $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
+                // $data = ['message' => $this->message($log, $student_school, $student_name, $timestamp), 'subject'=> $subject, 'address'=> $addressFrom, 'name' => $name, 'parent_name' => $parent_name];
+                // $msgSent = Mail::to($addressTo)->send(new TestEmail($data));
+                // dd($data);
                 if ($msgSent) {
                   array_push($responses, [
                     "payload" => $obj,
@@ -167,7 +170,7 @@ class StudentController extends Controller
             array_push($responses, [
               "payload" => $obj,
               "response" => "500",
-              "error"=> $student->firstname." Does not belong to ". $school->school_name,
+              "error"=> $student->firstname." Does not belong to ". $student_school,
             ]);
           }
         }else{
@@ -196,7 +199,7 @@ public function getParentData($pri_contact_id, $sec_contact_id){
     if($parent){
       $phone_number = $parent->phone_number;
       $email = $parent->email;
-      $parent_name = $parent->first_name. $parent->last_name;
+      $parent_name = $parent->first_name .' ' . $parent->last_name;
       $data = array('phone_number' => $phone_number, 'email' => $email, 'parent_name'=> $parent_name);
     }else {
       $data = null;
@@ -204,11 +207,11 @@ public function getParentData($pri_contact_id, $sec_contact_id){
     return $data;
 
   }else{
-    $parent = Parents::find($sec_contact_id);//check if the condition is not met ...that should be accounted for
+    $parent = Parents::where('id', $sec_contact_id)->first();//check if the condition is not met ...that should be accounted for
     if ($parent) {
       $phone_number = $parent->phone_number;
       $email = $parent->email;
-      $parent_name = $parent->first_name.$parent->last_name;
+      $parent_name = $parent->first_name .' ' . $parent->last_name;
       $data = array('phone_number' => $phone_number, 'email' => $email, 'parent_name'=> $parent_name);
     }else{
       $data = null;

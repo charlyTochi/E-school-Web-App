@@ -57,10 +57,8 @@ Route::group(['prefix' => 'auth'], function () {
           /****fetch card details of students****/
           Route::post('saveStudentLog', 'API\StudentController@saveStudentLog');
 
-          /****save sent messages ****/
           Route::post('sentMessageLog', 'API\SentMessageController@sentMessageLog');
 
-          /****check user Authentication ****/
           Route::post('checkAuth', 'API\SchoolController@checkAuth');
 
 

@@ -1,5 +1,5 @@
 <footer class="footer">
-  <div class="container-fluid">
+  <div class="container-fluid" style="max-height: 10px !important; font-size:20px">
     <!-- <nav class="float-left">
       <ul>
         <li>
