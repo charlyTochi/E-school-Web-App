@@ -69,6 +69,24 @@
           <p>{{ __('Messages') }}</p>
         </a>
       </li>
+      <li class="nav-item {{ ($activePage == 'class' || $activePage == 'class') ? ' active' : '' }}">
+        <a class="nav-link" data-toggle="collapse" href="#laravelExample1" aria-expanded="true">
+          <i class="fa fa-book"></i>
+          <p>{{ __('Accademic')}}
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse show" id="laravelExample1">
+          <ul class="nav">
+            <li class="nav-item{{ $activePage == 'class' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('classes.index') }}">
+                <i class="material-icons">person</i>
+                <span class="sidebar-normal">{{ __('Class') }} </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
     </ul>
   </div>
 </div>

@@ -108,7 +108,7 @@
                 <i class="fa fa-mail-bulk"></i>
               </div>
               <p class="card-category">All Message</p>
-              <h3 class="card-title">0
+              <h3 class="card-title">{{number_format($data['student'])}} <br>
                 <small>All Message</small>
               </h3>
             </div>

@@ -82,6 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('student', 'StudentController', ['except' => ['show']]);
     Route::resource('teacher', 'TeacherController', ['except' => ['show']]);
     Route::resource('message', 'MessageController', ['except' => ['show']]);
+    Route::resource('classes', 'ClassController', ['except' => ['show']]);
   // });
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

@@ -1,6 +1,7 @@
 @extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'register', 'title' => __('Material Dashboard')])
 
 @section('content')
+@if($auth == 'efulltechadmin@2020')
 <div class="container" style="height: auto;">
   <div class="row align-items-center">
     <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
@@ -10,7 +11,7 @@
         <div class="card card-login card-hidden mb-3">
           <div class="card-header card-header-warning text-center">
             <h4 class="card-title"><strong>{{ __('Register') }}</strong></h4>
-            <div class="social-line">
+            <!-- <div class="social-line">
               <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
                 <i class="fa fa-facebook-square"></i>
               </a>
@@ -20,7 +21,7 @@
               <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
                 <i class="fa fa-google-plus"></i>
               </a>
-            </div>
+            </div> -->
           </div>
           <div class="card-body ">
             <p class="card-description text-center">{{ __('Or Be Classical') }}</p>
@@ -102,4 +103,50 @@
     </div>
   </div>
 </div>
+@else 
+<div class="container" style="height: auto;">
+  <div class="row align-items-center">
+    <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+        <div class="card card-login card-hidden mb-3">
+          <div class="card-body ">
+            <p class="card-description text-center">{{ __('Are you Efull Staff?') }}</p>
+            <div class="card-footer justify-content-center">
+              <button  class="btn btn-warning btn-link btn-lg" data-toggle="modal" data-target="#exampleModalLong">{{ __('Go to register') }}</button>
+            </div>
+          </div>          
+        </div>
+    </div>
+  </div>
+</div>
+@endif
+
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form" method="" action="{{ route('register') }}">
+              <div class="card-body">
+                  <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                              <i class="material-icons">lock_outline</i>
+                          </span>
+                          <input type="password" name="code" class="form-control" placeholder="passcode">
+                      </div>
+                  </div>
+              </div>
+              <div class="card-footer justify-content-center">
+                <button type="submit" class="btn btn-warning btn-link btn-lg">{{ __('Create account') }}</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection

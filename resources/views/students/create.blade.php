@@ -24,7 +24,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('First Name') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('first_name') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" id="input-name" type="text" placeholder="{{ __('Last Name') }}" value="{{ old('first_name') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" id="input-name" type="text" placeholder="{{ __('First Name') }}" value="{{ old('first_name') }}" required="true" aria-required="true"/>
                       @if ($errors->has('first_name'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('first_name') }}</span>
                       @endif
@@ -89,23 +89,11 @@
                   <label class="col-sm-2 col-form-label">{{ __('Class') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('class_name') ? ' has-danger' : '' }}">
-                      <!-- <input class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name" id="input-class_name" type="text" placeholder="{{ __('Class Name') }}" value="{{ old('class_name') }}" required="true" aria-required="true"/> -->
                       <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name"  data-style="btn btn-link" id="class_name" value="{{ old('class_name') }}" required>
                         <option>Select Class</option>
-                        <option>Creche</option>
-                        <option>Nursery 1</option>
-                        <option>Nursery 2</option>
-                        <option>Primary 1</option>
-                        <option>Primary 2</option>
-                        <option>Primary 3</option>
-                        <option>Primary 4</option>
-                        <option>Primary 5</option>
-                        <option>Jss 1</option>
-                        <option>Jss 2</option>
-                        <option>Jss 3</option>
-                        <option>SS 1</option>
-                        <option>SS 2</option>
-                        <option>SS 3</option>
+                        @foreach($data['classes'] as $klass)
+                          <option value="{{$mother['id']}}">{{$klass['class']}}</option>
+                        @endforeach
                       </select>
                       @if ($errors->has('class_name'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('class_name') }}</span>

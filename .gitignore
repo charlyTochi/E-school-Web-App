@@ -10,7 +10,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-<<<<<<< HEAD
-=======
 "sendgrid.env" 
->>>>>>> c660153717f21a5ac5cfbd62004d2388f2c32cd3

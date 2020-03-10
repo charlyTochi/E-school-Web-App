@@ -8,6 +8,7 @@ use App\School;
 use App\Teacher;
 use App\Parents;
 use App\Student;
+use App\SentMessage;
 use App\User;
 
 class HomeController extends Controller
@@ -37,13 +38,15 @@ class HomeController extends Controller
         $student = Student::all()->count();
         $teacher = Teacher::all()->count();
         $parents = Parents::all()->count();
+        $parents = SentMessage::all()->count();
         $total = User::all()->count();
         $data = array(
           'school' => $school,
           'teacher' => $teacher,
           'total' => $total,
           'parents' => $parents,
-          'student' => $student
+          'student' => $student,
+          'message_sent' => $message_sent
         );
           return view('dashboard', ['data'=>$data]);
       }elseif ($cat_code == $this->userRole('ADMIN')) {
@@ -54,6 +57,7 @@ class HomeController extends Controller
         $student = Student::where('school_id', $id)->get()->count();
         $teacher = Teacher::where('school_id', $id)->get()->count();
         $parents = Parents::where('school_id', $id)->get()->count();
+        $message_sent = SentMessage::where('school_id', $id)->get()->count();
 
         // $request->session()->put('school_name', $school_name);
         $data = array(
@@ -61,7 +65,8 @@ class HomeController extends Controller
           'school' => $school,
           'teacher' => $teacher,
           'parents' => $parents,
-          'student' => $student
+          'student' => $student,
+          'message_sent' => $message_sent
         );
         return view('dashboard', ['data'=>$data]);
 

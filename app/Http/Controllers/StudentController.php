@@ -7,6 +7,7 @@ use App\User;
 use App\School;
 use App\Parents;
 use App\Teacher;
+use App\Classes;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -55,11 +56,13 @@ class StudentController extends Controller
       $father = Parents::where('school_id',  $school_id)->where('sex', 'male')->get()->toArray();
       $mother = Parents::where('school_id',  $school_id)->where('sex', 'female')->get()->toArray();
       $parents = Parents::where('school_id',  $school_id)->get()->toArray();
+      $classes = Classes::where('school_id',  $school_id)->get()->toArray();
       $data = array(
         'fathers' => $father,
         'mothers' => $mother,
         'parents' => $parents,
         'school_name' => $school_name,
+        'classes' => $classes,
        );
         return view('students.create', ['data' => $data]);
     }

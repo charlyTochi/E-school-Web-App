@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\SentMessage;
+use Auth;
 
 class SentMessageController extends Controller
 {
@@ -19,6 +20,7 @@ class SentMessageController extends Controller
         $student_card_code = $obj['student_card_code'];
         $card_id = $obj['card_id'];
         $message_sent = $obj['message_sent'];
+        $school_id = Auth::user()->school_id;
         switch ($message_sent) {
           case 'true':
             $sent = true;
@@ -35,6 +37,7 @@ class SentMessageController extends Controller
           $sentMessage->student_card_code = $student_card_code;
           $sentMessage->card_id = $card_id;
           $sentMessage->message_sent = $sent;
+          $sentMessage->school_id = $school_id;
 
         if($sentMessage->save()){
           array_push($responses, [

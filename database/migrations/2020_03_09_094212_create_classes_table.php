@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSentMessagesTable extends Migration
+class CreateClassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateSentMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sent_messages', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('message_id');
-            $table->string('message_isdn');
-            $table->string('message_content');
-            $table->string('student_card_code');
-            $table->string('message_sent');
+            $table->string('class');
             $table->string('school_id');
-            $table->string('card_id');
+            $table->string('department')->default(null);
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ class CreateSentMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sent_messages');
+        Schema::dropIfExists('classes');
     }
 }
