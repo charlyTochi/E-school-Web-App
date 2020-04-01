@@ -8,6 +8,7 @@ use App\School;
 use App\Parents;
 use App\Teacher;
 use App\Classes;
+use Image;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -32,14 +33,21 @@ class StudentController extends Controller
           return view('students.index', ['users' => $model->paginate(15)]);
 
       } else {
+        $student = School::find(Auth::user()->school_id)->students;
         $id = Auth::user()->school_id;
         $school_name = School::where('id', $id)->pluck('school_name')->first();
+        // $arr = array();
+        // foreach($student as $key){
+        //   $parent_contact = Parents::Where('id', $key['primary_contact_id'])->pluck('phone_number')->first();
+        //   array_push($arr, [$key['id']=> $parent_contact]);
+        // }
+
         $data = array(
           'school_name' => $school_name,
+
         );
-          $student = School::find(Auth::user()->school_id)->students;
-          // dd($student);
-          return view('students.index', ['users' => $student, 'data'=>$data]);
+        // dd($arr);
+          return view('students.index', ['users' => $student, 'data'=>$data ]);
 
       }
     }
@@ -79,7 +87,7 @@ class StudentController extends Controller
       $request->validate([
           'first_name' => 'required|string',
           'sex' => 'required|string',
-          // 'email' => 'required|string|email|unique:users',
+          'email' => 'required|string|email|unique:users',
           'last_name' => 'required|string',
           'address' => 'required|string',
           'father_id' => 'required|string',
@@ -95,11 +103,14 @@ class StudentController extends Controller
           'secondary_contact_id' => 'required|string',
           'secondary_contact_rel' => 'required|string',
           'local_govt' => 'required|string',
+          'password' => 'required|string|confirmed'
+          // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       ]);
 
-      $user = new Student([
+      $student = new Student([
         'first_name'=> $request->first_name,
         'last_name'=> $request->last_name,
+        'email'=> $request->email,
         'father_id'=> $request->father_id,
         'mother_id'=> $request->mother_id,
         'school_id' =>Auth::user()->school_id,
@@ -117,9 +128,25 @@ class StudentController extends Controller
         'secondary_contact_rel'=> $request->secondary_contact_rel,
         'sex'=> $request->sex,
       ]);
-        $user->save();
-
+      if($request->hasFile('profile_image')){
+        $image = $request->file('profile_image');
+        $filename = time(). $request->card_code. '.' . $image->getClientOriginalExtension();
+        $destinationPath = 'public/image/'; // upload path
+        $image->move($destinationPath, $filename);
+        $student->profile_image = $filename;  
+      }
+      $student->save();
+      $cat_code = $this->userRole('STUDENT');
         $full_name = $request->first_name. ' '. $request->last_name;
+        $user = new User([
+          'name'=> $full_name,
+          'password' => Hash::make($request->get('password')),
+          'external_table_id' => $student->id,
+          'email' => $request->email,
+          'user_category' => $cat_code,
+          'school_id' =>Auth::user()->school_id,
+        ]);
+        $user->save();
 
         return redirect()->route('student.index')->withStatus(__($full_name.' successfully registered in your school.'));
     }
@@ -134,13 +161,29 @@ class StudentController extends Controller
     {
       $school_id = Auth::user()->school_id;
       $school_name = School::where('id', $school_id)->pluck('school_name')->first();
+      $classes = Classes::where('school_id',  $school_id)->get()->toArray();
       // get the user
       $users = Student::find($id);
       $data = array(
         'school_name' => $school_name,
+        'classes' => $classes
        );
       // show the edit form and pass the user
       return View('students.edit', ['user'=> $users, 'data' => $data]);
+    }
+
+    public function details($id){
+      $school_id = Auth::user()->school_id;
+      $school_name = School::where('id', $school_id)->pluck('school_name')->first();
+      $classes = Classes::where('school_id',  $school_id)->get()->toArray();
+      // get the user
+      $users = Student::find($id);
+      $data = array(
+        'school_name' => $school_name,
+        'classes' => $classes
+       );
+      // show the edit form and pass the user
+      return View('students.details', ['user'=> $users, 'data' => $data]);
     }
 
     /**
@@ -182,6 +225,13 @@ class StudentController extends Controller
           $student->address =$request->get('address');
           $student->primary_contact_rel =$request->get('primary_contact_rel');
           $student->secondary_contact_rel =$request->get('secondary_contact_rel');
+          if($request->hasFile('profile_image')){
+            $image = $request->file('profile_image');
+            $filename = time(). $request->get('card_code'). '.' . $image->getClientOriginalExtension();
+            $destinationPath = 'public/image/'; // upload path
+            $image->move($destinationPath, $filename);
+            $student->profile_image = $filename;  
+          }
           $student->save();
 
         }

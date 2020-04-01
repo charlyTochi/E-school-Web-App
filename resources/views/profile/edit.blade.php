@@ -85,7 +85,7 @@
                   <label class="col-sm-2 col-form-label" for="input-current-password">{{ __('Current Password') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}" input type="password" name="old_password" id="input-current-password" placeholder="{{ __('Current Password') }}" value="" required />
+                      <input class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}" input type="password" name="old_password" id="input-current-password" placeholder="{{ __('Current Password') }}" value="{{ old('password', auth()->user()->password) }}" required />
                       @if ($errors->has('old_password'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('old_password') }}</span>
                       @endif

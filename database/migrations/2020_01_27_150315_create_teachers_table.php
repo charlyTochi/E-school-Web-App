@@ -23,6 +23,7 @@ class CreateTeachersTable extends Migration
           $table->string('address');
           $table->string('phone_number');
           $table->boolean('active')->default('true');
+          $table->string('profile_image')->default(null);
           $table->timestamps();
         });
     }

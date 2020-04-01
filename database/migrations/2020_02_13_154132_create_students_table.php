@@ -17,6 +17,8 @@ class CreateStudentsTable extends Migration
           $table->bigIncrements('id');
           $table->string('firstname');
           $table->string('lastname');
+          $table->string('email');
+          $table->string('password');
           $table->string('sex');
           $table->string('father_id');
           $table->string('mother_id');
@@ -33,6 +35,7 @@ class CreateStudentsTable extends Migration
           $table->string('primary_contact_rel');
           $table->string('secondary_contact_id');
           $table->string('secondary_contact_rel');
+          $table->string('profile_image')->default(null);
           $table->timestamps();
         });
     }

@@ -37,6 +37,9 @@
                           {{ __('Name') }}
                       </th>
                       <th>
+                          {{ __('Picture') }}
+                      </th>
+                      <th>
                         {{ __('Email') }}
                       </th>
                       <th>
@@ -51,6 +54,9 @@
                         <tr>
                           <td>
                             {{ $user->first_name .' '. $user->last_name }}
+                          </td>
+                          <td>
+                            <img class="image" id="image" src="{{ asset('public/image')}}/<?php echo $user->profile_image ? $user->profile_image : "defualt.png"?>" width="50" height="50">
                           </td>
                           <td>
                             {{ $user->email }}

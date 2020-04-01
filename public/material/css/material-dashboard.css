@@ -159,7 +159,7 @@ sup {
 }
 
 a {
-  color: #9c27b0;
+  color: #e1b676;
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
@@ -462,7 +462,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #212529;
+  /* color: #212529; */
   text-align: left;
   background-color: #fafafa;
 }
@@ -11358,7 +11358,7 @@ fieldset[disabled] .is-focused .switch label:focus {
 
 .form-control,
 .is-focused .form-control {
-  background-image: linear-gradient(to top, #9c27b0 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
+  background-image: linear-gradient(to top, #fd9a13 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
 }
 
 .form-control:invalid {
@@ -13031,7 +13031,7 @@ fieldset[disabled] .form-group .form-control {
   margin-bottom: 20px;
   height: auto !important;
   color: #fff;
-  background-color: #5f3104  !important;
+  background-color: #  !important;
   box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15);
 }
 
@@ -14137,7 +14137,7 @@ h2.title {
 .dropdown-menu a:focus,
 .dropdown-menu a:active {
   box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4);
-  background-color: #9c27b0;
+  background-color: #eabd7d;
   color: #FFFFFF;
 }
 
@@ -14493,8 +14493,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   border-left: 4px solid transparent;
 }
 
-.sidebar[data-background-color="black"] {
-  background-color: #5f3104;
+.sidebar[data-background-color="white"] {
+  background-color: #d6d6c3;
 }
 
 .sidebar .sidebar-wrapper {
@@ -14879,7 +14879,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   position: relative;
   float: right;
   width: calc(100% - 260px);
-  transition: 0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1);
+  transition: 0.33s, ease-out;
 }
 
 .main-panel>.content {
@@ -16286,8 +16286,8 @@ thead.thead-inverse th,
 }
 
 body {
-  background-image: linear-gradient(to top, #7b5b40, #0b042b);
-  color: #3C4858;
+  background-image: linear-gradient(to top, #d4dacd, #f3b663);
+  color: #b0b6bd;
   font-weight: 300;
 }
 

@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('student.update', $user) }}" autocomplete="off" class="form-horizontal">
+          <form method="post" action="{{ route('student.update', $user) }}" autocomplete="off" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             @method('put')
 
@@ -21,12 +21,22 @@
                   </div>
                 </div>
                 <div class="row">
+                  <div class="input-group col-md-4">
+                    <div class="custom-file">
+                      <input type="file" class="form-control{{ $errors->has('profile_image') ? ' is-invalid' : '' }}" name="profile_image" id="inputGroupFile04" value="{{ old('profile_image', $user->profile_image) }}" aria-describedby="inputGroupFileAddon04" accept=".png, .jpg, .jpeg">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <img class="image" id="image" src="{{ asset('public/image')}}/<?php echo $user->profile_image ? $user->profile_image : "defualt.png"?>" width="100" height="100">
+                  </div>
+                </div>
+                <div class="row">
                   <label class="col-sm-2 col-form-label">{{ __('First Name') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" id="input-name" type="text" placeholder="{{ __('Name') }}" value="{{ old('first_name', $user->first_name) }}" required="true" aria-required="true"/>
-                      @if ($errors->has('name'))
-                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
+                    <div class="form-group{{ $errors->has('first_name') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" id="input-name" type="text" placeholder="{{ __('First Name') }}" value="{{ old('first_name', $user->first_name) }}" required="true" aria-required="true"/>
+                      @if ($errors->has('first_name'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('first_name') }}</span>
                       @endif
                     </div>
                   </div>
@@ -46,7 +56,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Card Number') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('card_code') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('card_code') ? ' is-invalid' : '' }}" name="card_code" id="input-card_code" type="text" placeholder="{{ __('Card Number') }}" value="{{ old('card_code', $user->card_code) }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('card_code') ? ' is-invalid' : '' }}" name="card_code" id="input-card_code" type="text" placeholder="{{ __('Card Number') }}" value="{{ old('card_code', $user->card_code) }}" maxlength="11" required="true" aria-required="true"/>
                       @if ($errors->has('card_code'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('card_code') }}</span>
                       @endif
@@ -60,20 +70,9 @@
                       <!-- <input class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name" id="input-class_name" type="text" placeholder="{{ __('Class Name') }}" value="{{ old('class_name') }}" required="true" aria-required="true"/> -->
                       <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name"  data-style="btn btn-link" id="class_name" value="{{ old('class_name')}}" required>
                         <option>{{$user->class_name}}</option>
-                        <option>Creche</option>
-                        <option>Nursery 1</option>
-                        <option>Nursery 2</option>
-                        <option>Primary 1</option>
-                        <option>Primary 2</option>
-                        <option>Primary 3</option>
-                        <option>Primary 4</option>
-                        <option>Primary 5</option>
-                        <option>Jss 1</option>
-                        <option>Jss 2</option>
-                        <option>Jss 3</option>
-                        <option>SS 1</option>
-                        <option>SS 2</option>
-                        <option>SS 3</option>
+                        @foreach($data['classes'] as $klass)
+                          <option >{{$klass['class']}}</option>
+                        @endforeach
                       </select>
                       @if ($errors->has('class_name'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('class_name') }}</span>

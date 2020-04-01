@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('teacher.update', $user) }}" autocomplete="off" class="form-horizontal">
+          <form method="post" action="{{ route('teacher.update', $user) }}" autocomplete="off" class="form-horizontal"  enctype="multipart/form-data">
             @csrf
             @method('put')
 
@@ -18,6 +18,16 @@
                 <div class="row">
                   <div class="col-md-12 text-right">
                       <a href="{{ route('teacher.index') }}" class="btn btn-sm btn-warning">{{ __('Back to list') }}</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-group col-md-4">
+                    <div class="custom-file">
+                      <input type="file" class="form-control{{ $errors->has('profile_image') ? ' is-invalid' : '' }}" name="profile_image" id="inputGroupFile04" value="{{ old('profile_image', $user->profile_image) }}" aria-describedby="inputGroupFileAddon04" accept=".png, .jpg, .jpeg">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <img class="image" id="image" src="{{ asset('public/image')}}/<?php echo $user->profile_image ? $user->profile_image : "defualt.png"?>" width="100" height="100">
                   </div>
                 </div>
                 <div class="row">

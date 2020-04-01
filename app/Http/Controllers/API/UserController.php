@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Notifications\SignupActivate;
 use App\User;
+use App\School;
 use App\Traits\Utilities;
 use Auth;
 use Illuminate\Support\Str;
@@ -49,23 +50,25 @@ class UserController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
+            'school_name' => 'required|string',
         ]);
         $credentials = request(['email', 'password']);//validating the inputed email and password field
         if(!Auth::attempt($credentials)){
             return response()->json(['message' => 'Unauthorized'], 401);
           }else {
-                $userRole = $this->userRole('SUPERADMIN');
-                $user = Auth::user()->user_category;
-                if($user == $userRole){ //if user is exactly school login an exception comes up if not done
+                  $user_data = Auth::User();
+                  $school_data = School::Where('School_name', $request->school_name)->first();
                   $user = Auth::user();
                   $tokenResult = $user->createToken('Personal Access Token'); //access token created if successfull
                   $token = $tokenResult->token;
                   $token->save();
-                  return response()->json(['access_token' => $tokenResult->accessToken,'token_type' => 'Bearer'
-                  ]);
-                }else{
-                  return response()->json(['error'=>'Unauthorised', 'message' => 'Account is not permitted'], 401);
-                }
+                  return response()->json([
+                      'access_token' => $tokenResult->accessToken,
+                      'token_type' => 'Bearer', 
+                      'school_data' => $school_data,
+                      'user_data' => $user_data,
+                      'message' => 'authorized'
+                  ], 200);
           }
     }
 
@@ -81,6 +84,52 @@ class UserController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
+
+/**
+ * update user profile
+ */
+
+ public function updateProfile($id, Request $request){
+    $rules = array(
+        'title' => 'required|string',
+        'first_name' => 'required|string',
+        'last_name' => 'required|string',
+        'address' => 'required|string',
+        'phone_number' => 'required|string'
+      );
+      $validator = Validator::make($request->all(), $rules);
+
+      // process the login
+      if ($validator->fails()) {
+        return response()->json([
+            'message' => 'invalid input'
+        ], 401);
+        
+      } else {
+          // store
+          $user = User::find($id);
+
+          
+          if($user->external_table_id == 1){
+            $cat_code = $this->userRole('PARENT');
+          }
+          $parents->title = $request->get('title');
+          $parents->first_name = $request->get('first_name');
+          $parents->last_name = $request->get('last_name');
+          $parents->address = $request->get('address');
+          $parents->phone_number = $request->get('phone_number');
+            $parents->save();
+              $full_name = $request->first_name. ' '. $request->last_name;
+              $user = User::where('external_table_id', $id)->where('school_id', $parents->school_id)->first();
+              $user->name = $full_name;
+          
+            $user->save();
+          // redirect
+          return response()->json([
+            'message' => 'invalid input'
+        ], 200);
+      }
+ }
 
     /**
      * Get the authenticated User

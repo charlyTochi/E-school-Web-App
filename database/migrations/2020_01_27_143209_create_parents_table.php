@@ -24,6 +24,7 @@ class CreateParentsTable extends Migration
             $table->string('email');
             $table->string('phone_number');
             $table->boolean('active')->default('true');
+            $table->string('profile_image')->default(null);
             $table->timestamps();
         });
     }

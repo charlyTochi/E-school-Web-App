@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-absolute fixed-top ">
   <div class="container-fluid">
     <div class="navbar-wrapper">
-      <a class="navbar-brand" href="#">{{$data['school_name'] ?? 'E-School MGT'}}</a>
+      <a class="navbar-brand" href="#"><b>{{$data['school_name'] ?? 'E-School MGT'}}</b></a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
     <span class="sr-only">Toggle navigation</span>

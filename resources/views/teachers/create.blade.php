@@ -56,27 +56,15 @@
                 <div class="row">
                   <label class="col-sm-2 col-form-label">{{ __('Class Assigned') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('class_assigned') ? ' has-danger' : '' }}">
-                      <!-- <input class="form-control{{ $errors->has('class_assigned') ? ' is-invalid' : '' }}" name="class_assigned" id="input-class_assigned" type="text" placeholder="{{ __('Class Assigned') }}" value="{{ old('class_assigned') }}" required="true" aria-required="true"/> -->
-                      <select class="form-control{{ $errors->has('class_assigned') ? ' is-invalid' : '' }}" name="class_assigned"  data-style="btn btn-link" id="class_assigned" value="{{ old('class_assigned') }}" required>
+                    <div class="form-group{{ $errors->has('class_name') ? ' has-danger' : '' }}">
+                      <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name"  data-style="btn btn-link" id="class_name" value="{{ old('class_name') }}" required>
                         <option>Select Class</option>
-                        <option>Creche</option>
-                        <option>Nursery 1</option>
-                        <option>Nursery 2</option>
-                        <option>Primary 1</option>
-                        <option>Primary 2</option>
-                        <option>Primary 3</option>
-                        <option>Primary 4</option>
-                        <option>Primary 5</option>
-                        <option>Jss 1</option>
-                        <option>Jss 2</option>
-                        <option>Jss 3</option>
-                        <option>SS 1</option>
-                        <option>SS 2</option>
-                        <option>SS 3</option>
+                        @foreach($data['classes'] as $klass)
+                          <option value="{{$klass['id']}}">{{$klass['class']}}</option>
+                        @endforeach
                       </select>
-                      @if ($errors->has('class_assigned'))
-                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('class_assigned') }}</span>
+                      @if ($errors->has('class_name'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('class_name') }}</span>
                       @endif
                     </div>
                   </div>

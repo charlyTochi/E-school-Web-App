@@ -62,6 +62,26 @@ class SchoolController extends Controller
     /**
      * Login school and create token
      */
+
+     public function getAllSchoolName(){
+       $schools = School::all();
+       $school_names = array();
+        foreach($schools as $school){
+          $id = $school->id;
+          $school_name = $school->school_name;
+          array_push($school_names, [$id=> $school_name]);
+        }
+       if($school_names){
+          return response()->json([
+            'school_names' => $school_names
+        ]);
+       }
+       else{
+            return response()->json([
+              'message' => 'No Schools in database'
+          ], 400);
+       }
+     }
      public function login(Request $request)
        {
            $request->validate([

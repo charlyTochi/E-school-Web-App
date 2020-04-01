@@ -72,9 +72,20 @@
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <script src="{{ asset('material') }}/demo/demo.js"></script>
         <script src="{{ asset('material') }}/js/settings.js"></script>
-        <!-- <script src="{{asset( 'material' )}}/js/jquery.min.js"></script> -->
-        <!-- <script src="{{asset( 'material' )}}/js/chart.js"></script> -->
-        <!-- <script src="{{asset( 'material') }}/js/charts.js"></script> -->
+        <script>
+          $("#inputGroupFile04").change(function(event){
+            var reader = new FileReader();
+            var image = document.getElementById('image');
+
+            reader.onload = function(){
+              if ( reader.readyState == 2){
+                image.src = reader.result;
+              }
+            }
+
+            reader.readAsDataURL(event.target.files[0]);
+          });
+        </script>
 
         @stack('js')
     </body>

@@ -25,10 +25,12 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'auth'], function () {
     Route::post('signup', 'API\UserController@signup');
     Route::get('signup/activate/{token}', 'API\UserController@signupActivate');
-      /****Super admin login ****/
+      /****user login ****/
       Route::post('login', 'API\UserController@login');
       /****school login ****/
       Route::post('/schoolLogin', 'API\SchoolController@login');
+      // getAllSchoolName
+      Route::post('/getAllSchoolName', 'API\SchoolController@getAllSchoolName');
 });
 
 

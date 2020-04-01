@@ -6,6 +6,7 @@ use App\Teacher;
 use App\Parents;
 use App\Student;
 use App\School;
+use App\Classes;
 use App\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
@@ -51,8 +52,10 @@ class TeacherController extends Controller
     {
       $id = Auth::user()->school_id;
       $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $classes = Classes::where('school_id',  $id)->get()->toArray();
       $data = array(
       'school_name' => $school_name,
+      'classes' => $classes,
     );
         return view('teachers.create', ['data' => $data]);
     }
@@ -85,7 +88,7 @@ class TeacherController extends Controller
       $teacher->save();
 
       $cat_code = $this->userRole('TEACHER');
-      $full_name = $request->name. ' '. $request->last_name;
+      $full_name = $request->first_name. ' '. $request->last_name;
 
       $user = new User([
         'name'=> $full_name,
@@ -146,11 +149,17 @@ class TeacherController extends Controller
           $teacher->last_name =$request->get('last_name');
           $teacher->address =$request->get('address');
           $teacher->phone_number =$request->get('phone_number');
+          if($request->hasFile('profile_image')){
+            $image = $request->file('profile_image');
+            $filename = time(). '.' . $image->getClientOriginalExtension();
+            $destinationPath = 'public/image/'; // upload path
+            $image->move($destinationPath, $filename);
+            $teacher->profile_image = $filename;  
+          }
           $teacher->save();
             $full_name = $request->first_name. ' '. $request->last_name;
             $user = User::where('external_table_id', $id)->where('school_id', $teacher->school_id)->first();
             $user->name = $full_name;
-
           $user->save();
         }
         return redirect()->route('teacher.index')->withStatus(__('User successfully updated.'));

@@ -154,11 +154,18 @@ class ParentsController extends Controller
           $parents->last_name = $request->get('last_name');
           $parents->address = $request->get('address');
           $parents->phone_number = $request->get('phone_number');
-          $parents->save();
+          if($request->hasFile('profile_image')){
+            $image = $request->file('profile_image');
+            $filename = time(). '.' . $image->getClientOriginalExtension();
+            $destinationPath = 'public/image/'; // upload path
+            $image->move($destinationPath, $filename);
+            $parents->profile_image = $filename;  
+          }
+            $parents->save();
               $full_name = $request->first_name. ' '. $request->last_name;
               $user = User::where('external_table_id', $id)->where('school_id', $parents->school_id)->first();
               $user->name = $full_name;
-
+          
             $user->save();
 
           // redirect

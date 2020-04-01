@@ -40,6 +40,15 @@
                         {{ __('Class') }}
                       </th>
                       <th>
+                        {{ __('Picture') }}
+                      </th>
+                      <th>
+                        {{ __('Email') }}
+                      </th>
+                      <th>
+                        {{ __('Student Code') }}
+                      </th>
+                      <th>
                         {{ __('Creation date') }}
                       </th>
                       <th class="text-right">
@@ -55,6 +64,15 @@
                           <td>
                             {{ $user->class_name }}
                           </td>
+                          <td>
+                          <img class="image" id="image" src="{{ asset('public/image')}}/<?php echo $user->profile_image ? $user->profile_image : "defualt.png"?>" width="50" height="50">
+                          </td>
+                          <th>
+                            {{ $user->email }}
+                          </th>
+                          <th>
+                            {{ $user->card_code }}
+                          </th>
                           <td>
                             {{ $user->created_at->format('Y-m-d') }}
                           </td>
@@ -97,16 +115,51 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Student Details</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <img class="image" id="image" src="{{ asset('public/image')}}/<?php echo $user->profile_image ? $user->profile_image : "defualt.png"?>" width="100" height="100">
         <div class="modal-body">
-          <p>{{$user->first_name}}</p>
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Student Name</h4>
+            </div>
+            <div class="col-md-6">
+              <p>{{$user->first_name . ' '. $user->last_name}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="text-dark">Class</h4>
+            </div>
+            <div class="col-md-6">
+              <p>{{$user->class_name}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Sex</h4>
+            </div>
+            <div class="col-md-6">
+              <p>{{$user->sex}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Primary contact</h4>
+            </div>
+            <div class="col-md-6">
+              <h4>{{$user->id}}</h4>
+            </div>
+          </div>
+          <div class="row">
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="" class="btn btn-warning" data-dismiss="modal">View All</a>
         </div>
       </div>
     </div>

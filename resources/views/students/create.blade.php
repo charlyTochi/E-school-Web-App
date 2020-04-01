@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('student.store') }}" autocomplete="off" class="form-horizontal">
+          <form method="post" action="{{ route('student.store') }}" autocomplete="off" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             @method('post')
 
@@ -20,6 +20,16 @@
                       <a href="{{ route('student.index') }}" class="btn btn-sm btn-warning">{{ __('Back to list') }}</a>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="input-group col-md-4">
+                    <div class="custom-file">
+                      <input type="file" class="form-control{{ $errors->has('profile_image') ? ' is-invalid' : '' }}" name="profile_image" id="inputGroupFile04" value="{{ old('profile_image') }}" aria-describedby="inputGroupFileAddon04" accept=".png, .jpg, .jpeg">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <img class="image" id="image" src="{{ asset('public/image')}}/defualt.png" width="100" height="100">
+                  </div>
+                </div>                
                 <div class="row">
                   <label class="col-sm-2 col-form-label">{{ __('First Name') }}</label>
                   <div class="col-sm-7">
@@ -38,6 +48,17 @@
                       <input class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" id="input-last_name" type="text" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') }}" required="true" aria-required="true"/>
                       @if ($errors->has('last_name'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('last_name') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Email') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="input-email" type="email" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required />
+                      @if ($errors->has('email'))
+                        <span id="email-error" class="error text-danger" for="input-email">{{ $errors->first('email') }}</span>
                       @endif
                     </div>
                   </div>
@@ -78,7 +99,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Card Code') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('card_code') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('card_code') ? ' is-invalid' : '' }}" name="card_code" id="input-card_code" type="text" placeholder="{{ __('Card Code') }}" value="{{ old('card_code') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('card_code') ? ' is-invalid' : '' }}" type="text" name="card_code" id="input-card_code" placeholder="{{ __('Card Code') }}" value="{{ old('card_code') }}" required="true" aria-required="true" maxlength="11" />
                       @if ($errors->has('card_code'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('card_code') }}</span>
                       @endif
@@ -92,7 +113,7 @@
                       <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name"  data-style="btn btn-link" id="class_name" value="{{ old('class_name') }}" required>
                         <option>Select Class</option>
                         @foreach($data['classes'] as $klass)
-                          <option value="{{$mother['id']}}">{{$klass['class']}}</option>
+                          <option value="{{$klass['id']}}">{{$klass['class']}}</option>
                         @endforeach
                       </select>
                       @if ($errors->has('class_name'))
@@ -251,6 +272,25 @@
                       @if ($errors->has('religion'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('religion') }}</span>
                       @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label" for="input-password">{{ __(' Password') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" input type="password" name="password" id="input-password" placeholder="{{ __('Password') }}" value="" required />
+                      @if ($errors->has('password'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('password') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label" for="input-password-confirmation">{{ __('Confirm Password') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group">
+                      <input class="form-control" name="password_confirmation" id="input-password-confirmation" type="password" placeholder="{{ __('Confirm Password') }}" value="" required />
                     </div>
                   </div>
                 </div>
