@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 use App\Notifications\SignupActivate;
 use App\User;
 use App\School;
+use App\Student;
+use App\Parents;
+use App\Teacher;
 use App\Traits\Utilities;
 use Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
   use Utilities;
@@ -56,17 +60,28 @@ class UserController extends Controller
         if(!Auth::attempt($credentials)){
             return response()->json(['message' => 'Unauthorized'], 401);
           }else {
-                  $user_data = Auth::User();
-                  $school_data = School::Where('School_name', $request->school_name)->first();
+                  $school_data = School::Where('School_name', $request->school_name)->get();
                   $user = Auth::user();
                   $tokenResult = $user->createToken('Personal Access Token'); //access token created if successfull
                   $token = $tokenResult->token;
                   $token->save();
+                  $data ='';
+                  if($user->user_category == '22334'){
+                    $data = Parents::where('id', $user->external_table_id)->get();
+                  }elseif($user->user_category == '11223'){
+                        $data = Teacher::where('id', $user->external_table_id)->get();
+                  }elseif($user->user_category == '00112'){
+                    $data = Student::where('id', $user->external_table_id)->get();
+                  }else {
+                    return response()->json([
+                      'message' => 'No access for admin'
+                    ]);
+                  }
                   return response()->json([
                       'access_token' => $tokenResult->accessToken,
                       'token_type' => 'Bearer', 
                       'school_data' => $school_data,
-                      'user_data' => $user_data,
+                      'user_data' => $data,
                       'message' => 'authorized'
                   ], 200);
           }
@@ -89,47 +104,91 @@ class UserController extends Controller
  * update user profile
  */
 
- public function updateProfile($id, Request $request){
-    $rules = array(
-        'title' => 'required|string',
-        'first_name' => 'required|string',
-        'last_name' => 'required|string',
-        'address' => 'required|string',
-        'phone_number' => 'required|string'
-      );
-      $validator = Validator::make($request->all(), $rules);
-
-      // process the login
-      if ($validator->fails()) {
-        return response()->json([
-            'message' => 'invalid input'
-        ], 401);
-        
-      } else {
-          // store
-          $user = User::find($id);
-
+ public function updateProfile( Request $request){
+        $uid = $request->get('id');
+        $full_name = $request->first_name. ' '. $request->last_name;
+        $user = User::find($uid);
+        $user_data = '';
           
-          if($user->external_table_id == 1){
-            $cat_code = $this->userRole('PARENT');
+          if($user->user_category == 22334){
+                $id = $user->external_table_id;
+                $parents = Parents::find($id);
+                $parents->first_name = $request->get('first_name');
+                $parents->last_name = $request->get('last_name');
+                $parents->email = $request->get('email');
+                $parents->phone_number = $request->get('phone_number');
+                $parents->save();
+                $user = User::where('external_table_id', $id)->where('school_id', $parents->school_id)->where('user_category', $user->user_category)->first();
+                $user->name = $full_name;
+                $user->email = $request->email;
+                $user->save();
+                $user_data = User::find($uid);
+
+          }elseif($user->user_category == 11223){
+                $id = $user->extrnal_table_id;
+                $teacher = Teacher::find($id);
+                $teacher->first_name = $request->get('first_name');
+                $teacher->last_name = $request->get('last_name');
+                $teacher->address = $request->get('address');
+                $teacher->phone_number = $request->get('phone_number');
+                $teacher->save();
+                $user = User::where('external_table_id', $id)->where('school_id', $teacher->school_id)->where('user_category', $user->user_category)->first();
+                $user->name = $full_name;
+                $user->save();
+                $user_data = User::find($uid);
+
+          }elseif($user->user_category == 00112){
+                
+                $id = $user->extrnal_table_id;
+                $student = Student::find($id);
+                $student->first_name = $request->get('first_name');
+                $student->last_name = $request->get('last_name');
+                $student->address = $request->get('address');
+                $student->save();
+                $user = User::where('external_table_id', $id)->where('school_id', $student->school_id)->where('user_category', $parents->user_category)->first();
+                $user->name = $full_name;
+                $user->save();
+                $user_data = User::find($uid);
+          }else{
+            return response()->json([
+                'message' => 'user not allowed',
+            ], 401);
           }
-          $parents->title = $request->get('title');
-          $parents->first_name = $request->get('first_name');
-          $parents->last_name = $request->get('last_name');
-          $parents->address = $request->get('address');
-          $parents->phone_number = $request->get('phone_number');
-            $parents->save();
-              $full_name = $request->first_name. ' '. $request->last_name;
-              $user = User::where('external_table_id', $id)->where('school_id', $parents->school_id)->first();
-              $user->name = $full_name;
           
-            $user->save();
           // redirect
           return response()->json([
-            'message' => 'invalid input'
+            'message' => 'update successful',
+            'user_data' => $user_data
         ], 200);
-      }
  }
+
+ /**
+  * fetch all children from a school
+  */
+  public function fetchChildren($name=''){
+    $class_assigned = null;
+    $user = Auth::user();
+    if($user->user_category == '22334'){
+      $parent = 
+        $all = Student::where('primary_contact_id', $user->external_table_id)->orWhere('secondary_contact_id', $user->external_table_id)->get();
+        $children = array();
+        foreach($all as $child){
+          $school_name = School::where('id', $child['school_id'])->pluck('school_name')->first();
+          if($school_name == $name){
+            array_push($children, [$child['id']=> $child]);
+          }
+        }
+      }elseif($user->user_category == '11223'){
+        $children = Student::where('school_id', $user->school_id)->where('class_name', $class_assigned)->get();
+      }else{
+        return response()->json([
+            'error' => 'This user cant access this method'
+        ], 400);
+    }
+    return response()->json([
+        'children' => $children
+    ], 200);
+  }
 
     /**
      * Get the authenticated User

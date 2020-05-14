@@ -38,6 +38,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group([  'middleware' => 'auth:api'], function() {
         Route::get('logout', 'API\UserController@logout');
         Route::get('school', 'API\UserController@school');
+        Route::post('updateProfile', 'API\UserController@updateProfile');
+        Route::get('fetchChildren/{name}', 'API\UserController@fetchChildren');
 
         // access by only authenticated superadmin
         Route::group(['middleware' => 'superAdmin'], function(){
@@ -62,7 +64,6 @@ Route::group(['prefix' => 'auth'], function () {
           Route::post('sentMessageLog', 'API\SentMessageController@sentMessageLog');
 
           Route::post('checkAuth', 'API\SchoolController@checkAuth');
-
 
         });
 
