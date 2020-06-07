@@ -7,6 +7,8 @@ use App\School;
 use App\Teacher;
 use App\Student;
 use App\User;
+use App\Account;
+use Illuminate\Support\Str;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -75,7 +77,7 @@ class ParentsController extends Controller
           'phone_number' => 'required|string',
           'password' => 'required|string|confirmed'
       ]);
-
+      $acct_id = Str::random(60);
       $cat_code = $this->userRole('PARENT');
       $full_name = $request->first_name. ' '. $request->last_name;
       $parents = new Parents([
@@ -87,8 +89,17 @@ class ParentsController extends Controller
         'email' => $request->email,
         'phone_number' => $request->phone_number,
         'school_id' =>Auth::user()->school_id,
+        'acct_id' => $acct_id,
       ]);
       $parents->save();
+      
+      $account = new Account([
+        'acct_id'=> $acct_id,
+        'user_id'=> $parents->id,
+        'account_type_id' => 3,
+        'school_id' =>Auth::user()->school_id,
+      ]);
+     $account->save();
 
       $user = new User([
         'name'=> $full_name,
@@ -97,9 +108,10 @@ class ParentsController extends Controller
         'email' => $request->email,
         'user_category' => $cat_code,
         'school_id' =>Auth::user()->school_id,
+        'acct_id' => $acct_id,
       ]);
       $user->save();
-
+      
         return redirect()->route('parents.index')->withStatus(__($full_name.' successfully registered their ward(s) in your school.'));
     }
 

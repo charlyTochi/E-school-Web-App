@@ -8,6 +8,8 @@ use App\School;
 use App\Parents;
 use App\Teacher;
 use App\Classes;
+use App\Account;
+use Illuminate\Support\Str;
 use Image;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
@@ -107,6 +109,9 @@ class StudentController extends Controller
           // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       ]);
 
+      $cat_code = $this->userRole('STUDENT');
+      $full_name = $request->first_name. ' '. $request->last_name;
+      $acct_id = Str::random(60);
       $student = new Student([
         'first_name'=> $request->first_name,
         'last_name'=> $request->last_name,
@@ -127,6 +132,7 @@ class StudentController extends Controller
         'secondary_contact_id'=> $request->secondary_contact_id,
         'secondary_contact_rel'=> $request->secondary_contact_rel,
         'sex'=> $request->sex,
+        'acct_id'=> $acct_id
       ]);
       if($request->hasFile('profile_image')){
         $image = $request->file('profile_image');
@@ -135,9 +141,16 @@ class StudentController extends Controller
         $image->move($destinationPath, $filename);
         $student->profile_image = $filename;  
       }
-      $student->save();
-      $cat_code = $this->userRole('STUDENT');
-        $full_name = $request->first_name. ' '. $request->last_name;
+        $student->save();
+        
+        $account = new Account([
+          'acct_id'=> $acct_id,
+          'user_id'=> $student->id,
+          'account_type_id' => 5,
+          'school_id' =>Auth::user()->school_id,
+        ]);
+       $account->save();
+
         $user = new User([
           'name'=> $full_name,
           'password' => Hash::make($request->get('password')),
@@ -145,6 +158,7 @@ class StudentController extends Controller
           'email' => $request->email,
           'user_category' => $cat_code,
           'school_id' =>Auth::user()->school_id,
+          'acct_id' => $acct_id,
         ]);
         $user->save();
 

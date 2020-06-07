@@ -17,13 +17,13 @@ class Teacher extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name', 'email', 'school_id', 'profile_image', 'phone_number', 'active', 'profile_image', 'address', 'class_assigned'
+        'first_name','last_name', 'email', 'school_id', 'profile_image', 'phone_number', 'active', 'address', 'class_assigned', 'acct_id'
     ];
 
     public function students()
-      {
-          return $this->hasMany('App\Student');
-      }
+    {
+        return $this->hasMany('App\Student');
+    }
 
 
     /**

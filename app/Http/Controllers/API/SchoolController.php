@@ -63,17 +63,11 @@ class SchoolController extends Controller
      * Login school and create token
      */
 
-     public function getAllSchoolName(){
+    public function getAllSchoolName(){
        $schools = School::all();
-       $school_names = array();
-        foreach($schools as $school){
-          $id = $school->id;
-          $school_name = $school->school_name;
-          array_push($school_names, [$id=> $school_name]);
-        }
-       if($school_names){
+       if($schools){
           return response()->json([
-            'school_names' => $school_names
+            'school_names' => $schools
         ]);
        }
        else{
@@ -114,7 +108,7 @@ class SchoolController extends Controller
        }
 
 
-       public function checkAuth(){
+  public function checkAuth(){
     if(Auth::user() != "unauthenticated"){
       return response()->json([
           'response' => 200,

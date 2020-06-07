@@ -20,6 +20,7 @@ class CreateParentsTable extends Migration
             $table->string('last_name');
             $table->string('address');
             $table->string('school_id');
+            $table->string('acct_id');
             $table->string('sex');
             $table->string('email');
             $table->string('phone_number');

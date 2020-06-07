@@ -19,6 +19,7 @@ class CreateTeachersTable extends Migration
           $table->string('last_name');
           $table->string('class_assigned');
           $table->string('school_id');
+          $table->string('acct_id');
           $table->string('email');
           $table->string('address');
           $table->string('phone_number');

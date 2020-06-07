@@ -6,6 +6,8 @@ use App\Teacher;
 use App\Parents;
 use App\Student;
 use App\School;
+use App\Account;
+use Illuminate\Support\Str;
 use App\Classes;
 use App\User;
 use App\Http\Requests\UserRequest;
@@ -76,6 +78,10 @@ class TeacherController extends Controller
           'address' => 'required|string',
           'phone_number' => 'required|string'
       ]);
+      $acct_id = Str::random(60);
+      $cat_code = $this->userRole('TEACHER');
+      $full_name = $request->first_name. ' '. $request->last_name;
+
       $teacher = new Teacher([
         'first_name'=> $request->first_name,
         'last_name' => $request->last_name,
@@ -84,11 +90,17 @@ class TeacherController extends Controller
         'phone_number' => $request->phone_number,
         'school_id' =>Auth::user()->school_id,
         'class_assigned' =>$request->class_assigned,
+        'acct_id'=>$acct_id
       ]);
       $teacher->save();
 
-      $cat_code = $this->userRole('TEACHER');
-      $full_name = $request->first_name. ' '. $request->last_name;
+      $account = new Account([
+        'acct_id'=> $acct_id,
+        'user_id'=> $teacher->id,
+        'account_type_id' => 4,
+        'school_id' =>Auth::user()->school_id,
+      ]);
+     $account->save();
 
       $user = new User([
         'name'=> $full_name,
@@ -97,8 +109,10 @@ class TeacherController extends Controller
         'email' => $request->email,
         'user_category' => $cat_code,
         'school_id' =>Auth::user()->school_id,
+        'acct_id' => $acct_id,
       ]);
       $user->save();
+
         return redirect()->route('teacher.index')->withStatus(__($request->first_name.' successfully created as a Teacher in your school.'));
     }
 

@@ -38,8 +38,15 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group([  'middleware' => 'auth:api'], function() {
         Route::get('logout', 'API\UserController@logout');
         Route::get('school', 'API\UserController@school');
-        Route::post('updateProfile', 'API\UserController@updateProfile');
-        Route::get('fetchChildren/{name}', 'API\UserController@fetchChildren');
+        Route::get('fetchChildren/{name}/{class_assigned}', 'API\UserController@fetchChildren');
+        Route::post('updateProfile', 'API\UserController@UpdateProfile');
+        Route::post('updateProfileImage', 'API\UserController@UpdateProfileImage');
+      // login Account
+      Route::post('/loginAccount', 'API\UserController@loginAccount');
+      Route::post('sendNotif', 'API\NotifController@sendNotif');
+      Route::get('recieveNotif/{reciever_acct_type}/{reciever_id}/{school_id}', 'API\NotifController@recieveNotif');
+      Route::get('readNotif/{notif_id}', 'API\NotifController@readNotif');
+      Route::get('sentNotif/{sender_acct_type}/{sender_id}/{school_id}', 'API\NotifController@sentNotif');
 
         // access by only authenticated superadmin
         Route::group(['middleware' => 'superAdmin'], function(){
@@ -64,6 +71,9 @@ Route::group(['prefix' => 'auth'], function () {
           Route::post('sentMessageLog', 'API\SentMessageController@sentMessageLog');
 
           Route::post('checkAuth', 'API\SchoolController@checkAuth');
+          
+        //   add new account for existing user
+          Route::post('addAccount', 'API\UserController@addAccount');
 
         });
 

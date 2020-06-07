@@ -18,6 +18,7 @@ class CreateSchoolsTable extends Migration
             $table->string('school_name');
             $table->string('motto');
             $table->string('phone_number');
+            $table->string('acct_id');
             $table->string('address');
             $table->string('email');
             $table->timestamps();

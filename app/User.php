@@ -16,8 +16,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'school_id', 'external_table_id', 'user_category'
+        'name', 'email', 'password', 'school_id', 'external_table_id', 'user_category', 'acct_id'
     ];
+    
+    public function accounts()
+    {
+        return $this->hasMany('App\Account');
+    }
 
     // public function school()
     //   {

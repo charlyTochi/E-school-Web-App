@@ -17,7 +17,7 @@ class Parents extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'title','first_name','last_name', 'email', 'sex', 'school_id', 'phone_number', 'active', 'address'
+        'title','first_name','last_name', 'email', 'sex', 'school_id', 'phone_number', 'active', 'address', 'acct_id'
     ];
 
 

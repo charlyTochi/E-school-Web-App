@@ -44,4 +44,10 @@ class TeacherController extends Controller
             'message' => 'Successfully created Teacher!'
         ], 201);
       }
+
+      public function fetchAllTeacher(){
+        $user = Auth::user();
+        $teacher = School::find($user->id)->teachers();
+        dd($teacher);
+      }
 }
