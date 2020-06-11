@@ -29,6 +29,7 @@ class NotifController extends Controller
             'reciever_id' => 'required',
             'school_id' => 'required',
             'reciever_acct_type' => 'required',
+            'sender_acct_type' => 'required',
       );
       $this->validator($rules, $request);
       if($request->reciever_acct_type == 3 ){
@@ -49,6 +50,7 @@ class NotifController extends Controller
           'reciever_id' => $request->reciever_id,
           'school_id' => $request->school_id,
           'reciever_acct_type' => $reciever_acct_type,
+          'sender_acct_type' => $sender_acct_type
       ]);
       $notif->save();
       return response()->json(['message' => 'Message Sent successfuly'], 200);

@@ -27,6 +27,7 @@
                 <div class="row">
                   <div class="col-12 text-right">
                     <a href="{{ route('parents.create') }}" class="btn btn-sm btn-warning">{{ __('Add Parent') }}</a>
+                    <a href="{{ route('add') }}" class="btn btn-sm btn-warning">{{ __('Add Account') }}</a>
                   </div>
                 </div>
                 @endif

@@ -32,7 +32,7 @@ class UserController extends Controller
             'activation_token' => Str::random(60),
          ]);
          $user->save();
-         return view('')
+         return view('');
          // $user->notify(new SignupActivate($user));
          // return response()->json([
          //     'message' => 'Successfully created user!'

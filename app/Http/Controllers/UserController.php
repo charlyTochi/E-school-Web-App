@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\School;
 use App\Account;
+use Auth;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -77,13 +78,6 @@ class UserController extends Controller
                                 'user_category' => $cat_code, 
                                 'acct_id' => $acct_id,])->all();
         $userModel->create($user);
-        // $schoolModel->create($school);
-        $account = new Account([
-            'user_id'=> $user->acct_id,
-            'account_type_id' => 2,
-            'school_id' =>Auth::user()->school_id,
-          ]);
-         $account->save();
         return redirect()->route('user.index')->withStatus(__($request->school_name.' School successfully created.'));
     }
 

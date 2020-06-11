@@ -38,7 +38,7 @@ class HomeController extends Controller
         $student = Student::all()->count();
         $teacher = Teacher::all()->count();
         $parents = Parents::all()->count();
-        $parents = SentMessage::all()->count();
+        $message_sent = SentMessage::all()->count();
         $total = User::all()->count();
         $data = array(
           'school' => $school,
@@ -96,7 +96,16 @@ class HomeController extends Controller
           return view('parent', ['data' => $data]);
       }
     }
-
+    public function chart()
+    {
+      $school = School::all()->count();
+      $student = Student::all()->count();
+      $teacher = Teacher::all()->count();
+      $parents = Parents::all()->count();
+      // $result = User::all();
+      // $title  = ['Users', 'Parents', 'Teachers', 'Students'];
+      return response()->json(['Users'=>$school,'Students'=> $student,'Teachers'=> $teacher, 'Parents'=> $parents]);
+    }
     public function studentView($id)
     {
       $sch_id = Auth::user()->school_id;

@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use App\Traits\Utilities;
 
 class RegisterController extends Controller
@@ -66,12 +67,14 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $cat_code = $this->userRole('SUPERADMIN');
+        $acct_id = Str::random(60);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'external_table_id' => 0,
             'user_category' => ($cat_code),
+            'acct_id' => ($acct_id),
             'school_id' => 0
         ]);
     }

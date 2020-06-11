@@ -45,9 +45,12 @@ class TeacherController extends Controller
         ], 201);
       }
 
-      public function fetchAllTeacher(){
-        $user = Auth::user();
-        $teacher = School::find($user->id)->teachers();
-        dd($teacher);
+      public function all($school_id){
+        $teachers = Teacher::where('school_id', $school_id)->get();
+        return response()->json(['teachers' => $teachers], 200);
+        }
+      public function studentTeacher($school_id, $class_assigned){
+            $teachers = Teacher::where('school_id', $school_id)->where('class_assigned', $class_assigned)->get();
+            return response()->json(['teachers' => $teachers], 200);
       }
 }

@@ -33,8 +33,7 @@ class ParentsController extends Controller
           return view('parents.index', ['users' => $model->paginate(15)]);
 
       }else{
-        $id = Auth::user()->school_id;
-        $school_name = School::where('id', $id)->pluck('school_name')->first();
+        $school_name = $this->getSchoolName();
         $data = array(
           'school_name' => $school_name,
         );
@@ -50,12 +49,20 @@ class ParentsController extends Controller
      */
     public function create()
     {
-      $id = Auth::user()->school_id;
-      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $school_name = $this->getSchoolName();
       $data = array(
         'school_name' => $school_name,
       );
         return view('parents.create', ['data'=>$data]);
+    }
+
+    public function add()
+    {
+      $school_name = $this->getSchoolName();
+      $data = array(
+        'school_name' => $school_name,
+      );
+        return view('parents.add', ['data'=>$data]);
     }
 
     /**
@@ -124,8 +131,7 @@ class ParentsController extends Controller
      */
     public function edit($id)
     {
-      $school_id = Auth::user()->school_id;
-      $school_name = School::where('id', $school_id)->pluck('school_name')->first();
+      $school_name = $this->getSchoolName();
       // get the user
       $users = Parents::find($id);
       $data = array(
@@ -200,5 +206,11 @@ class ParentsController extends Controller
         }
         // redirect
         return redirect()->route('parents.index')->withStatus(__('User successfully deleted.'));
+    }
+
+    public function getSchoolName(){
+      $id = Auth::user()->school_id;
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      return $school_name;
     }
 }

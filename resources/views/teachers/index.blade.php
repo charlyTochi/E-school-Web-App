@@ -26,7 +26,8 @@
                 @if (Auth::user()->user_category != '77889' )
                 <div class="row">
                   <div class="col-12 text-right">
-                    <a href="{{ route('teacher.create') }}" class="btn btn-sm btn-warning">{{ __('Add user') }}</a>
+                    <a href="{{ route('teacher.create') }}" class="btn btn-sm btn-warning">{{ __('Add Teacher') }}</a>
+                    <a href="{{ route('addTeacher') }}" class="btn btn-sm btn-warning">{{ __('Add Account') }}</a>
                   </div>
                   @endif
                 </div>

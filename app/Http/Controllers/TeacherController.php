@@ -61,7 +61,17 @@ class TeacherController extends Controller
     );
         return view('teachers.create', ['data' => $data]);
     }
-
+    public function addTeacher()
+    {
+      $id = Auth::user()->school_id;
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $classes = Classes::where('school_id',  $id)->get()->toArray();
+      $data = array(
+      'school_name' => $school_name,
+      'classes' => $classes,
+    );
+        return view('teachers.add', ['data' => $data]);
+    }
     /**
      * Store a newly created user in storage
      *
@@ -126,8 +136,7 @@ class TeacherController extends Controller
     {
       // get the user
       $users = Teacher::find($id);
-      $school_id = Auth::user()->school_id;
-      $school_name = School::where('id', $school_id)->pluck('school_name')->first();
+      $school_name = $this->getSchoolName();
       $data = array(
         'school_name' => $school_name,
       );
@@ -194,5 +203,10 @@ class TeacherController extends Controller
       }
 
         return redirect()->route('teacher.index')->withStatus(__('User successfully deleted.'));
+    }
+    public function getSchoolName(){
+      $id = Auth::user()->school_id;
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      return $school_name;
     }
 }

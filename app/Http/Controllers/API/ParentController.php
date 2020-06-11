@@ -51,4 +51,9 @@ class ParentController extends Controller
             'message' => 'Successfully created Parent!'
         ], 201);
   }
+
+  public function all($school_id){
+        $parents = Parents::where('school_id', $school_id)->get();
+        return response()->json(['parents' => $parents], 200);
+  }
 }

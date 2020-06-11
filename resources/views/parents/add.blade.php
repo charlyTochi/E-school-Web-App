@@ -1,32 +1,55 @@
-@extends('layouts.app', ['activePage' => 'teacher', 'titlePage' => __('Teachers')])
+@extends('layouts.app', ['activePage' => 'parent', 'titlePage' => __('Add Parents Account')])
 
 @section('content')
   <div class="content">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('teacher.store') }}" autocomplete="off" class="form-horizontal">
+            @if (session('status'))
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="material-icons">close</i>
+                    </button>
+                    <span>{{ session('status') }}</span>
+                  </div>
+                </div>
+              </div>
+            @endif
+          <form method="post" action="{{ route('addAccount') }}" autocomplete="off" class="form-horizontal">
             @csrf
             @method('post')
 
             <div class="card ">
               <div class="card-header card-header-warning">
-                <h4 class="card-title">{{ __('Add User') }}</h4>
+                <h4 class="card-title">{{ __('Add New Account') }}</h4>
                 <p class="card-category"></p>
               </div>
               <div class="card-body ">
                 <div class="row">
                   <div class="col-md-12 text-right">
-                      <a href="{{ route('teacher.index') }}" class="btn btn-sm btn-warning">{{ __('Back to list') }}</a>
+                      <a href="{{ route('parents.index') }}" class="btn btn-sm btn-warning">{{ __('Back to list') }}</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Title') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('title') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" id="input-title" type="text" placeholder="{{ __('Title') }}" value="{{ old('title') }}" required="true" aria-required="true"/>
+                      @if ($errors->has('title'))
+                        <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('title') }}</span>
+                      @endif
+                    </div>
                   </div>
                 </div>
                 <div class="row">
                   <label class="col-sm-2 col-form-label">{{ __('First Name') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('first_name') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" id="input-name" type="text" placeholder="{{ __('First Name') }}" value="{{ old('first_name') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" id="input-first_name" type="text" placeholder="{{ __('First Name') }}" value="{{ old('first_name') }}" required="true" aria-required="true"/>
                       @if ($errors->has('first_name'))
-                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('first_name') }}</span>
+                        <span id="first_name-error" class="error text-danger" for="input-first_name">{{ $errors->first('first_name') }}</span>
                       @endif
                     </div>
                   </div>
@@ -35,9 +58,31 @@
                   <label class="col-sm-2 col-form-label">{{ __('Last Name') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('last_name') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" id="input-name" type="text" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" id="input-last_name" type="text" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') }}" required="true" aria-required="true"/>
                       @if ($errors->has('last_name'))
-                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('last_name') }}</span>
+                        <span id="last_name-error" class="error text-danger" for="input-last_name">{{ $errors->last('last_name') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Sex') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('sex') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('sex') ? ' is-invalid' : '' }}" name="sex" id="input-motto" type="text" placeholder="{{ __('Sex') }}" value="{{ old('sex') }}" required="true" aria-required="true"/>
+                      @if ($errors->has('sex'))
+                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('sex') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Prev Email') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('prev_email') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('prev_email') ? ' is-invalid' : '' }}" name="prev_email" id="input-prev_email" type="email" placeholder="{{ __('Previous Email') }}" value="{{ old('prev_email') }}" required />
+                      @if ($errors->has('prev_email'))
+                        <span id="prev_email-error" class="error text-danger" for="input-prev_email">{{ $errors->first('prev_email') }}</span>
                       @endif
                     </div>
                   </div>
@@ -54,17 +99,12 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('Class Assigned') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('Account Type') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('class_name') ? ' has-danger' : '' }}">
-                      <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_assigned"  data-style="btn btn-link" id="class_name" value="{{ old('class_name') }}" required>
-                        <option>Select Class</option>
-                        @foreach($data['classes'] as $klass)
-                          <option value="{{$klass['id']}}">{{$klass['class']}}</option>
-                        @endforeach
-                      </select>
-                      @if ($errors->has('class_name'))
-                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('class_name') }}</span>
+                    <div class="form-group{{ $errors->has('acct_type') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('acct_type') ? ' is-invalid' : '' }}" name="acct_type" id="input-email" type="text" placeholder="{{ __('Account Type') }}" value="{{ old('acct_type') }}" required />
+                      @if ($errors->has('acct_type'))
+                        <span id="email-error" class="error text-danger" for="input-email">{{ $errors->first('acct_type') }}</span>
                       @endif
                     </div>
                   </div>
@@ -112,7 +152,7 @@
                 </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
-                <button type="submit" class="btn btn-warning">{{ __('Add User') }}</button>
+                <button type="submit" class="btn btn-warning">{{ __('Add Parent') }}</button>
               </div>
             </div>
           </form>

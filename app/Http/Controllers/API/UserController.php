@@ -76,7 +76,7 @@ class UserController extends Controller
                     return response()->json(['message' => 'No access for this user account'], 401);
                   }
                   $school_name = array();
-                  $accounts = User::find($user->id)->accounts;
+                  $accounts = Account::where('acct_id', $user->acct_id)->get();
                   foreach($accounts as $acct){
                     $school = School::where('id', $acct->school_id)->pluck('school_name')->first();
                     array_push($school_name, $school);
@@ -106,7 +106,7 @@ class UserController extends Controller
               'email' => 'required|string|email|unique:users',
               'address' => 'required|string',
               'phone_number' => 'required|string',
-              'password' => 'required|string',
+              'password' => 'required|string|confirmed',
               'acct_type' => 'required|string',
               'prev_email' => 'required|string|email'
         );
@@ -174,6 +174,15 @@ class UserController extends Controller
                 'acct_id'=> $olduser->acct_id
               ]);
               $teacher->save();
+              
+              // add new account to account table
+             $account = new Account([
+                'acct_id'=> $olduser->acct_id,
+                'user_id'=> $teacher->id,
+                'account_type_id' => $acct_type,
+                'school_id' =>$admin_user->school_id,
+              ]);
+             $account->save();
 
             // add new account to users table
             $user = new User([
@@ -186,13 +195,7 @@ class UserController extends Controller
               'acct_id'=> $olduser->acct_id
             ]);
             $user->save();
-              // add new account to account table
-             $account = new Account([
-                'user_id'=> $olduser->acct_id,
-                'account_type_id' => $acct_type,
-                'school_id' =>$admin_user->school_id,
-              ]);
-             $account->save();
+              
              
         }else{
             return response()->json([
@@ -213,19 +216,20 @@ class UserController extends Controller
      */
     public function loginAccount(Request $request, $id)
     {
-      $user = Account::where('id', $id);
-        $acct_type_id = $user->acct_type_id;
+      $user = Account::where('id', $id)->first();
+        $acct_type_id = $user->account_type_id;
         $acct_id = $user->acct_id;
         $school_id = $user->school_id;
         $user_id = $user->user_id;
         $children = "";
         $school_data = "";
-              if($acct_type == 3){
+              if($acct_type_id == 3){
                 // $user = Parents::where();
-                $children = Parents::find($user_id)->students()->where('school_id', $school_id)->get();
+                $children = Student::where("primary_contact_id", $user_id)->orwhere("secondary_contact_id", $user_id)->where('school_id', $school_id)->get();
                 $school_data = School::where('id', $school_id)->first();
-              }elseif($acct_type == 4){
-                $children = Teacher::find($user->user_id)->students()->where('school_id', $school_id)->get();
+              }elseif($acct_type_id == 4){
+                  $teacher = Teacher::find($user_id);
+                $children = Student::where('class_name', $teacher->class_assigned)->where('school_id', $school_id)->get();
                 $school_data = School::where('id', $school_id)->first();
               }else{
                 return response()->json([

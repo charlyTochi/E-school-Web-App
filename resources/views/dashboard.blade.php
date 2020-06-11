@@ -157,16 +157,16 @@
         </div>
       </div>
       <!-- users statistics end here -->
-
+      @if (Auth::user()->user_category == '77889' )
       <!-- charts start here -->
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-success">
-              <div class="ct-chart" id="dailySalesChart"></div>
+              <canvas id="canvas" class="ct-chart"></canvas>
             </div>
             <div class="card-body">
-              <h4 class="card-title">Students Attendance</h4>
+              <h4 class="card-title">All Users Data</h4>
               <p class="card-category">
                 <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
             </div>
@@ -209,7 +209,8 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
+      @endif
       <!-- charts end here -->
 
 

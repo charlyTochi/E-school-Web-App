@@ -43,12 +43,34 @@
                   </div>
                 </div>
                 <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Prev Email') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('prev_email') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('prev_email') ? ' is-invalid' : '' }}" name="prev_email" id="input-prev_email" type="email" placeholder="{{ __('Previous Email') }}" value="{{ old('prev_email') }}" required />
+                      @if ($errors->has('prev_email'))
+                        <span id="prev_email-error" class="error text-danger" for="input-prev_email">{{ $errors->first('prev_email') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
                   <label class="col-sm-2 col-form-label">{{ __('Email') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                       <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="input-email" type="email" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required />
                       @if ($errors->has('email'))
                         <span id="email-error" class="error text-danger" for="input-email">{{ $errors->first('email') }}</span>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Account Type') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group{{ $errors->has('acct_type') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('acct_type') ? ' is-invalid' : '' }}" name="acct_type" id="input-email" type="text" placeholder="{{ __('Account Type') }}" value="{{ old('acct_type') }}" required />
+                      @if ($errors->has('acct_type'))
+                        <span id="email-error" class="error text-danger" for="input-email">{{ $errors->first('acct_type') }}</span>
                       @endif
                     </div>
                   </div>
@@ -112,7 +134,7 @@
                 </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
-                <button type="submit" class="btn btn-warning">{{ __('Add User') }}</button>
+                <button type="submit" class="btn btn-warning">{{ __('Add Teacher') }}</button>
               </div>
             </div>
           </form>

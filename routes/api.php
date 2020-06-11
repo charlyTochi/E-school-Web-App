@@ -42,11 +42,15 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('updateProfile', 'API\UserController@UpdateProfile');
         Route::post('updateProfileImage', 'API\UserController@UpdateProfileImage');
       // login Account
-      Route::post('/loginAccount', 'API\UserController@loginAccount');
+      Route::post('loginAccount/{id}', 'API\UserController@loginAccount');
       Route::post('sendNotif', 'API\NotifController@sendNotif');
       Route::get('recieveNotif/{reciever_acct_type}/{reciever_id}/{school_id}', 'API\NotifController@recieveNotif');
       Route::get('readNotif/{notif_id}', 'API\NotifController@readNotif');
       Route::get('sentNotif/{sender_acct_type}/{sender_id}/{school_id}', 'API\NotifController@sentNotif');
+      Route::get('getAccountType', 'API\AccountTypeController@getAccountType');
+      Route::get('allParents/{school_id}', 'API\ParentController@all');
+      Route::get('allTeacher/{school_id}', 'API\TeacherController@all');
+      Route::get('studentTeacher/{school_id}/{class_assigned}', 'API\TeacherController@studentTeacher');
 
         // access by only authenticated superadmin
         Route::group(['middleware' => 'superAdmin'], function(){

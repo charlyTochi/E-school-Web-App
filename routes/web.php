@@ -32,7 +32,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/studentView/{id}', 'HomeController@studentView')->name('studentView')->middleware('auth');
 // Route::post('loginUser', 'LoginController@loginUser');
-
+Route::get('user/chart','HomeController@chart');
 Route::get('/', function () {
     return view('welcome');
 });
@@ -84,6 +84,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('message', 'MessageController', ['except' => ['show']]);
 	Route::resource('classes', 'ClassController', ['except' => ['show']]);
 	Route::get('details/{id}', 'StudentController@details')->name('details');
+	Route::get('add', 'ParentsController@add')->name('add');
+	Route::get('addTeacher', 'TeacherController@addTeacher')->name('addTeacher');
+	Route::post('addAccount', 'AccountController@addAccount')->name('addAccount');
   // });
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
