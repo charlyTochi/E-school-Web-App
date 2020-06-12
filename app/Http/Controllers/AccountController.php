@@ -12,12 +12,16 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\Utilities;
+use App\Traits\Mail;
 use Auth;
 use Illuminate\Support\Facades\Validator;
+// use Illuminate\Support\Facades\Mail;
+// use App\Notifications\SignupActivate;
 
 class AccountController extends Controller
 {
     use Utilities;
+    use Mail;
     public function addAccount(Request $request){
         
         // validate inout fields
@@ -32,11 +36,7 @@ class AccountController extends Controller
               'acct_type' => 'required|string',
               'prev_email' => 'required|string|email'
         );
-        $validator = Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return redirect()->route('add')
-                ->withStatus(__(' All fields required'));
-        }
+        
         $admin_user = Auth::user();
         $full_name = $request->first_name . ' '. $request->last_name;
         
@@ -84,6 +84,7 @@ class AccountController extends Controller
               'acct_id'=> $olduser->acct_id
             ]);
             $user->save();
+            $this->sendMail($request->email, $user );
              // return json response of user data with new
              return redirect()->route('parents.index')
                 ->withStatus(__($full_name.' new account add successfully.'));
@@ -124,6 +125,7 @@ class AccountController extends Controller
               'acct_id'=> $olduser->acct_id
             ]);
             $user->save();
+            $this->sendMail($request->email, $user );
             // return json response of user data with new
             return redirect()->route('teacher.index')
                 ->withStatus(__($full_name.' new account add successfully.'));

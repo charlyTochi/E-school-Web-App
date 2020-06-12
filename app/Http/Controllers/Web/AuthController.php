@@ -91,17 +91,18 @@ class UserController extends Controller
         return response()->json($request->user());
     }
 
-    public function signupActivate($token)
+    public function signupActivate($acct_id)
     {
-        $user = User::where('activation_token', $token)->first();
+        $user = User::where('acct_id', $acct_id)->first();
         if (!$user) {
-            return response()->json([
-                'message' => 'This activation token is invalid.'
-            ], 404);
+           
+            return redirect()->route('register')
+                ->withStatus(__('User does not exist'));
         }
         $user->active = true;
-        $user->activation_token = '';
         $user->save();
-        return $user;
+        return redirect()->route('login')
+                ->withStatus(__('Welcome'.$user->first_name.'Please Login with your credential'));
+        
     }
 }

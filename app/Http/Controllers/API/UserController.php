@@ -223,20 +223,23 @@ class UserController extends Controller
         $user_id = $user->user_id;
         $children = "";
         $school_data = "";
+        $student ="";
               if($acct_type_id == 3){
                 // $user = Parents::where();
                 $children = Student::where("primary_contact_id", $user_id)->orwhere("secondary_contact_id", $user_id)->where('school_id', $school_id)->get();
                 $school_data = School::where('id', $school_id)->first();
               }elseif($acct_type_id == 4){
                   $teacher = Teacher::find($user_id);
-                $children = Student::where('class_name', $teacher->class_assigned)->where('school_id', $school_id)->get();
+                $student = Student::where('class_name', $teacher->class_assigned)->where('school_id', $school_id)->get();
                 $school_data = School::where('id', $school_id)->first();
+                $children = Student::where("primary_contact_id", $user_id)->orwhere("secondary_contact_id", $user_id)->where('school_id', $school_id)->get();
               }else{
                 return response()->json([
                   'message' => 'No access for admin'
                 ]);
               }
               return response()->json([
+                  'students'=>$user_id,
                   'children' => $children,
                   'school_data' =>$school_data,
                   'message' => 'Account logged in'
@@ -417,18 +420,19 @@ class UserController extends Controller
         return response()->json($request->user());
     }
 
-    public function signupActivate($token)
+    public function signupActivate($acct_id)
     {
-        $user = User::where('activation_token', $token)->first();
+        $user = User::where('acct_id', $acct_id)->first();
         if (!$user) {
-            return response()->json([
-                'message' => 'This activation token is invalid.'
-            ], 404);
+           
+            return redirect()->route('register')
+                ->withStatus(__('User does not exist'));
         }
-        $user->active = true;
-        $user->activation_token = '';
+        $user->status = true;
         $user->save();
-        return $user;
+        return redirect()->route('activate')
+                ->with('status', 'Welcome'.$user->first_name.'Please Login with your credential');
+        
     }
     
 public function validator($rules, $request){

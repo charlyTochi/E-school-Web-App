@@ -29,6 +29,7 @@ Route::get('get-post-chart-data', 'ChartDataController@getMonthlyPostData');
 
 Auth::routes();
 
+Route::get('activate', 'UserController@activate')->name('activate');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/studentView/{id}', 'HomeController@studentView')->name('studentView')->middleware('auth');
 // Route::post('loginUser', 'LoginController@loginUser');

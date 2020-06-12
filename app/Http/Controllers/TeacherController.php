@@ -14,11 +14,13 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\Utilities;
+use App\Traits\Mail;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 class TeacherController extends Controller
 {
   use Utilities;
+  use Mail;
     /**
      * Display a listing of the users
      *
@@ -122,7 +124,7 @@ class TeacherController extends Controller
         'acct_id' => $acct_id,
       ]);
       $user->save();
-
+      $this->sendMail($request->email, $user );
         return redirect()->route('teacher.index')->withStatus(__($request->first_name.' successfully created as a Teacher in your school.'));
     }
 

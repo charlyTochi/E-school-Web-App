@@ -15,11 +15,14 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\Utilities;
+use App\Traits\Mail;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 class StudentController extends Controller
 {
   use Utilities;
+  use Mail;
+
     /**
      * Display a listing of the users
      *
@@ -63,8 +66,8 @@ class StudentController extends Controller
     {
       $school_id = Auth::user()->school_id;
       $school_name = School::where('id', $school_id)->pluck('school_name')->first();
-      $father = Parents::where('school_id',  $school_id)->where('sex', 'male')->get()->toArray();
-      $mother = Parents::where('school_id',  $school_id)->where('sex', 'female')->get()->toArray();
+      $father = User::where('school_id',  $school_id)->where('sex', 'male')->get()->toArray();
+      $mother = User::where('school_id',  $school_id)->where('sex', 'female')->get()->toArray();
       $parents = Parents::where('school_id',  $school_id)->get()->toArray();
       $classes = Classes::where('school_id',  $school_id)->get()->toArray();
       $data = array(
@@ -161,7 +164,7 @@ class StudentController extends Controller
           'acct_id' => $acct_id,
         ]);
         $user->save();
-
+        $this->sendMail($request->email, $user );
         return redirect()->route('student.index')->withStatus(__($full_name.' successfully registered in your school.'));
     }
 

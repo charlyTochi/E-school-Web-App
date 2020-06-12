@@ -3,6 +3,18 @@
 @section('content')
 <div class="container" style="height: auto;">
   <div class="row align-items-center">
+        @if (session('status'))
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <i class="material-icons">close</i>
+                </button>
+                <span>{{ session('status') }}</span>
+              </div>
+            </div>
+          </div>
+        @endif
     <div class="col-md-9 ml-auto mr-auto mb-3 text-center">
       <h3>{{ __('Log in to your School Dashboard and automate your school Management and more.') }} </h3>
     </div>

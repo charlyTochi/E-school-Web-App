@@ -78,6 +78,7 @@ class UserController extends Controller
                                 'user_category' => $cat_code, 
                                 'acct_id' => $acct_id,])->all();
         $userModel->create($user);
+        $this->sendMail($request->email, $userModel );
         return redirect()->route('user.index')->withStatus(__($request->school_name.' School successfully created.'));
     }
 
@@ -90,6 +91,11 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('users.edit', compact('user'));
+    }
+
+    public function activate(User $user)
+    {
+        return view('auth.activate');
     }
 
     /**
