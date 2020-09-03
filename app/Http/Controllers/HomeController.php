@@ -87,8 +87,10 @@ class HomeController extends Controller
 
         $school_name = School::where('id', $id)->pluck('school_name')->first();
         $teacher_data = Teacher::where('id', $uid)->first();
-        $children = Student::where('school_id', $id)->where('class_name', $teacher_data->class_assigned)->get()->toArray();
-
+        $children = [];
+        if ($teacher_data){
+          $children = Student::where('school_id', $id)->where('class_name', $teacher_data->class_assigned)->get()->toArray();
+        }
         $data = array(
           'school_name' => $school_name,
           'children' => $children

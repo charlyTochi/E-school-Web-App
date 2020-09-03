@@ -26,7 +26,6 @@ Route::get('/', function () {
 });
 Route::get('get-post-chart-data', 'ChartDataController@getMonthlyPostData');
 
-
 Auth::routes();
 
 Route::get('activate', 'UserController@activate')->name('activate');
