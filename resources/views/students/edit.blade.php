@@ -56,7 +56,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Card Number') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('card_code') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('card_code') ? ' is-invalid' : '' }}" name="card_code" id="input-card_code" type="text" placeholder="{{ __('Card Number') }}" value="{{ old('card_code', $user->card_code) }}" maxlength="11" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('card_code') ? ' is-invalid' : '' }}" name="card_code" id="input-card_code" type="text" placeholder="{{ __('Card Number') }}" value="{{ old('card_code', $user->card_code) }}" maxlength="10" required="true" aria-required="true"/>
                       @if ($errors->has('card_code'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('card_code') }}</span>
                       @endif
@@ -69,7 +69,9 @@
                     <div class="form-group{{ $errors->has('class_name') ? ' has-danger' : '' }}">
                       <!-- <input class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name" id="input-class_name" type="text" placeholder="{{ __('Class Name') }}" value="{{ old('class_name') }}" required="true" aria-required="true"/> -->
                       <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name"  data-style="btn btn-link" id="class_name" value="{{ old('class_name')}}" required>
-                        <option>{{$user->class_name}}</option>
+                      @if($user->class_name != null)
+                        <option>{{$user->class_name->class_name}}</option>
+                        @endif
                         @foreach($data['classes'] as $klass)
                           <option >{{$klass['class']}}</option>
                         @endforeach

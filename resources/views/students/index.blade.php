@@ -5,7 +5,16 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
+          <div class="">
+            <a href="{{ route('user.index')}}" class="btn btn-sm btn-warning">{{ __('School') }}</a>
+            <a href="#" class="btn btn-sm btn-default">{{ __('Students') }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
             <div class="card">
+            @if(count($users) > 0)
               <div class="card-header card-header-warning">
                 <h4 class="card-title ">{{ __('Students') }}</h4>
                 <p class="card-category"> {{ __('Here you can manage your students') }}</p>
@@ -57,12 +66,13 @@
                     </thead>
                     <tbody>
                       @foreach($users as $user)
+                      <!--  -->
                         <tr>
                           <td>
                             {{ $user->first_name. ' '. $user->last_name }}
                           </td>
                           <td>
-                            {{ $user->class_name }}
+                            {{ $user->class_name->class_name }}
                           </td>
                           <td>
                           <img class="image" id="image" src="{{ asset('public/image')}}/<?php echo $user->profile_image ? $user->profile_image : "defualt.png"?>" width="50" height="50">
@@ -103,6 +113,18 @@
                   </table>
                 </div>
               </div>
+            @else
+              <div class="customInfo">
+                No information for this school
+                @if (Auth::user()->user_category == '77889' )
+                <div class="row">
+                  <div class="col-12">
+                    <a href="{{ route('student.create') }}" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
+                  </div>
+                </div>
+                @endif
+              </div>
+            @endif
             </div>
         </div>
       </div>

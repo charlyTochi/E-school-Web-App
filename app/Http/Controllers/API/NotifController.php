@@ -59,9 +59,11 @@ class NotifController extends Controller
     function recieveNotif($reciever_acct_type, $reciever_id, $school_id){
         // if($acct_type == "Parents"){
             $notif = Notification::where('reciever_id', $reciever_id)
-                                ->where('school_id', $school_id)
+                                ->orWhere('school_id', $school_id)
                                 ->where('status', true)
-                                ->where('reciever_acct_type', $reciever_acct_type )->get();
+                                ->orWhere('reciever_acct_type', $reciever_acct_type )
+                                ->orderBy('id', 'DESC')
+                                ->get();
             return response()->json(['message' => 'Message recieved',
                                      'notification'=> $notif
                                 ], 400);

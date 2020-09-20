@@ -41,6 +41,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::Post('adminLogin', 'API\UserController@login');
 // Route::get('/schools', 'HomeController@index')->name('schools')->middleware('auth');
+Route::get('/school_dashboard/{id}', 'SchoolController@schoolDashboard')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {
@@ -78,9 +79,13 @@ Route::group(['middleware' => 'auth'], function () {
   });
 
   // Route::group(['middleware' => 'admin'], function(){
-    Route::resource('parents', 'ParentsController', ['except' => ['show']]);
-    Route::resource('student', 'StudentController', ['except' => ['show']]);
-    Route::resource('teacher', 'TeacherController', ['except' => ['show']]);
+	Route::resource('parents', 'ParentsController', ['except' => ['show']]);
+	Route::get('{school_id}/parent', 'ParentsController@perSchool')->middleware("auth");
+	Route::resource('student', 'StudentController', ['except' => ['show']]);
+	Route::get('studentCreate/{school_id}', 'StudentController@openCreate');
+	Route::get('{school_id}/student', 'UserController@perSchool')->middleware("auth");
+	Route::resource('teacher', 'TeacherController', ['except' => ['show']]);
+	Route::get('{school_id}/teacher', 'TeacherController@perSchool')->middleware("auth");
     Route::resource('message', 'MessageController', ['except' => ['show']]);
 	Route::resource('classes', 'ClassController', ['except' => ['show']]);
 	Route::get('details/{id}', 'StudentController@details')->name('details');

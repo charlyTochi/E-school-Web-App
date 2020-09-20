@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1058521602df5196f23f3cc7914db8b8",
+    "content-hash": "53a85186450334f7615b51fcf183b661",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -2575,7 +2575,7 @@
         },
         {
             "name": "snowfire/beautymail",
-            "version": "dev-master",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Snowfire/Beautymail.git",
@@ -6420,9 +6420,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "snowfire/beautymail": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

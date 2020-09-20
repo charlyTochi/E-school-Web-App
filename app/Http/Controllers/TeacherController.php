@@ -34,8 +34,7 @@ class TeacherController extends Controller
       // chdck the current user
       if ($cat_code == $this->userRole('SUPERADMIN'))
       {
-          return view('teachers.index', ['users' => $model->paginate(15)]);
-
+        return view('teachers.index', ['users' => $model->paginate(15)]);
       }else{
         $id = Auth::user()->school_id;
         $school_name = School::where('id', $id)->pluck('school_name')->first();
@@ -210,5 +209,15 @@ class TeacherController extends Controller
       $id = Auth::user()->school_id;
       $school_name = School::where('id', $id)->pluck('school_name')->first();
       return $school_name;
+    }
+
+
+    public function perSchool($id){
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $data = array(
+        'school_name' => $school_name
+      );
+      $teacher = School::find($id)->teachers;
+      return view('teachers.index', ['users' => $teacher, 'data'=> $data]);
     }
 }

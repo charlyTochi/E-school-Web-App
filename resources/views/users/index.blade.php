@@ -5,6 +5,13 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
+          <div class="">
+            <a href="#" class="btn btn-sm btn-disabled">{{ __('School') }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
             <div class="card">
               <div class="card-header card-header-warning">
                 <h4 class="card-title ">{{ __('Schools') }}</h4>
@@ -30,9 +37,9 @@
                 </div>
                 <div class="table-responsive">
                   <table class="table">
-                    <thead class=" text-primary">
+                    <thead class="text-primary">
                       <th>
-                          {{ __('Name') }}
+                        {{ __('Name') }}
                       </th>
                       <th>
                         {{ __('Email') }}
@@ -44,11 +51,11 @@
                         {{ __('Actions') }}
                       </th>
                     </thead>
-                    <tbody>
+                    <tbody class="table-hover">
                       @foreach($school as $user)
                         <tr>
                           <td>
-                            {{ $user->school_name }}
+                            <a href="/school_dashboard/{{$user->id}}">{{ $user->school_name }}</a>
                           </td>
                           <td>
                             {{ $user->email }}

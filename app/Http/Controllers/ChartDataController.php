@@ -16,7 +16,7 @@ class ChartDataController extends Controller
 
 		if ( ! empty( $posts_dates ) ) {
 			foreach ( $posts_dates as $unformatted_date ) {
-				$date = new \DateTime( $unformatted_date->date );
+				$date = new DateTime( $unformatted_date->date );
 				$month_no = $date->format( 'm' );
 				$month_name = $date->format( 'M' );
 				$month_array[ $month_no ] = $month_name;

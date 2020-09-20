@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\School;
+use App\Classes;
 use App\Account;
 use Auth;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\Utilities;
+use App\Traits\Mail;
 class UserController extends Controller
 {
   use Utilities;
+  use Mail;
     /**
      * Display a listing of the users
      *
@@ -22,6 +25,7 @@ class UserController extends Controller
     public function index(School $school, User $user)
     {
         return view('users.index', ['school' => $school->paginate(15), 'user' => $user->paginate(15) ]);
+        // dd($school);
     }
 
     /**
@@ -112,7 +116,6 @@ class UserController extends Controller
             $request->merge(['password' => Hash::make($request->get('password'))])
                 ->except([$hasPassword ? '' : 'password']
         ));
-
         return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
     }
 
@@ -127,5 +130,19 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('user.index')->withStatus(__('User successfully deleted.'));
+    }
+
+    public function perSchool($id){
+        $student = School::find($id)->students;
+        // $class = School::find($id)->class_id;
+        // $class_id = 
+        // $class = Classes::where('class_id', );
+        // $id = $school->id;
+        $school_name = School::where('id', $id)->pluck('school_name')->first();
+
+        $data = array(
+          'school_name' => $school_name,
+        );
+        return view('students.index', ['users' => $student, 'data'=>$data]);
     }
 }

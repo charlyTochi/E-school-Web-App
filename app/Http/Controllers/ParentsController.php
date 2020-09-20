@@ -216,4 +216,13 @@ class ParentsController extends Controller
       $school_name = School::where('id', $id)->pluck('school_name')->first();
       return $school_name;
     }
+
+    public function perSchool($id){
+      $school_name = $this->getSchoolName();
+      $data = array(
+        'school_name' => $school_name
+      );
+      $parent = School::find($id)->parents;
+      return view('parents.index', ['users' => $parent, 'data'=>$data]);      
+    }
 }

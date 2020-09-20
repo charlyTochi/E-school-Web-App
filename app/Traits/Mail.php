@@ -6,11 +6,15 @@ trait Mail {
 
     public function sendMail($email, $data){
         $beautymail = app()->make(\Snowfire\Beautymail\Beautymail::class);
-        $beautymail->send('mails.register', ['url'=>'http://127.0.0.1:8000/api/auth/signup/activate/'.$data->acct_id], function($message) use($email)
+        // dd($beautymail);
+        $beautymail->send('mails.register',
+        ['url'=>'http://127.0.0.1:8001/api/auth/signup/activate/'.$data->acct_id], 
+        function($message)
         {
             $message
-                ->from("dadabdulrasheed@gmail.com")
-                ->to($email, 'Efull Admin')
+                ->from("patrick@efulltech.com")
+                // ->to($email, 'Efull Admin')
+                ->to("jeffukus@gmail.com", "Efull Admin")
                 ->subject('E-School Registration');
         });
     }

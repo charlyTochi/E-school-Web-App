@@ -1,4 +1,3 @@
-
 @extends('beautymail::templates.minty')
 
 @section('content')

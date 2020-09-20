@@ -32,7 +32,11 @@ class School extends Model
   public function parents()
     {
         return $this->hasMany('App\Parents');
-    }
+    }    
+  public function class_id()
+  {
+        return $this->hasMany('App\Classes');
+  }
   /**
    * The attributes that should be hidden for arrays.
    *

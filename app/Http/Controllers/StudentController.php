@@ -49,10 +49,9 @@ class StudentController extends Controller
 
         $data = array(
           'school_name' => $school_name,
-
         );
-        // dd($arr);
-          return view('students.index', ['users' => $student, 'data'=>$data ]);
+        // dd($users);
+          return view('students.index', ['users' => $student, 'data'=> $data ]);
 
       }
     }
@@ -64,10 +63,11 @@ class StudentController extends Controller
      */
     public function create()
     {
-      $school_id = Auth::user()->school_id;
+      $school_id = Auth::user();
+      dd($school_id);
       $school_name = School::where('id', $school_id)->pluck('school_name')->first();
-      $father = User::where('school_id',  $school_id)->where('sex', 'male')->get()->toArray();
-      $mother = User::where('school_id',  $school_id)->where('sex', 'female')->get()->toArray();
+      $father = User::where('school_id',  $school_id)->where('sex', 'Male')->get()->toArray();
+      $mother = User::where('school_id',  $school_id)->where('sex', 'Female')->get()->toArray();
       $parents = Parents::where('school_id',  $school_id)->get()->toArray();
       $classes = Classes::where('school_id',  $school_id)->get()->toArray();
       $data = array(
@@ -77,7 +77,9 @@ class StudentController extends Controller
         'school_name' => $school_name,
         'classes' => $classes,
        );
-        return view('students.create', ['data' => $data]);
+        return view('students.create',
+         ['data' => $data]
+        );
     }
 
     /**
@@ -102,7 +104,7 @@ class StudentController extends Controller
           'religion' => 'required|string',
           'state_of_origin' => 'required|string',
           'card_code' => 'required|string',
-          'class_name' => 'required|string',
+          'class_id' => 'required|string',
           'primary_contact_id' => 'required|string',
           'primary_contact_rel' => 'required|string',
           'secondary_contact_id' => 'required|string',
@@ -111,6 +113,8 @@ class StudentController extends Controller
           'password' => 'required|string|confirmed'
           // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       ]);
+
+      // dd($request);
 
       $cat_code = $this->userRole('STUDENT');
       $full_name = $request->first_name. ' '. $request->last_name;
@@ -122,7 +126,7 @@ class StudentController extends Controller
         'father_id'=> $request->father_id,
         'mother_id'=> $request->mother_id,
         'school_id' =>Auth::user()->school_id,
-        'class_name'=> $request->class_name,
+        'class_id'=> $request->class_id,
         'card_code'=> $request->card_code,
         'date_of_birth'=> $request->date_of_birth,
         'nationality'=> $request->nationality,
@@ -232,7 +236,7 @@ class StudentController extends Controller
           $student = Student::find($id);
           $student->first_name =$request->get('first_name');
           $student->last_name =$request->get('last_name');
-          $student->class_name =$request->get('class_name');
+          $student->class_id =$request->get('class_name');
           $student->card_code =$request->get('card_code');
           // 'date_of_birth'=> $student->date_of_birth,
           // 'nationality'=> $student->nationality,
@@ -272,5 +276,24 @@ class StudentController extends Controller
 
       // redirect
       return redirect()->route('student.index')->withStatus(__('User successfully deleted.'));
+    }
+
+    public function openCreate($school_id){
+      $school_name = School::where('id', $school_id)->pluck('school_name')->first();
+      $father = Parents::where('school_id',  $school_id)->where('sex', 'Male')->get()->toArray();
+      $mother = Parents::where('school_id',  $school_id)->where('sex', 'Female')->get()->toArray();
+      $parents = Parents::where('school_id',  $school_id)->get()->toArray();
+      $classes = Classes::where('school_id',  $school_id)->get()->toArray();
+      // dd($classes);
+      $data = array(
+        'fathers' => $father,
+        'mothers' => $mother,
+        'parents' => $parents,
+        'school_name' => $school_name,
+        'classes' => $classes,
+       );
+        return view('students.create',
+         ['data' => $data]
+        );
     }
 }

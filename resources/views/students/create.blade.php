@@ -110,10 +110,10 @@
                   <label class="col-sm-2 col-form-label">{{ __('Class') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('class_name') ? ' has-danger' : '' }}">
-                      <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name"  data-style="btn btn-link" id="class_name" value="{{ old('class_name') }}" required>
+                      <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_id"  data-style="btn btn-link" id="class_name" value="{{ old('class_name') }}" required>
                         <option>Select Class</option>
                         @foreach($data['classes'] as $klass)
-                          <option value="{{$klass['id']}}">{{$klass['class']}}</option>
+                          <option value="{{$klass['id']}}">{{$klass['class_name']}}</option>
                         @endforeach
                       </select>
                       @if ($errors->has('class_name'))
@@ -125,8 +125,12 @@
                 <div class="row">
                   <label class="col-sm-2 col-form-label">{{ __('Sex') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('sex') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('sex') ? ' is-invalid' : '' }}" name="sex" id="input-motto" type="text" placeholder="{{ __('Sex') }}" value="{{ old('sex') }}" required="true" aria-required="true"/>
+                  <div class="form-group{{ $errors->has('sex') ? ' has-danger' : '' }}">
+                      <select class="form-control{{ $errors->has('sex') ? ' is-invalid' : '' }}" name="sex"  data-style="btn btn-link" id="sex" value="{{ old('sex') }}" required>
+                        <option>Select Sex</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
                       @if ($errors->has('sex'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('sex') }}</span>
                       @endif

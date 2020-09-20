@@ -19,4 +19,7 @@ class Student extends Model
     public function school(){
       return $this->belongsTo('App\School', "school_id");
     }
+    public function class_name(){
+      return $this->belongsTo('App\Classes', "class_id");
+    }
 }

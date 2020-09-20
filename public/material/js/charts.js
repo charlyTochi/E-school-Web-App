@@ -11,7 +11,7 @@
 		},
 
 		ajaxGetPostMonthlyData: function () {
-			var urlPath =  'http://127.0.0.1:8000/get-post-chart-data';
+			var urlPath =  'http://127.0.0.1:8001/get-post-chart-data';
 			var request = $.ajax( {
 				method: 'GET',
 				url: urlPath
@@ -36,7 +36,7 @@
 					datasets: [{
 						label: "Sessions",
 						lineTension: 0.3,
-						backgroundColor: "rgba(2,117,216,0.2)",
+						backgroundColor: "rgba(2,0,0,0.2)",
 						borderColor: "rgba(2,117,216,1)",
 						pointRadius: 5,
 						pointBackgroundColor: "rgba(2,117,216,1)",
