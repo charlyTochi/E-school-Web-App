@@ -121,7 +121,7 @@ class ParentsController extends Controller
         'acct_id' => $acct_id,
       ]);
       $user->save();
-      $this->sendMail($request->email, $user );
+      // $this->sendMail($request->email, $user );
         return redirect()->route('parents.index')->withStatus(__($full_name.' successfully registered their ward(s) in your school.'));
     }
 
@@ -224,5 +224,9 @@ class ParentsController extends Controller
       );
       $parent = School::find($id)->parents;
       return view('parents.index', ['users' => $parent, 'data'=>$data]);      
+    }
+
+    public function getChildren($id){
+      
     }
 }

@@ -35,7 +35,7 @@
                 @if (Auth::user()->user_category != '77889' )
                 <div class="row">
                   <div class="col-12 text-right">
-                    <a href="{{ route('student.create') }}" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
+                    <a href="/student/{{ $users[0]->school_id}}/custom_create" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
                   </div>
                 </div>
                 @endif
@@ -72,7 +72,11 @@
                             {{ $user->first_name. ' '. $user->last_name }}
                           </td>
                           <td>
-                            {{ $user->class_name->class_name }}
+                            @if(is_object($user->class_name) )
+                              {{ $user->class_name->class_name }}
+                            @else
+                              JSS 
+                            @endif
                           </td>
                           <td>
                           <img class="image" id="image" src="{{ asset('public/image')}}/<?php echo $user->profile_image ? $user->profile_image : "defualt.png"?>" width="50" height="50">
@@ -116,10 +120,10 @@
             @else
               <div class="customInfo">
                 No information for this school
-                @if (Auth::user()->user_category == '77889' )
+                @if (Auth::user()->user_category != '77889' )
                 <div class="row">
                   <div class="col-12">
-                    <a href="{{ route('student.create') }}" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
+                    <a href="/student/{{Auth::user()->id}}/custom_create" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
                   </div>
                 </div>
                 @endif

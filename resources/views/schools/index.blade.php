@@ -11,14 +11,14 @@
               <div class="card-icon">
                 <i class="fa fa-gear"></i>
               </div>
-              <p class="card-category">Total Users</p>
-              <h3 class="card-title">
-                <small>Management</small>
+            <p class="card-category">Class</p>
+              <h3 class="card-title"> {{number_format($data['classes'])}}
+                <small>Classes</small>
               </h3>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="fa fa-users text-danger"></i>Management
+                <i class="fa fa-users text-danger"></i> All Classes
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="fas fa-chalkboard-teacher"></i>All teacher
+                            <i class="fas fa-chalkboard-teacher"></i> All teacher
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="card-footer">
                 <div class="stats">
-                    <i class="fa fa-users text-danger"></i>All student
+                    <i class="fa fa-users text-danger"></i> All student
                 </div>
                 </div>
             </div>
@@ -138,6 +138,46 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-md-4">
+          <a href="/school/{{$data["school_id"]}}/settings">
+            <div class="card card-stats">
+              <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                  <i class="fa fa-gear"></i>
+                </div>
+                <p class="card-category">Settings</p>
+                <h3 class="card-title">
+                  <small>Settings</small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="fa fa-gear text-warning"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="/school/{{$data["school_id"]}}/student_logs">
+            <div class="card card-stats">
+              <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                  <i class="fa fa-gear"></i>
+                </div>
+                <p class="card-category">Student Logs</p>
+                <h3 class="card-title">
+                  <small>Student Logs</small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="fa fa-gear text-warning"></i>
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </div>

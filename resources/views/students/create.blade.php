@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('student.store') }}" autocomplete="off" class="form-horizontal" enctype="multipart/form-data">
+          <form method="post" action="/student/{{$data["school_id"]}}/custom_store" autocomplete="off" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             @method('post')
 
@@ -110,7 +110,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Class') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('class_name') ? ' has-danger' : '' }}">
-                      <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_id"  data-style="btn btn-link" id="class_name" value="{{ old('class_name') }}" required>
+                      <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name"  data-style="btn btn-link" id="class_name" value="{{ old('class_name') }}" required>
                         <option>Select Class</option>
                         @foreach($data['classes'] as $klass)
                           <option value="{{$klass['id']}}">{{$klass['class_name']}}</option>

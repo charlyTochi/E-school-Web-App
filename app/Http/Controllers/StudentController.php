@@ -63,12 +63,12 @@ class StudentController extends Controller
      */
     public function create()
     {
-      $school_id = Auth::user();
+      $school_id = Auth::user()->school_id;
       dd($school_id);
       $school_name = School::where('id', $school_id)->pluck('school_name')->first();
-      $father = User::where('school_id',  $school_id)->where('sex', 'Male')->get()->toArray();
-      $mother = User::where('school_id',  $school_id)->where('sex', 'Female')->get()->toArray();
-      $parents = Parents::where('school_id',  $school_id)->get()->toArray();
+      $father = Parents::where('school_id',  $school_id)->get()->toArray();
+      $mother = Parents::where('school_id',  $school_id)->get()->toArray();
+      $parents = User::where('school_id',  $school_id)->get()->toArray();
       $classes = Classes::where('school_id',  $school_id)->get()->toArray();
       $data = array(
         'fathers' => $father,
@@ -104,7 +104,7 @@ class StudentController extends Controller
           'religion' => 'required|string',
           'state_of_origin' => 'required|string',
           'card_code' => 'required|string',
-          'class_id' => 'required|string',
+          'class_name' => 'required|string',
           'primary_contact_id' => 'required|string',
           'primary_contact_rel' => 'required|string',
           'secondary_contact_id' => 'required|string',
@@ -125,8 +125,8 @@ class StudentController extends Controller
         'email'=> $request->email,
         'father_id'=> $request->father_id,
         'mother_id'=> $request->mother_id,
-        'school_id' =>Auth::user()->school_id,
-        'class_id'=> $request->class_id,
+        'school_id' => Auth::user()->school_id,
+        'class_id' => $request->class_name,
         'card_code'=> $request->card_code,
         'date_of_birth'=> $request->date_of_birth,
         'nationality'=> $request->nationality,
@@ -168,7 +168,7 @@ class StudentController extends Controller
           'acct_id' => $acct_id,
         ]);
         $user->save();
-        $this->sendMail($request->email, $user );
+        // $this->sendMail($request->email, $user );
         return redirect()->route('student.index')->withStatus(__($full_name.' successfully registered in your school.'));
     }
 
@@ -288,6 +288,28 @@ class StudentController extends Controller
       $data = array(
         'fathers' => $father,
         'mothers' => $mother,
+        'school_id' => $school_id,
+        'parents' => $parents,
+        'school_name' => $school_name,
+        'classes' => $classes,
+       );
+        return view('students.create',
+         ['data' => $data]
+        );
+      }
+
+    public function myCreate($id)
+    {
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $father = Parents::where('school_id',  $id)->get()->toArray();
+      $mother = Parents::where('school_id',  $id)->get()->toArray();
+      $parents = Parents::where('school_id',  $id)->get()->toArray();
+      $classes = Classes::where('school_id',  $id)->get()->toArray();
+      $data = array(
+        'school_id' => $id,
+        'fathers' => $father,
+        'mothers' => $mother,
+        'school_id' => $id,
         'parents' => $parents,
         'school_name' => $school_name,
         'classes' => $classes,
@@ -296,4 +318,89 @@ class StudentController extends Controller
          ['data' => $data]
         );
     }
+
+    public function customStore(Request $request, $id)
+    {
+      $request->validate([
+          'first_name' => 'required|string',
+          'sex' => 'required|string',
+          'email' => 'required|string|email|unique:users',
+          'last_name' => 'required|string',
+          'address' => 'required|string',
+          'father_id' => 'required|string',
+          'mother_id' => 'required|string',
+          'date_of_birth' => 'required|string',
+          'nationality' => 'required|string',
+          'religion' => 'required|string',
+          'state_of_origin' => 'required|string',
+          'card_code' => 'required|string',
+          'class_name' => 'required|string',
+          'primary_contact_id' => 'required|string',
+          'primary_contact_rel' => 'required|string',
+          'secondary_contact_id' => 'required|string',
+          'secondary_contact_rel' => 'required|string',
+          'local_govt' => 'required|string',
+          'password' => 'required|string|confirmed'
+          // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      ]);
+
+      // dd($request->class_name);
+
+      $cat_code = $this->userRole('STUDENT');
+      $full_name = $request->first_name. ' '. $request->last_name;
+      $acct_id = Str::random(60);
+      $student = new Student([
+        'first_name'=> $request->first_name,
+        'last_name'=> $request->last_name,
+        'email'=> $request->email,
+        'father_id'=> $request->father_id,
+        'mother_id'=> $request->mother_id,
+        'school_id' => $id,
+        'class_id' => $request->class_name,
+        'card_code'=> $request->card_code,
+        'date_of_birth'=> $request->date_of_birth,
+        'nationality'=> $request->nationality,
+        'religion'=> $request->religion,
+        'state_of_origin'=> $request->state_of_origin,
+        'local_govt'=> $request->local_govt,
+        'address'=> $request->address,
+        'primary_contact_id'=> $request->primary_contact_id,
+        'primary_contact_rel'=> $request->primary_contact_rel,
+        'secondary_contact_id'=> $request->secondary_contact_id,
+        'secondary_contact_rel'=> $request->secondary_contact_rel,
+        'sex'=> $request->sex,
+        'acct_id'=> $acct_id
+      ]);
+
+      if($request->hasFile('profile_image')){
+        $image = $request->file('profile_image');
+        $filename = time(). $request->card_code. '.' . $image->getClientOriginalExtension();
+        $destinationPath = 'public/image/'; // upload path
+        $image->move($destinationPath, $filename);
+        $student->profile_image = $filename;  
+      }
+        $student->save();
+        
+        $account = new Account([
+          'acct_id'=> $acct_id,
+          'user_id'=> $student->id,
+          'account_type_id' => 5,
+          'school_id' =>Auth::user()->school_id,
+        ]);
+       $account->save();
+
+        $user = new User([
+          'name'=> $full_name,
+          'password' => Hash::make($request->get('password')),
+          'external_table_id' => $student->id,
+          'email' => $request->email,
+          'user_category' => $cat_code,
+          'school_id' =>Auth::user()->school_id,
+          'acct_id' => $acct_id,
+        ]);
+        $user->save();
+        // $this->sendMail($request->email, $user );
+        return redirect()->route('student.index')->withStatus(__($full_name.' successfully registered in your school.'));
+    }
+
 }

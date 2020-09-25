@@ -8,6 +8,8 @@ use App\Parents;
 use App\Student;
 use App\SentMessage;
 use App\User;
+use App\Classes;
+use App\StudentLog;
 
 class SchoolController extends Controller
 {
@@ -37,6 +39,7 @@ class SchoolController extends Controller
         $student = Student::where('school_id', $id)->get()->count();
         $teacher = Teacher::where('school_id', $id)->get()->count();
         $parents = Parents::where('school_id', $id)->get()->count();
+        $classes = Classes::where('school_id', $id)->get()->count();
         $message_sent = SentMessage::where('school_id', $id)->get()->count();
 
         // $request->session()->put('school_name', $school_name);
@@ -47,8 +50,32 @@ class SchoolController extends Controller
             'parents' => $parents,
             'student' => $student,
             'message_sent' => $message_sent,
-            'school_id' => $id
+            'school_id' => $id,
+            'classes' => $classes
         );
         return view('schools.index', ['data' => $data]);
+    }
+
+    public function schoolSettings($id){
+        return view('school.index');
+    }
+
+    public function getStudentLogs(){
+        $logs = StudentLog::orderBy("id", "DESC")->paginate(10);
+        return view('schools.studentsLog', ['data' => $logs]);
+    }
+
+    public function getEachStudentLogs($id){
+        $arr = [];
+        $students = Student::where('school_id', $id)->get();
+        foreach($students as $student){
+            $logs = StudentLog::where('card_code', $student->card_code)->orderBy("id", "DESC")->paginate(10);
+            array_push($arr, $logs);
+        }
+        if (count($arr) > 0){
+            return view('schools.studentsLog', ['data' => $arr[0]]);
+        }else{
+            return view('schools.studentsLog', ['data' => []]);
+        }
     }
 }

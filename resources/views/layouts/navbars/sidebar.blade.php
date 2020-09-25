@@ -43,6 +43,12 @@
             <span class="sidebar-normal"> {{ __('Schools') }} </span>
           </a>
         </li>
+        <li class="nav-item{{ $activePage == 'student_log' ? ' active' : '' }}">
+          <a class="nav-link" href="/school/student_logs">
+            <i class="fas fa-history"></i>
+            <span class="sidebar-normal"> {{ __('Students Log') }} </span>
+          </a>
+        </li>
       @else
         <li class="nav-item{{ $activePage == 'student' ? ' active' : '' }}">
           <a class="nav-link" href="{{ route('student.index') }}">
@@ -86,6 +92,12 @@
               </li>
             </ul>
           </div>
+        </li>
+        <li class="nav-item{{ $activePage == 'student_log' ? ' active' : '' }}">
+          <a class="nav-link" href="/school/{{Auth::user()->id}}/student_logs">
+            <i class="fas fa-history"></i>
+            <span class="sidebar-normal"> {{ __('Students Log') }} </span>
+          </a>
         </li>
       @endif
     </ul>

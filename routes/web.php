@@ -83,9 +83,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('{school_id}/parent', 'ParentsController@perSchool')->middleware("auth");
 	Route::resource('student', 'StudentController', ['except' => ['show']]);
 	Route::get('studentCreate/{school_id}', 'StudentController@openCreate');
+	Route::get('student/{id}/custom_create', 'StudentController@myCreate')->middleware("auth");
+	Route::post('student/{id}/custom_store', 'StudentController@customStore')->middleware("auth");
 	Route::get('{school_id}/student', 'UserController@perSchool')->middleware("auth");
 	Route::resource('teacher', 'TeacherController', ['except' => ['show']]);
 	Route::get('{school_id}/teacher', 'TeacherController@perSchool')->middleware("auth");
+	Route::get('school/{id}/settings', 'SchoolController@schoolSettings')->middleware("auth");
+	Route::get('school/student_logs', 'SchoolController@getStudentLogs')->middleware("auth");
+	Route::get('school/{id}/student_logs', 'SchoolController@getEachStudentLogs')->middleware("auth");
     Route::resource('message', 'MessageController', ['except' => ['show']]);
 	Route::resource('classes', 'ClassController', ['except' => ['show']]);
 	Route::get('details/{id}', 'StudentController@details')->name('details');
