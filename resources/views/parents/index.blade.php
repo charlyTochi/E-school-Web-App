@@ -6,15 +6,15 @@
       <div class="row">
         <div class="col-md-12">
             <div class="card">
-              <div class="card-header card-header-warning">
-                <h4 class="card-title ">{{ __('Parents') }}</h4>
+              <div class="card-header card-header dark-violet">
+                <h4 class="card-title text-white">{{ __('Parents') }}</h4>
                 <p class="card-category"> {{ __('Here you can manage your school Parents') }}</p>
               </div>
               <div class="card-body">
                 @if (session('status'))
                   <div class="row">
                     <div class="col-sm-12">
-                      <div class="alert alert-warning">
+                      <div class="alert alert-success">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <i class="material-icons">close</i>
                         </button>
@@ -23,17 +23,23 @@
                     </div>
                   </div>
                 @endif
-                @if (Auth::user()->user_category != '77889' )
+                {{-- @if (Auth::user()->user_category != '77889' ) --}}
                 <div class="row">
                   <div class="col-12 text-right">
-                    <a href="{{ route('parents.create') }}" class="btn btn-sm btn-warning">{{ __('Add Parent') }}</a>
-                    <a href="{{ route('add') }}" class="btn btn-sm btn-warning">{{ __('Add Account') }}</a>
+                    @if(Auth::user()->user_category == '77889')
+                      <a href="/{{$data['school_id']}}/parents/add" class="btn btn-sm btn-warning">{{ __('Add Parent') }}</a>
+                    @else
+                      <a href="{{ route('parents.create') }}" class="btn btn-sm btn-warning">{{ __('Add Parent') }}</a>
+                    @endif
+                    <a href="" class="btn btn-sm btn-warning">{{ __('Send Broadcast') }}</a>
                   </div>
                 </div>
-                @endif
+                <div id="example"></div>
+                {{-- @endif --}}
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">
+                      <th></th>
                       <th>
                           {{ __('Name') }}
                       </th>
@@ -53,6 +59,9 @@
                     <tbody>
                       @foreach($users as $user)
                         <tr>
+                          <td>
+                            <input type="checkbox" value={{$user->id}}>
+                          </td>
                           <td>
                             {{ $user->first_name .' '. $user->last_name }}
                           </td>

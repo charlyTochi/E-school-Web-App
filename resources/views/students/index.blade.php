@@ -6,7 +6,9 @@
       <div class="row">
         <div class="col-md-12">
           <div class="">
-            <a href="{{ route('user.index')}}" class="btn btn-sm btn-warning">{{ __('School') }}</a>
+            @if (Auth::user()->user_category == '77889' )
+              <a href="{{ route('user.index')}}" class="btn btn-sm btn-warning">{{ __('School') }}</a>
+            @endif
             <a href="#" class="btn btn-sm btn-default">{{ __('Students') }}</a>
           </div>
         </div>
@@ -32,13 +34,17 @@
                     </div>
                   </div>
                 @endif
-                @if (Auth::user()->user_category != '77889' )
+                {{-- @if (Auth::user()->user_category != '77889'  ) --}}
                 <div class="row">
                   <div class="col-12 text-right">
-                    <a href="/student/{{ $users[0]->school_id}}/custom_create" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
+                    @if(Auth::user()->user_category == '77889')
+                      <a href="/student/{{ $users[0]->school_id}}/custom_create" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
+                    @else
+                      <a href="{{ route('student.create') }}" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
+                    @endif
                   </div>
                 </div>
-                @endif
+                {{-- @endif --}}
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">
@@ -120,13 +126,15 @@
             @else
               <div class="customInfo">
                 No information for this school
-                @if (Auth::user()->user_category != '77889' )
                 <div class="row">
                   <div class="col-12">
-                    <a href="/student/{{Auth::user()->id}}/custom_create" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
+                    @if (Auth::user()->user_category == '77889' )
+                      <a href="/student/{{$data["school_id"]}}/custom_create" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
+                    @else
+                      <a href="/student/create" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
+                    @endif
                   </div>
                 </div>
-                @endif
               </div>
             @endif
             </div>
@@ -137,58 +145,58 @@
 
   <!-- modal view -->
   @foreach($users as $user)
-  <div class="modal fade" id="exampleModalLong{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Student Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <img class="image" id="image" src="{{ asset('public/image')}}/<?php echo $user->profile_image ? $user->profile_image : "defualt.png"?>" width="100" height="100">
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <h4>Student Name</h4>
-            </div>
-            <div class="col-md-6">
-              <p>{{$user->first_name . ' '. $user->last_name}}</p>
-            </div>
+    <div class="modal fade" id="exampleModalLong{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Student Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h4 class="text-dark">Class</h4>
+          <img class="image" id="image" src="{{ asset('public/image')}}/<?php echo $user->profile_image ? $user->profile_image : "defualt.png"?>" width="100" height="100">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Student Name</h4>
+              </div>
+              <div class="col-md-6">
+                <p>{{$user->first_name . ' '. $user->last_name}}</p>
+              </div>
             </div>
-            <div class="col-md-6">
-              <p>{{$user->class_name}}</p>
+            <div class="row">
+              <div class="col-md-6">
+                <h4 class="text-dark">Class</h4>
+              </div>
+              <div class="col-md-6">
+                <p>{{$user->class_name->class_name ?? ""}}</p>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h4>Sex</h4>
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Sex</h4>
+              </div>
+              <div class="col-md-6">
+                <p>{{$user->sex}}</p>
+              </div>
             </div>
-            <div class="col-md-6">
-              <p>{{$user->sex}}</p>
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Primary contact</h4>
+              </div>
+              <div class="col-md-6">
+                <h4>{{$user->id}}</h4>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h4>Primary contact</h4>
-            </div>
-            <div class="col-md-6">
-              <h4>{{$user->id}}</h4>
-            </div>
-          </div>
-          <div class="row">
+            <div class="row">
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a href="" class="btn btn-warning" data-dismiss="modal">View All</a>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a href="" class="btn btn-warning" data-dismiss="modal">View All</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   @endforeach
 @endsection

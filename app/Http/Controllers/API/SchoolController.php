@@ -9,6 +9,8 @@ use App\Traits\Utilities;
 use App\School;
 use App\Student;
 use App\User;
+use App\StudentLog;
+use App\Classes;
 
 use Illuminate\Support\Str;
 
@@ -90,10 +92,15 @@ class SchoolController extends Controller
                    'message' => 'Unauthorized'
                ], 401);
 
-
            $user = Auth::User();
            $id = Auth::user()->external_table_id;
-           $all_student = Student::where('school_id', $id)->get();
+           $students = array();
+           $all_students = Student::where('school_id', $id)->get();
+           $school_info = School::find($user->school_id);
+          //  return $all_students;
+           foreach($all_students as $student){
+              $student->class_id = Classes::where('id', $student->class_id)->get()[0];
+           }
            $success = 'Login Successfull';
            $tokenResult = $user->createToken('Personal Access Token');
            $token = $tokenResult->token;
@@ -102,8 +109,9 @@ class SchoolController extends Controller
                'access_token' => $tokenResult->accessToken,
                'message' => $success,
                'user' => $user,
+               'school_info' => $school_info,
                'token_type' => 'Bearer',
-               'students' => $all_student
+               'students' => $all_students
            ], 200);
        }
 
@@ -124,4 +132,10 @@ class SchoolController extends Controller
     //   ], 500);
     // }
   }
+  
+  
+    public function studentLogInfo($id){
+        $logs = StudentLog::where('card_code', $id)->orderBy('id', 'DESC')->paginate(10);
+        return json_encode(['data' => $logs]);
+    }
 }

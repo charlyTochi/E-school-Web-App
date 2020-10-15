@@ -10,8 +10,8 @@
             @method('put')
 
             <div class="card ">
-              <div class="card-header card-header-warning">
-                <h4 class="card-title">{{ __('Edit Profile') }}</h4>
+              <div class="card-header card-header dark-violet">
+                <h4 class="card-title main-head">{{ __('Edit Profile') }}</h4>
                 <p class="card-category">{{ __('User information') }}</p>
               </div>
               <div class="card-body ">
@@ -64,8 +64,8 @@
             @method('put')
 
             <div class="card ">
-              <div class="card-header card-header-warning">
-                <h4 class="card-title">{{ __('Change password') }}</h4>
+              <div class="card-header card-header dark-violet">
+                <h4 class="card-title main-head">{{ __('Change password') }}</h4>
                 <p class="card-category">{{ __('Password') }}</p>
               </div>
               <div class="card-body ">

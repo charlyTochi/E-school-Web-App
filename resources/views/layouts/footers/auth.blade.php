@@ -24,7 +24,7 @@
         </li>
       </ul>
     </nav> -->
-    <div class="copyright text-center text-white">
+    <div class="copyright text-center" style="color: #2d2c3e">
       &copy;
       <script>
         document.write(new Date().getFullYear())

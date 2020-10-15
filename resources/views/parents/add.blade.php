@@ -17,7 +17,7 @@
                 </div>
               </div>
             @endif
-          <form method="post" action="{{ route('addAccount') }}" autocomplete="off" class="form-horizontal">
+          <form method="post" action="/{{$data['id']}}/parent/storeParent" autocomplete="off" class="form-horizontal">
             @csrf
             @method('post')
 

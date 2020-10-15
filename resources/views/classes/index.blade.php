@@ -1,5 +1,6 @@
 @extends('layouts.app', ['activePage' => 'class', 'titlePage' => __('Classes')])
 
+
 @section('content')
   <div class="content">
     <div class="container-fluid">
@@ -14,22 +15,42 @@
                 @if (session('status'))
                   <div class="row">
                     <div class="col-sm-12">
-                      <div class="alert alert-success">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <i class="material-icons">close</i>
-                        </button>
-                        <span>{{ session('status') }}</span>
-                      </div>
+                      <a href="{{ route('parents.create') }}">
+                        <div class="alert alert-success">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="material-icons">close</i>
+                          </button>
+                          <span>{{ session('status') }}</span>
+                        </div>
+                      </a>
                     </div>
                   </div>
                 @endif
-                @if (Auth::user()->user_category != '77889' )
+                @if (session('goto'))
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a href="{{ route('classes.index') }}">
+                        <div class="alert alert-info">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="material-icons">close</i>
+                          </button>
+                          <span>{{ session('goto') }}</span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                @endif
+                {{-- @if (Auth::user()->user_category != '77889' ) --}}
                 <div class="row">
                   <div class="col-12 text-right">
-                    <a href="{{ route('classes.create') }}" class="btn btn-sm btn-warning">{{ __('Add Class') }}</a>
+                    @if(Auth::user()->user_category == '77889')
+                      <a href="/{{$data["id"]}}/addClass" class="btn btn-sm btn-warning">{{ __('Add Class') }}</a>
+                    @else
+                      <a href="{{ route('classes.create') }}" class="btn btn-sm btn-warning">{{ __('Add Class') }}</a>
+                    @endif
                   </div>
                 </div>
-                @endif
+                {{-- @endif --}}
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">
@@ -50,7 +71,7 @@
                       @foreach($classes as $class)
                         <tr>
                           <td>
-                            {{ $class->class}}
+                            {{ $class->class_name}}
                           </td>
                           <td>
                             {{ $class->department }}

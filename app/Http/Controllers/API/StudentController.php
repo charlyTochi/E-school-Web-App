@@ -18,6 +18,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Http;
+use Parse\ParseClient;
+use Parse\ParseObject;
 
 class StudentController extends Controller
 {
@@ -26,8 +29,10 @@ class StudentController extends Controller
       $objects = json_decode($request->getContent(), true);
       $responses = [];
       foreach ($objects as $key => $obj) {
+        // $card_code = $obj["card_code"];
+        // $timestamp = $obj["timestamp"];
         $card_code = $obj["card_code"];
-        $timestamp = $obj["timestamp"];
+        $timestamp = $obj["log_timestamp"];
         $year = date('Y');
         $month = date('m');
         $day = date('d');
@@ -190,6 +195,7 @@ class StudentController extends Controller
           ]);
         }
       }
+      array_push($responses, $this->sendToParseServer($responses));
       return json_encode($responses);
   }
 
@@ -233,5 +239,66 @@ public function message($log, $student_school, $student_name, $timestamp){
     return $message;
   }
 }
+
+  public function sendToParseServer($requests)
+  {
+    ParseClient::initialize( "tQGDY6msG4KXkdCj2x7IqWc883y7mYWoKrZNNbuz", "EOCQ03v8J70rkFkozDyndBDw6ql4xmop4rijf8wg", "nLEZfE0ZorvHYPuyn8rAr3mmeL0yaXQnZl9ad29r" );
+    ParseClient::setServerURL('https://emenu.back4app.io', '/');
+
+    $arr = [];
+
+    foreach($requests as $_request){
+      $myCustomObject = new ParseObject("eschoolNotifier");
+      $myCustomObject->set("card_code", $_request["payload"]["card_code"]);
+      $myCustomObject->set("school_id", $_request["payload"]["school_id"]);
+      $myCustomObject->set("is_logged_in", $_request["payload"]["is_logged_in"]);
+      $myCustomObject->set("log_timestamp", $_request["payload"]["log_timestamp"]);
+      $myCustomObject->set("log_day", $_request["payload"]["log_day"]);
+      $myCustomObject->set("log_month", $_request["payload"]["log_month"]);
+      $myCustomObject->set("log_year", $_request["payload"]["log_year"]);
+      $myCustomObject->set("log_hour", $_request["payload"]["log_hour"]);
+      $myCustomObject->set("log_min", $_request["payload"]["log_min"]);
+      $myCustomObject->set("log_sec", $_request["payload"]["log_sec"]);
+
+      try {
+        $myCustomObject->save();
+        array_push($arr, [
+          "message" => 'New object created with objectId: ' . $myCustomObject->getObjectId(),
+          "response" => 200,
+        ]);
+      } catch (ParseException $ex) {
+        // Execute any logic that should take place if the save fails.
+        // error is a ParseException object with an error code and message.
+        echo 'Failed to create new object, with error message: ' . $ex->getMessage();
+      }
+    }
+    return json_encode($arr);
+    // $client = new Client();
+    // foreach($requests as $request){
+    //   $old = json_encode($request);
+    //   $_request = json_decode($old, true);
+    //   $is_logged_in = $request["payload"]["is_logged_in"] === 'true' ? true : false;
+    //   $res = $client->request('POST', 'https://emenu.back4app.io/classes/eschoolNotifier', [
+    //       'headers' => [
+    //         "X-Parse-Application-Id" => "tQGDY6msG4KXkdCj2x7IqWc883y7mYWoKrZNNbuz",
+    //         "X-Parse-REST-API-Key" => "EOCQ03v8J70rkFkozDyndBDw6ql4xmop4rijf8wg"
+    //       ],
+    //       'form_params' => [
+    //         "log_year" => $_request["payload"]["log_year"],
+    //         "log_day" => $_request["payload"]["log_day"],
+    //         "log_month" => $_request["payload"]["log_month"],
+    //         "log_min" => $_request["payload"]["log_min"],
+    //         "log_sec" => $_request["payload"]["log_sec"],
+    //         "log_hour" => $_request["payload"]["log_hour"],
+    //         "log_timestamp" => $_request["payload"]["log_timestamp"],
+    //         "is_logged_in" => $_request["payload"]["is_logged_in"] === 'true' ? true : false,
+    //         "card_code" => $_request["payload"]["card_code"],
+    //         "school_id" => $_request["payload"]["school_id"]
+    //       ]
+    //   ]);
+    //   echo $res->getBody();
+    //   // {"type":"User"...'
+    // }
+  }
 
 }

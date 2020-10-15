@@ -1,130 +1,203 @@
 @extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
 
 @section('content')
-  <div class="content">
+  <div class="content" style="background: #f2f2f2">
     <div class="container-fluid">
       <!-- users statiscs start here -->
       <div class="row">
+        <div class="col-md-12">
+          <div class="badge badge-info p-2">
+            <i class="fa fa-info-circle" style="color: white"></i>
+              Ensure to create classes before creating parents => create parents before creating teachers => create teachers before creating students <br/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         @if (Auth::user()->user_category == '77889' )
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
+          <div class="card card-stats p-3">
             <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
+              {{-- <div class="card-icon">
                 <i class="fa fa-users"></i>
-              </div>
+              </div> --}}
               <p class="card-category">Total Users</p>
-              <h3 class="card-title">{{number_format($data['total'])}} <br>
+              <h3 class="card-title">{{number_format($data['total'])}}
                 <small>Users</small>
               </h3>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="fa fa-users text-danger"></i>All users
+                <i class="fa fa-users text-danger"></i>
               </div>
             </div>
           </div>
         </div>
         @endif
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="fas fa-school"></i>
+          @if(Auth::user()->user_category != '77889')
+            <a href="classes">
+              <div class="card card-stats p-3">
+                <div class="card-header card-header-warning card-header-icon">
+                  {{-- <div class="card-icon">
+                    <i class="fas fa-school"></i>
+                  </div> --}}
+                  <p class="card-category">Classes</p>
+                  <h3 class="card-title">{{number_format($data['classes'])}}
+                      <small>Classes</small>
+                  </h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="fas fa-school text-primary"></i>
+                  </div>
+                </div>
               </div>
-              <p class="card-category">Schools</p>
-              <h3 class="card-title">{{number_format($data['school'])}}
-                  <small>Schools</small>
-              </h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="fas fa-school text-primary"></i> All school
+            </a>
+          @else
+            <div class="card card-stats p-3">
+              <div class="card-header card-header-warning card-header-icon">
+                {{-- <div class="card-icon">
+                  <i class="fas fa-school"></i>
+                </div> --}}
+                <p class="card-category">Classes</p>
+                <h3 class="card-title">{{number_format($data['classes'])}}
+                    <small>Classes</small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="fas fa-school text-primary"></i>
+                </div>
               </div>
             </div>
-          </div>
+          @endif
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-user-friends"></i>
+          @if(Auth::user()->user_category != '77889')
+            <a href="parents">
+              <div class="card card-stats p-3">
+                <div class="card-header card-header-warning card-header-icon">
+                  {{-- <div class="card-icon">
+                    <i class="fa fa-user-friends"></i>
+                  </div> --}}
+                  <p class="card-category">Parents</p>
+                  <h3 class="card-title">{{number_format($data['parents'])}}
+                    <small>Parents</small>
+                  </h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="fa fa-user-friends text-warning"></i>
+                  </div>
+                </div>
               </div>
-              <p class="card-category">Parents</p>
-              <h3 class="card-title">{{number_format($data['parents'])}}
-                <small>Parents</small>
-              </h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="fa fa-user-friends text-warning"></i> All parent
+            </a>
+          @else
+            <div class="card card-stats p-3">
+              <div class="card-header card-header-warning card-header-icon">
+                {{-- <div class="card-icon">
+                  <i class="fa fa-user-friends"></i>
+                </div> --}}
+                <p class="card-category">Parents</p>
+                <h3 class="card-title">{{number_format($data['parents'])}}
+                  <small>Parents</small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="fa fa-user-friends text-warning"></i>
+                </div>
               </div>
             </div>
-          </div>
+          @endif
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="fas fa-chalkboard-teacher"></i>
+          @if(Auth::user()->user_category != '77889')
+            <a href="teacher">
+              <div class="card card-stats p-3">
+                <div class="card-header card-header-warning card-header-icon">
+                  {{-- <div class="card-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                  </div> --}}
+                  <p class="card-category">Teachers</p>
+                  <h3 class="card-title">{{number_format($data['teacher'])}}
+                    <small> Teachers</small>
+                  </h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                  </div>
+                </div>
               </div>
-              <p class="card-category">Teachers</p>
-              <h3 class="card-title">{{number_format($data['teacher'])}}
-                <small> Teachers</small>
-              </h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="fas fa-chalkboard-teacher"></i>All teacher
+            </a>
+          @else
+            <div class="card card-stats p-3">
+              <div class="card-header card-header-warning card-header-icon">
+                {{-- <div class="card-icon">
+                  <i class="fas fa-chalkboard-teacher"></i>
+                </div> --}}
+                <p class="card-category">Teachers</p>
+                <h3 class="card-title">{{number_format($data['teacher'])}}
+                  <small> Teachers</small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="fas fa-chalkboard-teacher"></i>
+                </div>
               </div>
             </div>
-          </div>
+          @endif
         </div>
         @if (Auth::user()->user_category != '77889' )
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-users"></i>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <a href="student">
+              <div class="card card-stats p-3">
+                <div class="card-header card-header-warning card-header-icon">
+                  {{-- <div class="card-icon">
+                    <i class="fa fa-users"></i>
+                  </div> --}}
+                  <p class="card-category">Total Students</p>
+                  <h3 class="card-title">{{number_format($data['student'])}}
+                    <small>Student</small>
+                  </h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="fa fa-users text-danger"></i>
+                  </div>
+                </div>
               </div>
-              <p class="card-category">Total Student</p>
-              <h3 class="card-title">{{number_format($data['student'])}} <br>
-                <small>Student</small>
-              </h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="fa fa-users text-danger"></i>All student
-              </div>
-            </div>
+            </a>
           </div>
-        </div>
         @endif
       </div>
       <div class="row ">
         <div class="col-md-4">
-          <div class="card card-stats">
+          <div class="card card-stats p-3">
             <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
+              {{-- <div class="card-icon">
                 <i class="fa fa-mail-bulk"></i>
-              </div>
+              </div> --}}
               <p class="card-category">All Message</p>
-              <h3 class="card-title">{{number_format($data['student'])}} <br>
+              <h3 class="card-title">{{number_format($data['student'])}}
                 <small>All Message</small>
               </h3>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="fa fa-mail-bulk text-warning"></i> All messsages
+                <i class="fa fa-mail-bulk text-warning"></i>
               </div>
             </div>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card card-stats">
+          <div class="card card-stats p-3">
             <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
+              {{-- <div class="card-icon">
                 <i class="fa fa-envelope-open-text"></i>
-              </div>
+              </div> --}}
               <p class="card-category">Message Delivered</p>
               <h3 class="card-title">0
                 <small>Message Delivered</small>
@@ -132,17 +205,17 @@
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="fa fa-envelope-open-text text-warning"></i> All delivered messsage
+                <i class="fa fa-envelope-open-text text-warning"></i>
               </div>
             </div>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card card-stats">
+          <div class="card card-stats p-3">
             <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
+              {{-- <div class="card-icon">
                 <i class="fa fa-envelope"></i>
-              </div>
+              </div> --}}
               <p class="card-category">Message failed</p>
               <h3 class="card-title">0
                 <small>Message failed</small>
@@ -150,16 +223,21 @@
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="fa fa-envelope text-warning"></i> All failed messsage
+                <i class="fa fa-envelope text-warning"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="bottom_image"></div>
+        </div>
+      </div>
       <!-- users statistics end here -->
       @if (Auth::user()->user_category == '77889' )
       <!-- charts start here -->
-      <div class="row">
+      {{-- <div class="row">
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-success">
@@ -168,16 +246,16 @@
             <div class="card-body">
               <h4 class="card-title">All Users Data</h4>
               <p class="card-category">
-                <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-            </div>
+                {{-- <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p> --}}
+            {{-- </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">access_time</i> updated 4 minutes ago
+                <i class="material-icons">access_time</i> updated just now
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
+        </div>  --}}
+        {{-- <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-warning">
               <div class="ct-chart" id="websiteViewsChart"></div>
@@ -192,8 +270,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
+        </div> --}}
+        {{-- <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-danger">
               <div class="ct-chart" id="completedTasksChart"></div>
@@ -208,7 +286,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
       @endif
       <!-- charts end here -->

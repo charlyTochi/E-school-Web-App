@@ -8,6 +8,7 @@ use App\Teacher;
 use App\Student;
 use App\User;
 use App\Account;
+use App\Classes;
 use Illuminate\Support\Str;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
@@ -36,12 +37,15 @@ class ParentsController extends Controller
           return view('parents.index', ['users' => $model->paginate(15)]);
 
       }else{
-        $school_name = $this->getSchoolName();
+        // $school_name = $this->getSchoolName();
+        $school_name = "";
+        $school_id = Auth::user()->school_id;
         $data = array(
           'school_name' => $school_name,
+          'school_id' => $school_id
         );
-          $parent = School::find(Auth::user()->school_id)->parents;
-          return view('parents.index', ['users' => $parent, 'data'=>$data]);
+        $parent = School::find($school_id)->parents;
+        return view('parents.index', ['users' => $parent, 'data'=>$data]);
       }
     }
 
@@ -52,16 +56,20 @@ class ParentsController extends Controller
      */
     public function create()
     {
-      $school_name = $this->getSchoolName();
+      // $school_name = $this->getSchoolName();
+      $school_name = "";
+      $id = Auth::user()->school_id;
       $data = array(
         'school_name' => $school_name,
+        'school_id' => $id
       );
-        return view('parents.create', ['data'=>$data]);
+        return view('parents.create', ['data'=> $data]);
     }
 
     public function add()
     {
-      $school_name = $this->getSchoolName();
+      // $school_name = $this->getSchoolName();
+      $school_name = "";
       $data = array(
         'school_name' => $school_name,
       );
@@ -122,7 +130,7 @@ class ParentsController extends Controller
       ]);
       $user->save();
       // $this->sendMail($request->email, $user );
-        return redirect()->route('parents.index')->withStatus(__($full_name.' successfully registered their ward(s) in your school.'));
+        return redirect()->route('parents.index')->withStatus(__($full_name.' successfully registered their ward(s) in your school. Now that you have registered a class, CLICK HERE TO PROCEED TO CREATE TEACHERS'));
     }
 
 
@@ -134,7 +142,8 @@ class ParentsController extends Controller
      */
     public function edit($id)
     {
-      $school_name = $this->getSchoolName();
+      // $school_name = $this->getSchoolName();
+      $school_name = "";
       // get the user
       $users = Parents::find($id);
       $data = array(
@@ -211,22 +220,100 @@ class ParentsController extends Controller
         return redirect()->route('parents.index')->withStatus(__('User successfully deleted.'));
     }
 
-    public function getSchoolName(){
-      $id = Auth::user()->school_id;
+    public function getSchoolName($id){
+      // $id = Auth::user()->school_id;
       $school_name = School::where('id', $id)->pluck('school_name')->first();
       return $school_name;
     }
 
     public function perSchool($id){
-      $school_name = $this->getSchoolName();
+      $school_name = $this->getSchoolName($id);
       $data = array(
         'school_name' => $school_name
       );
       $parent = School::find($id)->parents;
-      return view('parents.index', ['users' => $parent, 'data'=>$data]);      
+      return view('parents.index', ['users' => $parent, 'data' => $data]);      
     }
 
     public function getChildren($id){
       
     }
+
+    public function createParentsView($id){
+      $school_name = $this->getSchoolName($id);
+        $data = array(
+          'school_name' => $school_name,
+          'school_id' => $id
+        );
+        $parent = School::find($id)->parents;
+        $classes = Classes::find($id);
+        return view('parents.index', ['users' => $parent, 'data'=>$data]);
+    }
+
+    public function addParentsView($id)
+    {
+      // $school_name = $this->getSchoolName();
+      $school_name = "";
+      $data = array(
+        'school_name' => $school_name,
+        'school_id' => $id
+      );
+        return view('parents.create', ['data'=>$data]);
+    }
+
+    public function storeParent(Request $request, $id)
+    {
+      $request->validate([
+          'title' => 'required|string',
+          'first_name' => 'required|string',
+          'sex' => 'required|string',
+          'email' => 'required|string|email|unique:users',
+          'last_name' => 'required|string',
+          'address' => 'required|string',
+          'phone_number' => 'required|string',
+          'password' => 'required|string|confirmed'
+      ]);
+      $acct_id = Str::random(60);
+      $cat_code = $this->userRole('PARENT');
+      $full_name = $request->first_name. ' '. $request->last_name;
+      $parents = new Parents([
+        'title' => $request->title,
+        'first_name'=> $request->first_name,
+        'last_name' => $request->last_name,
+        'address' => $request->address,
+        'sex' => $request->sex,
+        'email' => $request->email,
+        'phone_number' => $request->phone_number,
+        'school_id' => $id,
+        'acct_id' => $acct_id,
+      ]);
+      $parents->save();
+      
+      $account = new Account([
+        'acct_id'=> $acct_id,
+        'user_id'=> $parents->id,
+        'account_type_id' => 3,
+        'school_id' => $id
+      ]);
+     $account->save();
+
+      $user = new User([
+        'name'=> $full_name,
+        'password' => Hash::make($request->get('password')),
+        'external_table_id' => $parents->id,
+        'email' => $request->email,
+        'user_category' => $cat_code,
+        'school_id' => $id,
+        'acct_id' => $acct_id,
+      ]);
+      $user->save();
+      $school_name = $this->getSchoolName($id);
+        $data = array(
+          'school_name' => $school_name,
+          'school_id' => $id
+        );
+      // $this->sendMail($request->email, $user );
+      return redirect('/'.$id.'/parents/create')->with(['data' => $data, 'status' => $full_name.' successfully added to parents for '.$school_name]);
+    }
+
 }

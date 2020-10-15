@@ -40,6 +40,7 @@ class TeacherController extends Controller
         $school_name = School::where('id', $id)->pluck('school_name')->first();
         $data = array(
           'school_name' => $school_name,
+          'school_id' => $id
         );
         $teacher = School::find(Auth::user()->school_id)->teachers;
         return view('teachers.index', ['users' => $teacher, 'data'=> $data]);
@@ -123,8 +124,8 @@ class TeacherController extends Controller
         'acct_id' => $acct_id,
       ]);
       $user->save();
-      $this->sendMail($request->email, $user );
-        return redirect()->route('teacher.index')->withStatus(__($request->first_name.' successfully created as a Teacher in your school.'));
+      // $this->sendMail($request->email, $user );
+      return redirect()->route('teacher.index')->withStatus(__($request->first_name.' successfully created as a Teacher in your school.'));
     }
 
     /**
@@ -219,5 +220,82 @@ class TeacherController extends Controller
       );
       $teacher = School::find($id)->teachers;
       return view('teachers.index', ['users' => $teacher, 'data'=> $data]);
+    }
+
+    public function createTeacher($id)
+    {
+        $school_name = School::where('id', $id)->pluck('school_name')->first();
+        $data = array(
+          'school_name' => $school_name,
+          'school_id' => $id
+        );
+        $teacher = School::find($id)->teachers;
+        return view('teachers.index', ['users' => $teacher, 'data'=> $data]);      
+    }
+
+    public function add($id)
+    {
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $classes = Classes::where('school_id',  $id)->get()->toArray();
+      $data = array(
+        'school_name' => $school_name,
+        'classes' => $classes,
+        'school_id' => $id
+      );
+      return view('teachers.create', ['data' => $data]);
+    }
+
+    public function storeTeacher(Request $request, $id)
+    {
+      $request->validate([
+          'first_name' => 'required|string',
+          'email' => 'required|string|email|unique:users',
+          'last_name' => 'required|string',
+          'address' => 'required|string',
+          'phone_number' => 'required|string'
+      ]);
+      $acct_id = Str::random(60);
+      $cat_code = $this->userRole('TEACHER');
+      $full_name = $request->first_name. ' '. $request->last_name;
+
+      $teacher = new Teacher([
+        'first_name'=> $request->first_name,
+        'last_name' => $request->last_name,
+        'address' => $request->address,
+        'email' => $request->email,
+        'phone_number' => $request->phone_number,
+        'school_id' => $id,
+        'class_assigned' =>$request->class_assigned,
+        'acct_id'=>$acct_id
+      ]);
+      $teacher->save();
+
+      $account = new Account([
+        'acct_id'=> $acct_id,
+        'user_id'=> $teacher->id,
+        'account_type_id' => 4,
+        'school_id' => $id
+      ]);
+     $account->save();
+
+      $user = new User([
+        'name'=> $full_name,
+        'password' => Hash::make($request->get('password')),
+        'external_table_id' => $teacher->id,
+        'email' => $request->email,
+        'user_category' => $cat_code,
+        'school_id' => $id,
+        'acct_id' => $acct_id,
+      ]);
+      $user->save();
+      // $this->sendMail($request->email, $user );
+      $school_name = $this->getSchoolName($id);
+      $data = array(
+        'school_name' => $school_name,
+        'school_id' => $id
+      );
+      $teacher = School::find($id)->teachers;
+      
+      return redirect('/'.$id.'/teacher/create')->with(['data' => $data, 'users' => $teacher, 'status' => $full_name.' successfully added to teachers for '.$school_name]);
     }
 }

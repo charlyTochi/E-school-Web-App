@@ -1,4 +1,4 @@
-<footer class="footer fixed" >
+<footer class="footer" style="margin-top: 80px !important">
     <div class="container" style="height: 10px; font-size:20px">
         <!-- <nav class="float-left">
         <ul>
@@ -29,7 +29,7 @@
         <script>
             document.write(new Date().getFullYear())
         </script>, made with <i class="material-icons">favorite</i> by
-        <a class="text-warning" href="https://www.e-school.com" target="_blank">Powered by Efull Technology Nig. Ltd</a>  for the best solution in tech.
+        <a class="text-warning" href="#" id="footer_link" target="_blank">Powered by Efull Technology Nig. Ltd</a>  for the best solution in tech.
         </div>
     </div>
 </footer>

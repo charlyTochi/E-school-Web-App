@@ -5,7 +5,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('teacher.store') }}" autocomplete="off" class="form-horizontal">
+          @if(Auth::user()->user_category == '77889')
+            <form method="post" action="/{{$data['school_id']}}/teacher/storeTeacher" autocomplete="off" class="form-horizontal">
+          @else
+            <form method="post" action="{{ route('teacher.store') }}" autocomplete="off" class="form-horizontal">
+          @endif
             @csrf
             @method('post')
 
@@ -60,7 +64,7 @@
                       <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_assigned"  data-style="btn btn-link" id="class_name" value="{{ old('class_name') }}" required>
                         <option>Select Class</option>
                         @foreach($data['classes'] as $klass)
-                          <option value="{{$klass['id']}}">{{$klass['class']}}</option>
+                          <option value="{{$klass['id']}}">{{$klass['class_name']}}</option>
                         @endforeach
                       </select>
                       @if ($errors->has('class_name'))

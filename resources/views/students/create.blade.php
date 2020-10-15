@@ -5,13 +5,16 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="/student/{{$data["school_id"]}}/custom_store" autocomplete="off" class="form-horizontal" enctype="multipart/form-data">
+          @if(Auth::user()->user_category == '77889')
+            <form method="post" action="/student/{{$data["school_id"]}}/custom_store" autocomplete="off" class="form-horizontal" enctype="multipart/form-data">
+          @else
+            <form method="post" action="{{route('student.store')}}" autocomplete="off" class="form-horizontal" enctype="multipart/form-data">
+          @endif  
             @csrf
             @method('post')
-
             <div class="card ">
               <div class="card-header card-header-warning">
-                <h4 class="card-title">{{ __('Add User') }}</h4>
+                <h4 class="card-title">{{ __('Add Student') }}</h4>
                 <p class="card-category"></p>
               </div>
               <div class="card-body ">
@@ -217,7 +220,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Address') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" id="input-address" type="text" placeholder="{{ __('Address') }}" value="{{ old('address') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" id="input-address" type="text" placeholder="{{ __('Address') }}" value="{{ old('address') }}" aria-required="true"/>
                       @if ($errors->has('address'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('address') }}</span>
                       @endif
@@ -228,7 +231,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Date Of Birth') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('date_of_birth') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}" name="date_of_birth" id="input-date_of_birth" type="date" placeholder="{{ __('Date Of Birth') }}" value="{{ old('date_of_birth') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}" name="date_of_birth" id="input-date_of_birth" type="date" placeholder="{{ __('Date Of Birth') }}" value="{{ old('date_of_birth') }}" aria-required="true"/>
                       @if ($errors->has('date_of_birth'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('date_of_birth') }}</span>
                       @endif
@@ -239,7 +242,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Nationality') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('nationality') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('nationality') ? ' is-invalid' : '' }}" name="nationality" id="input-nationality" type="text" placeholder="{{ __('nationality') }}" value="{{ old('Nationality') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('nationality') ? ' is-invalid' : '' }}" name="nationality" id="input-nationality" type="text" placeholder="{{ __('nationality') }}" value="{{ old('Nationality') }}" aria-required="true"/>
                       @if ($errors->has('nationality'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('nationality') }}</span>
                       @endif
@@ -250,7 +253,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('State Of Origin') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('state_of_origin') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('state_of_origin') ? ' is-invalid' : '' }}" name="state_of_origin" id="input-state_of_origin" type="text" placeholder="{{ __('State Of Origin') }}" value="{{ old('state_of _origin') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('state_of_origin') ? ' is-invalid' : '' }}" name="state_of_origin" id="input-state_of_origin" type="text" placeholder="{{ __('State Of Origin') }}" value="{{ old('state_of _origin') }}" aria-required="true"/>
                       @if ($errors->has('state_of_origin'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('state_of_origin') }}</span>
                       @endif
@@ -261,7 +264,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Local Govt') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('local_govt') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('local_govt') ? ' is-invalid' : '' }}" name="local_govt" id="input-local_govt" type="text" placeholder="{{ __('Local Govt') }}" value="{{ old('local_govt') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('local_govt') ? ' is-invalid' : '' }}" name="local_govt" id="input-local_govt" type="text" placeholder="{{ __('Local Govt') }}" value="{{ old('local_govt') }}" aria-required="true"/>
                       @if ($errors->has('local_govt'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('local_govt') }}</span>
                       @endif
@@ -272,7 +275,7 @@
                   <label class="col-sm-2 col-form-label">{{ __('Religion') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('religion') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('religion') ? ' is-invalid' : '' }}" name="religion" id="input-religion" type="text" placeholder="{{ __('religion') }}" value="{{ old('Religion') }}" required="true" aria-required="true"/>
+                      <input class="form-control{{ $errors->has('religion') ? ' is-invalid' : '' }}" name="religion" id="input-religion" type="text" placeholder="{{ __('religion') }}" value="{{ old('Religion') }}" aria-required="true"/>
                       @if ($errors->has('religion'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('religion') }}</span>
                       @endif

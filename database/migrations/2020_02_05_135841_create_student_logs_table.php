@@ -16,6 +16,7 @@ class CreateStudentLogsTable extends Migration
         Schema::create('student_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('card_code');
+            $table->int('school_id');
             $table->boolean('is_logged_in');
             $table->string('log_timestamp');
             $table->string('log_day')->nullable();

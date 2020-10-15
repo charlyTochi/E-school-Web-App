@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
@@ -52,20 +51,20 @@ class UserController extends Controller
         $credentials = request(['email', 'password']);//validating the inputed email and password field
         if(!Auth::attempt($credentials)){
             return response()->json(['message' => 'Unauthorized'], 401);
-          }else {
-                $userRole = $this->userRole('SCHOOL');
-                $user = Auth::user()->user_category;
-                if($user === $userRole){ //if user is exactly school login an exception comes up if not done
-                  $user = Auth::user();
-                  $tokenResult = $user->createToken('Personal Access Token'); //access token created if successfull
-                  $token = $tokenResult->token;
-                  $token->save();
-                  return response()->json(['access_token' => $tokenResult->accessToken,'token_type' => 'Bearer'
-                  ]);
-                }else{
-                  return response()->json(['error'=>'Unauthorised', 'message' => 'Account is not permitted'], 401);
-                }
-          }
+        }else {
+            $userRole = $this->userRole('SCHOOL');
+            $user = Auth::user()->user_category;
+            if($user === $userRole){ //if user is exactly school login an exception comes up if not done
+                $user = Auth::user();
+                $tokenResult = $user->createToken('Personal Access Token'); //access token created if successfull
+                $token = $tokenResult->token;
+                $token->save();
+                setcookie("token", $token, time() + (86400 * 30), "/");
+                return response()->json(['access_token' => $tokenResult->accessToken,'token_type' => 'Bearer']);
+            }else{
+                return response()->json(['error'=>'Unauthorised', 'message' => 'Account is not permitted'], 401);
+            }
+        }
     }
 
     /**
@@ -95,7 +94,6 @@ class UserController extends Controller
     {
         $user = User::where('acct_id', $acct_id)->first();
         if (!$user) {
-           
             return redirect()->route('register')
                 ->withStatus(__('User does not exist'));
         }

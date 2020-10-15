@@ -12,7 +12,7 @@ class Classes extends Model
    * @var array
    */
   protected $fillable = [
-    'class','school_id', 'department'
+    'class_name','school_id', 'department'
 ];
 
   public function student(){

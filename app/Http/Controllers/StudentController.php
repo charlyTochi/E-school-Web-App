@@ -49,6 +49,7 @@ class StudentController extends Controller
 
         $data = array(
           'school_name' => $school_name,
+          'school_id' => $id
         );
         // dd($users);
           return view('students.index', ['users' => $student, 'data'=> $data ]);
@@ -64,18 +65,19 @@ class StudentController extends Controller
     public function create()
     {
       $school_id = Auth::user()->school_id;
-      dd($school_id);
       $school_name = School::where('id', $school_id)->pluck('school_name')->first();
-      $father = Parents::where('school_id',  $school_id)->get()->toArray();
-      $mother = Parents::where('school_id',  $school_id)->get()->toArray();
-      $parents = User::where('school_id',  $school_id)->get()->toArray();
+      $father = Parents::where('school_id',  $school_id)->where('sex', 'Male')->get()->toArray();
+      $mother = Parents::where('school_id',  $school_id)->where('sex', 'Female')->get()->toArray();
+      $parents = Parents::where('school_id',  $school_id)->get()->toArray();
       $classes = Classes::where('school_id',  $school_id)->get()->toArray();
+      // dd($father);
       $data = array(
         'fathers' => $father,
         'mothers' => $mother,
         'parents' => $parents,
         'school_name' => $school_name,
         'classes' => $classes,
+        'school_id' => $school_id
        );
         return view('students.create',
          ['data' => $data]
@@ -96,20 +98,20 @@ class StudentController extends Controller
           'sex' => 'required|string',
           'email' => 'required|string|email|unique:users',
           'last_name' => 'required|string',
-          'address' => 'required|string',
+          // 'address' => 'required|string',
           'father_id' => 'required|string',
           'mother_id' => 'required|string',
-          'date_of_birth' => 'required|string',
-          'nationality' => 'required|string',
-          'religion' => 'required|string',
-          'state_of_origin' => 'required|string',
+          // 'date_of_birth' => 'required|string',
+          // 'nationality' => 'required|string',
+          // 'religion' => 'required|string',
+          // 'state_of_origin' => 'required|string',
           'card_code' => 'required|string',
           'class_name' => 'required|string',
           'primary_contact_id' => 'required|string',
           'primary_contact_rel' => 'required|string',
           'secondary_contact_id' => 'required|string',
           'secondary_contact_rel' => 'required|string',
-          'local_govt' => 'required|string',
+          // 'local_govt' => 'required|string',
           'password' => 'required|string|confirmed'
           // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       ]);

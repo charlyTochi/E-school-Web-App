@@ -1,44 +1,36 @@
 @extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'login', 'title' => __('Login')])
 
 @section('content')
-<div class="container" style="height: auto;">
+<div class="container-fluid">
   <div class="row align-items-center">
-        @if (session('status'))
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="alert alert-success">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <i class="material-icons">close</i>
-                </button>
-                <span>{{ session('status') }}</span>
-              </div>
+      @if (session('status'))
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="material-icons">close</i>
+              </button>
+              <span>{{ session('status') }}</span>
             </div>
           </div>
-        @endif
-    <div class="col-md-9 ml-auto mr-auto mb-3 text-center">
-      <h3>{{ __('Log in to your School Dashboard and automate your school Management and more.') }} </h3>
+        </div>
+      @endif
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-7 col-md-8 mt-5 pt-5">
+        <h2 class="text-white text-center" style="font-weight: bold;">{{ __('E-School Management') }}</h2>
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+  </div>
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8 ml-auto mr-auto">
       <form class="form" method="POST" action="{{ route('login') }}">
         @csrf
-
+  
         <div class="card card-login card-hidden mb-3">
           <div class="card-header card-header-warning text-center">
             <h4 class="card-title"><strong>{{ __('Login') }}</strong></h4>
-            <!-- <div class="social-line">
-              <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                <i class="fa fa-facebook-square"></i>
-              </a>
-              <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                <i class="fa fa-twitter"></i>
-              </a>
-              <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                <i class="fa fa-google-plus"></i>
-              </a>
-            </div> -->
           </div>
           <div class="card-body">
-            <!-- <p class="card-description text-center">{{ __('Or Sign in with ') }} <strong>admin@material.com</strong> {{ __(' and the password ') }}<strong>secret</strong> </p> -->
             <div class="bmd-form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -97,7 +89,7 @@
             </a>
         </div>
       </div>
-    </div>
+    </div>                  
   </div>
 </div>
 @endsection

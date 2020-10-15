@@ -6,14 +6,6 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <div class="">
-            <a href="{{ route('user.index')}}" class="btn btn-sm btn-warning">{{ __('School') }}</a>
-            <a href="#" class="btn btn-sm btn-default">{{ __('Students Logs') }}</a>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
             <div class="card">
             @if(count($data) > 0)
               <div class="card-header card-header-warning">
@@ -32,13 +24,6 @@
                       </div>
                     </div>
                   </div>
-                @endif
-                @if (Auth::user()->user_category != '77889' )
-                <div class="row">
-                  <div class="col-12 text-right">
-                    <a href="{{ route('student.create') }}" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
-                  </div>
-                </div>
                 @endif
                 <div class="table-responsive">
                   <table class="table">
@@ -119,13 +104,6 @@
             @else
               <div class="customInfo">
                 No log information for this school
-                @if (Auth::user()->user_category == '77889' )
-                <div class="row">
-                  <div class="col-12">
-                    <a href="{{ route('student.create') }}" class="btn btn-sm btn-warning">{{ __('Add Student') }}</a>
-                  </div>
-                </div>
-                @endif
               </div>
             @endif
             </div>

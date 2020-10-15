@@ -8,7 +8,6 @@
           <form method="post" action="{{ route('student.update', $user) }}" autocomplete="off" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             @method('put')
-
             <div class="card ">
               <div class="card-header card-header-warning">
                 <h4 class="card-title">{{ __('Edit User') }}</h4>
@@ -69,11 +68,11 @@
                     <div class="form-group{{ $errors->has('class_name') ? ' has-danger' : '' }}">
                       <!-- <input class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name" id="input-class_name" type="text" placeholder="{{ __('Class Name') }}" value="{{ old('class_name') }}" required="true" aria-required="true"/> -->
                       <select class="form-control{{ $errors->has('class_name') ? ' is-invalid' : '' }}" name="class_name"  data-style="btn btn-link" id="class_name" value="{{ old('class_name')}}" required>
-                      @if($user->class_name != null)
-                        <option>{{$user->class_name->class_name}}</option>
+                        @if($user->class_name != null)
+                          <option value={{$user->class_id}}>{{$user->class_name->class_name}}</option>
                         @endif
                         @foreach($data['classes'] as $klass)
-                          <option >{{$klass['class']}}</option>
+                          <option value={{$klass['id']}}>{{$klass['class_name']}}</option>
                         @endforeach
                       </select>
                       @if ($errors->has('class_name'))

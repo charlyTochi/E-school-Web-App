@@ -5,7 +5,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('parents.store') }}" autocomplete="off" class="form-horizontal">
+          @if(Auth::user()->user_category == '77889')
+            <form method="post" action="/{{$data['school_id']}}/parent/storeParent" autocomplete="off" class="form-horizontal">
+          @else
+            <form method="post" action="{{ route('parents.store') }}" autocomplete="off" class="form-horizontal"> 
+          @endif  
             @csrf
             @method('post')
 
@@ -57,7 +61,11 @@
                   <label class="col-sm-2 col-form-label">{{ __('Sex') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('sex') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('sex') ? ' is-invalid' : '' }}" name="sex" id="input-motto" type="text" placeholder="{{ __('Sex') }}" value="{{ old('sex') }}" required="true" aria-required="true"/>
+                      <select class="form-control{{ $errors->has('sex') ? ' is-invalid' : '' }}" name="sex"  data-style="btn btn-link" id="sex" value="{{ old('sex') }}" required>
+                        <option>Select Sex</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
                       @if ($errors->has('sex'))
                         <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('sex') }}</span>
                       @endif

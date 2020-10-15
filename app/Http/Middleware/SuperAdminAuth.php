@@ -22,8 +22,8 @@ class SuperAdminAuth
          return route('login');
        }
        if (Auth::User()->user_category != $cat_code){
-         return route('home');
+         return redirect()->route('home');
        }
-         return $next($request);
+      return $next($request);
      }
 }

@@ -74,29 +74,39 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-  Route::group(['middleware' => 'superadmin'], function(){
-    Route::resource('user', 'UserController', ['except' => ['show']]);
-  });
-
-  // Route::group(['middleware' => 'admin'], function(){
-	Route::resource('parents', 'ParentsController', ['except' => ['show']]);
+  Route::group(['middleware' => 'superAdmin'], function(){
+	Route::resource('user', 'UserController', ['except' => ['show']]);
+	Route::get('{school_id}/parents/create', 'ParentsController@createParentsView');
+	Route::get('{school_id}/parents/add', 'ParentsController@addParentsView');
+	Route::post('{school_id}/parent/storeParent', 'ParentsController@storeParent');
 	Route::get('{school_id}/parent', 'ParentsController@perSchool')->middleware("auth");
-	Route::resource('student', 'StudentController', ['except' => ['show']]);
 	Route::get('studentCreate/{school_id}', 'StudentController@openCreate');
 	Route::get('student/{id}/custom_create', 'StudentController@myCreate')->middleware("auth");
 	Route::post('student/{id}/custom_store', 'StudentController@customStore')->middleware("auth");
 	Route::get('{school_id}/student', 'UserController@perSchool')->middleware("auth");
-	Route::resource('teacher', 'TeacherController', ['except' => ['show']]);
+	Route::get('{school_id}/teacher/create', 'TeacherController@createTeacher');
+	Route::get('{school_id}/teacher/addTeacher', 'TeacherController@add');
+	Route::post('{school_id}/teacher/storeTeacher', 'TeacherController@storeTeacher');
 	Route::get('{school_id}/teacher', 'TeacherController@perSchool')->middleware("auth");
 	Route::get('school/{id}/settings', 'SchoolController@schoolSettings')->middleware("auth");
 	Route::get('school/student_logs', 'SchoolController@getStudentLogs')->middleware("auth");
-	Route::get('school/{id}/student_logs', 'SchoolController@getEachStudentLogs')->middleware("auth");
+	Route::get('school/{id}/student_logs', 'SchoolController@getEachStudentLogs');
+	Route::post('classes/{school_id}/create', 'ClassController@storeClass');
+	Route::get('details/{id}', 'StudentController@details')->name('details');
+	Route::get('{school_id}/createClass', 'ClassController@createClass')->middleware("auth");
+	Route::get('{school_id}/addClass', 'ClassController@addClass')->middleware("auth");
+  });
+
+  // Route::group(['middleware' => 'admin'], function(){
+	Route::resource('parents', 'ParentsController', ['except' => ['show']]);
+	Route::resource('student', 'StudentController', ['except' => ['show']]);
+	Route::resource('teacher', 'TeacherController', ['except' => ['show']]);
     Route::resource('message', 'MessageController', ['except' => ['show']]);
 	Route::resource('classes', 'ClassController', ['except' => ['show']]);
-	Route::get('details/{id}', 'StudentController@details')->name('details');
 	Route::get('add', 'ParentsController@add')->name('add');
 	Route::get('addTeacher', 'TeacherController@addTeacher')->name('addTeacher');
 	Route::post('addAccount', 'AccountController@addAccount')->name('addAccount');
+	Route::get('school/student_logs', 'SchoolController@getEachSchoolLogs');
   // });
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

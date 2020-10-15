@@ -23,13 +23,17 @@
                     </div>
                   </div>
                 @endif
-                @if (Auth::user()->user_category != '77889' )
+                {{-- @if (Auth::user()->user_category != '77889' ) --}}
                 <div class="row">
                   <div class="col-12 text-right">
-                    <a href="{{ route('teacher.create') }}" class="btn btn-sm btn-warning">{{ __('Add Teacher') }}</a>
+                    @if (Auth::user()->user_category == '77889' )
+                      <a href="/{{$data['school_id']}}/teacher/addTeacher" class="btn btn-sm btn-warning">{{ __('Add Teacher') }}</a>
+                    @else
+                      <a href="{{ route('teacher.create') }}" class="btn btn-sm btn-warning">{{ __('Add Teacher') }}</a>
+                    @endif
                     <a href="{{ route('addTeacher') }}" class="btn btn-sm btn-warning">{{ __('Add Account') }}</a>
                   </div>
-                  @endif
+                  {{-- @endif --}}
                 </div>
                 <div class="table-responsive">
                   <table class="table">

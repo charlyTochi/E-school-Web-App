@@ -5,3 +5,50 @@
     height: 50vh;
     padding-top: 25vh;
 }
+
+.navbar-brand{
+    color: #2d2c3e !important;
+    font-size: 2em;
+}
+
+.sideText{
+    font-size: 3em;
+    width: 100%;
+    text-align: left;
+    margin-top: 300px;
+    height: auto;
+    padding: 20px;
+}
+
+#sideImage{
+ height: 100vh;   
+}
+
+#footer_link {
+    font-weight: bold;
+}
+
+.page-header{
+    background-image: url('/public/image/proffessor.png') !important;
+    background-size: contain; 
+    background-position: left;
+    background-attachment: fixed; 
+    background-repeat: no-repeat;
+    align-items: center;
+}
+
+.bottom_image{
+    background-image: url('/public/image/data_vis_new.png') !important;
+    background-size: 400px;
+    height: 200px;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+
+.dark-violet{
+    background: #2d2c3e !important;
+}
+
+.main-head{
+    color: white;
+}

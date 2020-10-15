@@ -25,22 +25,26 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'auth'], function () {
     Route::post('signup', 'API\UserController@signup');
     Route::get('signup/activate/{acct_id}', 'API\UserController@signupActivate');
-      /****user login ****/
-      Route::post('login', 'API\UserController@login');
-      /****school login ****/
-      Route::post('/schoolLogin', 'API\SchoolController@login');
-      // getAllSchoolName
-      Route::post('/getAllSchoolName', 'API\SchoolController@getAllSchoolName');
+    /****user login ****/
+    Route::post('login', 'API\UserController@login');
+    /****school login ****/
+    Route::post('/schoolLogin', 'API\SchoolController@login');
+    // getAllSchoolName
+    Route::get('/getAllSchoolName', 'API\SchoolController@getAllSchoolName');
 });
 
 
 
     Route::group([  'middleware' => 'auth:api'], function() {
         Route::get('logout', 'API\UserController@logout');
-        Route::get('school', 'API\UserController@school');
+        Route::resource('schools', 'API\SchoolsController');
+        Route::resource('classes', 'API\ClassesController');
+        Route::resource('users', 'API\UsersController');
         Route::get('fetchChildren/{name}/{class_assigned}', 'API\UserController@fetchChildren');
         Route::post('updateProfile', 'API\UserController@UpdateProfile');
         Route::post('updateProfileImage', 'API\UserController@UpdateProfileImage');
+         // Students' logs
+        Route::get('/studentLog/{card_code}', 'API\SchoolController@studentLogInfo');
       // login Account
       Route::post('loginAccount/{id}', 'API\UserController@loginAccount');
       Route::post('sendNotif', 'API\NotifController@sendNotif');
@@ -49,7 +53,7 @@ Route::group(['prefix' => 'auth'], function () {
       Route::get('sentNotif/{sender_acct_type}/{sender_id}/{school_id}', 'API\NotifController@sentNotif');
       Route::get('getAccountType', 'API\AccountTypeController@getAccountType');
       Route::get('allParents/{school_id}', 'API\ParentController@all');
-      Route::get('allTeacher/{school_id}', 'API\TeacherController@all');
+      Route::get('allTeachers/{school_id}', 'API\TeacherController@all');
       Route::get('studentTeacher/{school_id}/{class_assigned}', 'API\TeacherController@studentTeacher');
 
         // access by only authenticated superadmin

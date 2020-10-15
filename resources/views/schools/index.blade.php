@@ -4,27 +4,47 @@
   <div class="content">
     <div class="container-fluid">
       <!-- users statiscs start here -->
+      <div class="alert alert-success">
+        <div style="text-align: center; font-size:1.3em; font-weight:bold"><i class="fa fa-info-circle" style="color: white"></i> Kindly read and follow this instruction </div>
+          <div class="mt-2" style="text-align: center">
+            Ensure to create classes before creating parents => create parents before creating teachers => create teachers before creating students <br/>
+          </div>
+      </div>
+      @if (session('error'))
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <i class="material-icons">close</i>
+                        </button>
+                        <span>{{ session('error') }}</span>
+                      </div>
+                    </div>
+                  </div>
+                @endif
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-gear"></i>
+          <a href="/{{$data['school_id']}}/createClass">
+            <div class="card card-stats">
+              <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                  <i class="fa fa-gear"></i>
+                </div>
+              <p class="card-category">Class</p>
+                <h3 class="card-title"> {{number_format($data['classes'])}}
+                  <small>Classes</small>
+                </h3>
               </div>
-            <p class="card-category">Class</p>
-              <h3 class="card-title"> {{number_format($data['classes'])}}
-                <small>Classes</small>
-              </h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="fa fa-users text-danger"></i> All Classes
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="fa fa-users text-danger"></i> All Classes
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <a href="/{{$data['school_id']}}/parent">
+          <a href="/{{$data['school_id']}}/parents/create">
             <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
@@ -44,7 +64,7 @@
           </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href="/{{$data['school_id']}}/teacher"> 
+            <a href="/{{$data['school_id']}}/teacher/create"> 
                 <div class="card card-stats">
                     <div class="card-header card-header-warning card-header-icon">
                         <div class="card-icon">

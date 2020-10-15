@@ -10,6 +10,8 @@ use App\Parents;
 use App\Student;
 use App\SentMessage;
 use App\User;
+use App\Classes;
+use App\Events\MyEvent;
 
 class HomeController extends Controller
 {
@@ -39,6 +41,7 @@ class HomeController extends Controller
         $teacher = Teacher::all()->count();
         $parents = Parents::all()->count();
         $message_sent = SentMessage::all()->count();
+        $classes = Classes::all()->count();
         $total = User::all()->count();
         $data = array(
           'school' => $school,
@@ -46,18 +49,39 @@ class HomeController extends Controller
           'total' => $total,
           'parents' => $parents,
           'student' => $student,
+          'classes' => $classes,
           'message_sent' => $message_sent
         );
           return view('dashboard', ['data'=>$data]);
       }elseif ($cat_code == $this->userRole('ADMIN')) {
-
         $id = Auth::user()->school_id;
+        // $school_name = School::where('id', $id)->pluck('school_name')->first();
+        // $school = User::where('school_id', $id)->get()->count();
+        // $student = Student::where('school_id', $id)->get()->count();
+        // $teacher = Teacher::where('school_id', $id)->get()->count();
+        // $parents = Parents::where('school_id', $id)->get()->count();
+        // $classes = Classes::where('school_id', $id)->get()->count();
+        // $message_sent = SentMessage::where('school_id', $id)->get()->count();
+
+        // // $request->session()->put('school_name', $school_name);
+        // $data = array(
+        //     'school_name' => $school_name,
+        //     'school' => $school,
+        //     'teacher' => $teacher,
+        //     'parents' => $parents,
+        //     'student' => $student,
+        //     'message_sent' => $message_sent,
+        //     'school_id' => $id,
+        //     'classes' => $classes
+        // );
+        // return view('schools.index', ['data' => $data]);
         $school_name = School::where('id', $id)->pluck('school_name')->first();
         $school = User::where('school_id', $id)->get()->count();
         $student = Student::where('school_id', $id)->get()->count();
         $teacher = Teacher::where('school_id', $id)->get()->count();
         $parents = Parents::where('school_id', $id)->get()->count();
         $message_sent = SentMessage::where('school_id', $id)->get()->count();
+        $classes = Classes::where('school_id', $id)->get()->count();
 
         // $request->session()->put('school_name', $school_name);
         $data = array(
@@ -66,6 +90,7 @@ class HomeController extends Controller
           'teacher' => $teacher,
           'parents' => $parents,
           'student' => $student,
+          'classes' => $classes,
           'message_sent' => $message_sent
         );
         return view('dashboard', ['data'=>$data]);
@@ -97,6 +122,7 @@ class HomeController extends Controller
         );
           return view('parent', ['data' => $data]);
       }
+      event(new MyEvent('hello world'));
     }
     public function chart()
     {

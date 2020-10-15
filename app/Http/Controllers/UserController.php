@@ -47,23 +47,23 @@ class UserController extends Controller
      */
     public function store(UserRequest $request, User $userModel)
     {
-      $request->validate([
-          'school_name' => 'required|string',
-          'email' => 'required|string|email|unique:users',
-          'name' => 'required|string',
-          'address' => 'required|string',
-          'phone_number' => 'required|string'
-      ]);
-        $cat_code = $this->userRole('ADMIN');
-        $acct_id = Str::random(60);
-        $school = new School([
-          'school_name'=> $request->school_name,
-          'email' => $request->email,
-          'address' => $request->address,
-          'motto' => $request->motto,
-          'phone_number' => $request->phone_number,
-          'acct_id' => $acct_id,
-        ]);
+    $request->validate([
+    'school_name' => 'required|string',
+    'email' => 'required|string|email|unique:users',
+    'name' => 'required|string',
+    'address' => 'required|string',
+    'phone_number' => 'required|string'
+    ]);
+    $cat_code = $this->userRole('ADMIN');
+    $acct_id = Str::random(60);
+    $school = new School([
+        'school_name'=> $request->school_name,
+        'email' => $request->email,
+        'address' => $request->address,
+        'motto' => $request->motto,
+        'phone_number' => $request->phone_number,
+        'acct_id' => $acct_id,
+    ]);
         $school->save();
 
         $account = new Account([
@@ -82,7 +82,7 @@ class UserController extends Controller
                                 'user_category' => $cat_code, 
                                 'acct_id' => $acct_id,])->all();
         $userModel->create($user);
-        $this->sendMail($request->email, $userModel );
+        // $this->sendMail($request->email, $userModel );
         return redirect()->route('user.index')->withStatus(__($request->school_name.' School successfully created.'));
     }
 
@@ -142,6 +142,7 @@ class UserController extends Controller
 
         $data = array(
           'school_name' => $school_name,
+          'school_id' => $id
         );
         return view('students.index', ['users' => $student, 'data'=>$data]);
     }

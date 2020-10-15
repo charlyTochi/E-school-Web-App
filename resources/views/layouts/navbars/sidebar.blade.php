@@ -1,4 +1,7 @@
-<div class="sidebar" data-color="orange" data-background-color="black" data-image="{{ asset('material') }}/img/sidebar-1.jpg">
+<div class="sidebar" data-color="orange" data-background-color="black" 
+style="background: #2d2c3e"
+{{-- data-image="{{ asset('material') }}/img/sidebar-1.jpg" --}}
+>
   <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -75,7 +78,7 @@
             <p>{{ __('Messages') }}</p>
           </a>
         </li>
-        <li class="nav-item {{ ($activePage == 'class' || $activePage == 'class') ? ' active' : '' }}">
+        {{-- <li class="nav-item {{ ($activePage == 'class' || $activePage == 'class') ? ' active' : '' }}">
           <a class="nav-link" data-toggle="collapse" href="#laravelExample1" aria-expanded="true">
             <i class="fa fa-book"></i>
             <p>{{ __('Accademic')}}
@@ -92,12 +95,22 @@
               </li>
             </ul>
           </div>
+        </li> --}}
+        <li class="nav-item{{ $activePage == 'class' ? ' active' : '' }}">
+          <a class="nav-link" href="{{ route('classes.index') }}">
+            <i class="material-icons">person</i>
+            <span class="sidebar-normal">{{ __('Class') }} </span>
+          </a>
         </li>
         <li class="nav-item{{ $activePage == 'student_log' ? ' active' : '' }}">
-          <a class="nav-link" href="/school/{{Auth::user()->id}}/student_logs">
-            <i class="fas fa-history"></i>
-            <span class="sidebar-normal"> {{ __('Students Log') }} </span>
-          </a>
+          @if (Auth::user()->user_category == '77889' )
+            <a class="nav-link" href="/school/{{Auth::user()->id}}/student_logs">
+          @else
+            <a class="nav-link" href="/school/student_logs">
+          @endif
+              <i class="fas fa-history"></i>
+              <span class="sidebar-normal"> {{ __('Students Log') }} </span>
+            </a>
         </li>
       @endif
     </ul>

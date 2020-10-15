@@ -10,6 +10,7 @@ use App\SentMessage;
 use App\User;
 use App\Classes;
 use App\StudentLog;
+use Auth;
 
 class SchoolController extends Controller
 {
@@ -41,8 +42,6 @@ class SchoolController extends Controller
         $parents = Parents::where('school_id', $id)->get()->count();
         $classes = Classes::where('school_id', $id)->get()->count();
         $message_sent = SentMessage::where('school_id', $id)->get()->count();
-
-        // $request->session()->put('school_name', $school_name);
         $data = array(
             'school_name' => $school_name,
             'school' => $school,
@@ -67,6 +66,21 @@ class SchoolController extends Controller
 
     public function getEachStudentLogs($id){
         $arr = [];
+        $students = Student::where('school_id', $id)->get();
+        foreach($students as $student){
+            $logs = StudentLog::where('card_code', $student->card_code)->orderBy("id", "DESC")->paginate(10);
+            array_push($arr, $logs);
+        }
+        if (count($arr) > 0){
+            return view('schools.studentsLog', ['data' => $arr[0]]);
+        }else{
+            return view('schools.studentsLog', ['data' => []]);
+        }
+    }
+
+    public function getEachSchoolLogs(){
+        $arr = [];
+        $id = Auth::user()->school_id;
         $students = Student::where('school_id', $id)->get();
         foreach($students as $student){
             $logs = StudentLog::where('card_code', $student->card_code)->orderBy("id", "DESC")->paginate(10);

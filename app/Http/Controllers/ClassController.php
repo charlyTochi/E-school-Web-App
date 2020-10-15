@@ -35,6 +35,7 @@ class ClassController extends Controller
           $school_name = School::where('id', $id)->pluck('school_name')->first();
           $data = array(
             'school_name' => $school_name,
+            'id' => $id
           );
           $classes = Classes::where('school_id', Auth::user()->school_id)->get();
 
@@ -63,16 +64,24 @@ class ClassController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-        'class' => 'required|string',
+        'class_name' => 'required|string',
       ]);
         $classes = new Classes([
-          'class' => $request->class,
+          'class_name' => $request->class_name,
           'department'=> $request->department,
-          'school_id' =>Auth::user()->school_id,
+          'school_id' =>Auth::user()->school_id
         ]);
         $classes->save();
+          $id = Auth::user()->school_id;
+          $school_name = School::where('id', $id)->pluck('school_name')->first();
+          $data = array(
+            'school_name' => $school_name,
+            'id' => $id
+          );
+          $classes = Classes::where('school_id', Auth::user()->school_id)->get();
 
-        return redirect()->route('classes.index')->withStatus(__('Message successfully created.'));
+        return redirect()->route('classes.index')->with('classes' , $classes)->withStatus(__('Class successfully created. Now that you have registered a class, CLICK HERE TO PROCEED TO CREATE PARENT'));
+        // return redirect()->route('classes.index', ['classes' => $classes, 'goto' => 'Now that you have registered a class, click here to register a student', 'status' => 'class successfully updated.']);
     }
 
     /**
@@ -96,7 +105,7 @@ class ClassController extends Controller
     public function update($id, Request $request)
     {
       $class = Classes::find($id);
-      $class->class = $request->get('class');
+      $class->class_name = $request->get('class');
       $class->department = $request->get('department');
       $class->save();
         return redirect()->route('classes.index')->withStatus(__('class successfully updated.'));
@@ -113,5 +122,53 @@ class ClassController extends Controller
         $classes->delete();
 
         return redirect()->route('message.index')->withStatus(__('User successfully deleted.'));
+    }
+
+
+    // Admin classes
+    public function createClass($id){
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $data = array(
+        'school_name' => $school_name,
+        'id' => $id
+      );
+      $classes = Classes::where('school_id', $id)->get();
+      return view('classes.index', ['classes' => $classes, 'data' => $data]);
+    }
+
+    public function addClass($id){
+      return view('classes.create', ['id' => $id]);
+    }
+
+    public function storeClass(Request $request, $id){
+      $request->validate([
+        'class' => 'required|string',
+      ]);
+        $classes = new Classes([
+          'class_name' => $request->class,
+          'department'=> $request->department,
+          'school_id' => $id
+        ]);
+        // dd($request);
+        $classes->save();
+
+      $school_name = School::where('id', $id)->pluck('school_name')->first();
+      $data = array(
+        'school_name' => $school_name,
+        'id' => $id
+      );
+      $classes = Classes::where('school_id', $id)->get();
+      return redirect('/'.$id.'/createClass')->with(['classes' => $classes, 'data' => $data, 'status' => 'Class successfully created.']);
+    }
+
+    public function updateById($id, Request $request)
+    {
+      $class = Classes::find($id);
+      $class->class_name = $request->get('class');
+      $class->department = $request->get('department');
+      $class->save();
+
+        // return redirect()->route('classes.index')->withStatus(__('class successfully updated.'));
+        return view('classes.index', ['data' => $model->paginate(15), 'status' => 'class successfully updated.']);
     }
 }
